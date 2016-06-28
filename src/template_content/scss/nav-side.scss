@@ -1,0 +1,78 @@
+@import "./base/base";
+nav.navbar-fixed-side{
+  position:fixed;
+  top : 50px;
+  bottom:0;
+  z-index:1;
+  background-color: $main-color;
+  overflow-y: hidden;
+  width:250px;
+  color:white;
+
+  ul#side-menu{
+    li{
+      font-size:14px;
+      a{
+        padding:10px 15px;
+        line-height:20px;
+        color:#fff !important;
+        .fa{
+          font-size:20px;
+        }
+      }
+      a:hover,a:visited,a:active{
+        color:#fff !important;
+        background-color: $main-color;
+      }
+      .info{
+        position: relative;
+        left:10px;
+        bottom: 2px;
+      }
+    }
+  }
+
+  .sidebar-user{
+    height:99px;
+    line-height:16px;
+    padding:15px;
+    .user-img{
+      float:left;
+      height:65px;
+      width:65px;
+    }
+    .user-info{
+      color:white;
+      float:left;
+      text-align: left;
+      margin-left:20px;
+      font-weight: 700;
+      .welcome{
+        font-size:12px;
+      }
+      .user-name{
+        font-size:17px;
+      }
+      .user-state{
+        background-color: $navbar-top-right-color;
+        font-size:12px;
+      }
+    }
+  }
+
+  .sidebar-search{
+    padding:10px 15px;
+    background-color: $search-bg-color;
+    input[type="text"]{
+      background:$search-bg-color;
+      border: 1px grey solid;
+      color:white;
+      border-radius: 0;
+      height:$sidebar-search-height;
+    }
+  }
+
+  .active{
+    background-color: $navbar-top-right-color;
+  }
+}

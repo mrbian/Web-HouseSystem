@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% content './admin_shared/head.html' %>
+    <% content 'head' %>
+</head>
+<body>
+<div id="wrapper">
+    <% include './admin_shared/header.html' %>
+    <% include './admin_shared/sidebar.html' %>
+    <div id="page-wrapper" class="main-content">
+        <% content %>
+    </div>
+</div>
+<footer>
+    <span>&copy;&nbsp;2016.7 </span>
+</footer>
+</body>
+<script type="text/plain" id="num">3</script>
+<script src="/dist/admin-commons.js"></script>
+<% content 'scripts' %>
+</html>

@@ -1,0 +1,54 @@
+@import "./base/base";
+
+nav.navbar-fixed-top {
+  height: $navbar-top-height;
+  line-height: $navbar-top-height;
+  margin : 0;
+  background-color: $navbar-top-right-color;
+  .navbar-left {
+    background-color: $navbar-top-logo-color;
+    min-width: 250px;
+    height: $navbar-top-height;
+    text-align: center;
+    .logo-title {
+      color: white;
+      font-size: 30px;
+    }
+  }
+  .navbar-menu{
+    height: $navbar-top-height;
+    float:left;
+  }
+  .navbar-right{
+    height: $navbar-top-height;
+    float:right;
+    margin-right : 20px;
+    ul.navbar-top-links{
+      li {
+        display: inline-block;
+      }
+      a:visited,a:hover{
+        color:white;
+        background-color: $navbar-top-right-color;
+      }
+    }
+    .dropdown-toggle{
+      color:white;
+      font-size:14px;
+    }
+    .dropdown-toggle.user{
+      width:140px;
+      .user-img{
+        width:25px;
+        height:25px;
+        display: inline;
+        vertical-align: baseline;
+      }
+      .user{
+        color:white;
+        font-size:18px;
+        vertical-align: super;
+      }
+    }
+  }
+}

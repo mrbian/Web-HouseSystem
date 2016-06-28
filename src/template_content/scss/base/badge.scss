@@ -1,0 +1,21 @@
+.badge{
+  border-radius: 1px;
+  font-weight: 300;
+}
+
+.badge.badge-notification{
+  position:relative;
+  top:-10px;
+  left:-10px;
+  z-index:1;
+  padding:4px 6px;
+  font-size:10px;
+}
+
+.badge.badge-warnning{
+  background-color: #f9bf3b;
+}
+
+.badge.badge-danger{
+  background-color: #f22613;
+}

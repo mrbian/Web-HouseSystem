@@ -9,11 +9,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 var adminEnties = {
-    // 'admin-index': ['./src/js/admin/index.js']
-};
-
-var phoneEntries = {
-    // 'phone-goods': ['./src/js/phone/goods.js']
+    'admin-index': ['./src/js/admin/index.js']
 };
 
 var extraEntries = {
@@ -21,7 +17,7 @@ var extraEntries = {
 };
 
 var entry = extend({}, adminEnties);
-entry = extend(entry, phoneEntries);
+// entry = extend(entry, adminEnties);
 
 
 module.exports = {
@@ -54,8 +50,7 @@ module.exports = {
             new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
         ),
         new ExtractTextPlugin("[name].css"),
-        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties)),
-        new CommonsChunkPlugin("phone-commons.js", Object.keys(phoneEntries)),
+        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties))
     ],
     //devtool: 'source-map'
     

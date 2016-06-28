@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="./dist/css/index.css"/>
+    <title>后台管理</title>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid no-padding">
+            <div class="navbar-left navbar-header">
+                <span class="logo-title">OurEDA</span>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-menu hidden-sm"></div>
+            <div class="navbar-right hidden-xs">
+                <ul class="nav navbar-top-links">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-envelope fa-fw fa-2x"></i>
+                            <span class="badge badge-notification badge-warnning">7</span>
+                        </a>
+                        <ul class="dropdown-menu"></ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-tasks fa-fw fa-2x"></i>
+                            <span class="badge badge-notification badge-danger">2</span>
+                        </a>
+                        <ul class="dropdown-menu"></ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
+                            <span class="user">卞留念</span>
+                            <img src="./dist/image/head.jpg" alt="头像" class="img-responsive img-circle user-img"/>
+                            <i class="fa fa-angle-down user"></i>
+                        </a>
+                        <ul class="dropdown-menu"></ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav id="menu" class="nav navbar-default navbar-fixed-side hidden-xs">
+        <div class="sidebar-collapse collapse in">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-user">
+                <div class="user-img">
+                    <img src="./dist/image/head.jpg" alt="头像" class="img-responsive img-circle"/>
+                </div>
+                <div class="user-info">
+                    <span class="welcome">&nbsp;你好</span><p></p>
+                    <span class="user-name">卞留念</span><p></p>
+                    <p><span class="user-state label">已认证 <i class="fa fa-check"></i></span></p>
+                </div>
+            </li>
+            <li class="sidebar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-inverse"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </li>
+            <li class="">
+                <a href="#">
+                    <i class="fa fa-home"></i>
+                     <span class="info">首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-gears"></i>
+                    <span class="info">图表控件</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-desktop"></i>
+                    <span class="info">硬件管理</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-upload"></i>
+                    <span class="info">上传</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-download"></i>
+                    <span class="info">下载</span>
+                </a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper" class="main-content">
+    </div>
+</div>
+<footer>
+    <span>&copy;&nbsp;2016 OurEDA 泰昌科技    </span>
+</footer>
+</body>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/plain" id="num">3</script>
+<script src="js/index.js"></script>
+</html>

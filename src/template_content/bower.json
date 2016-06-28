@@ -1,0 +1,22 @@
+{
+  "name": "defone-x",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "bian"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "www.mrbian.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.1"
+  }
+}

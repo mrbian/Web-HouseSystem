@@ -1,0 +1,277 @@
+.badge {
+  border-radius: 1px;
+  font-weight: 300; }
+
+.badge.badge-notification {
+  position: relative;
+  top: -10px;
+  left: -10px;
+  z-index: 1;
+  padding: 4px 6px;
+  font-size: 10px; }
+
+.badge.badge-warnning {
+  background-color: #f9bf3b; }
+
+.badge.badge-danger {
+  background-color: #f22613; }
+
+.label {
+  border-radius: 2px; }
+
+.no-padding {
+  padding: 0; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  line-height: 30px; }
+
+#wrapper {
+  width: 100%;
+  position: relative; }
+
+.btn.btn-inverse {
+  background-color: #111;
+  border-color: #111;
+  border-radius: 0;
+  height: 30px;
+  font-size: 12px; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 57px;
+  background-color: #303641;
+  right: 0;
+  left: 250px;
+  line-height: 57px;
+  color: white;
+  font-size: 12px;
+  text-align: right; }
+  @media all and (max-width: 768px) {
+    footer {
+      left: 0; } }
+  footer span {
+    white-space: pre; }
+
+nav.navbar-fixed-top {
+  height: 50px;
+  line-height: 50px;
+  margin: 0;
+  background-color: #18bc9c; }
+  nav.navbar-fixed-top .navbar-left {
+    background-color: #1f232a;
+    min-width: 250px;
+    height: 50px;
+    text-align: center; }
+    nav.navbar-fixed-top .navbar-left .logo-title {
+      color: white;
+      font-size: 30px; }
+  nav.navbar-fixed-top .navbar-menu {
+    height: 50px;
+    float: left; }
+  nav.navbar-fixed-top .navbar-right {
+    height: 50px;
+    float: right;
+    margin-right: 20px; }
+    nav.navbar-fixed-top .navbar-right ul.navbar-top-links li {
+      display: inline-block; }
+    nav.navbar-fixed-top .navbar-right ul.navbar-top-links a:visited, nav.navbar-fixed-top .navbar-right ul.navbar-top-links a:hover {
+      color: white;
+      background-color: #18bc9c; }
+    nav.navbar-fixed-top .navbar-right .dropdown-toggle {
+      color: white;
+      font-size: 14px; }
+    nav.navbar-fixed-top .navbar-right .dropdown-toggle.user {
+      width: 140px; }
+      nav.navbar-fixed-top .navbar-right .dropdown-toggle.user .user-img {
+        width: 25px;
+        height: 25px;
+        display: inline;
+        vertical-align: baseline; }
+      nav.navbar-fixed-top .navbar-right .dropdown-toggle.user .user {
+        color: white;
+        font-size: 18px;
+        vertical-align: super; }
+
+.badge {
+  border-radius: 1px;
+  font-weight: 300; }
+
+.badge.badge-notification {
+  position: relative;
+  top: -10px;
+  left: -10px;
+  z-index: 1;
+  padding: 4px 6px;
+  font-size: 10px; }
+
+.badge.badge-warnning {
+  background-color: #f9bf3b; }
+
+.badge.badge-danger {
+  background-color: #f22613; }
+
+.label {
+  border-radius: 2px; }
+
+.no-padding {
+  padding: 0; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  line-height: 30px; }
+
+#wrapper {
+  width: 100%;
+  position: relative; }
+
+.btn.btn-inverse {
+  background-color: #111;
+  border-color: #111;
+  border-radius: 0;
+  height: 30px;
+  font-size: 12px; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 57px;
+  background-color: #303641;
+  right: 0;
+  left: 250px;
+  line-height: 57px;
+  color: white;
+  font-size: 12px;
+  text-align: right; }
+  @media all and (max-width: 768px) {
+    footer {
+      left: 0; } }
+  footer span {
+    white-space: pre; }
+
+nav.navbar-fixed-side {
+  position: fixed;
+  top: 50px;
+  bottom: 0;
+  z-index: 1;
+  background-color: #303641;
+  overflow-y: hidden;
+  width: 250px;
+  color: white; }
+  nav.navbar-fixed-side ul#side-menu li {
+    font-size: 14px; }
+    nav.navbar-fixed-side ul#side-menu li a {
+      padding: 10px 15px;
+      line-height: 20px;
+      color: #fff !important; }
+      nav.navbar-fixed-side ul#side-menu li a .fa {
+        font-size: 20px; }
+    nav.navbar-fixed-side ul#side-menu li a:hover, nav.navbar-fixed-side ul#side-menu li a:visited, nav.navbar-fixed-side ul#side-menu li a:active {
+      color: #fff !important;
+      background-color: #303641; }
+    nav.navbar-fixed-side ul#side-menu li .info {
+      position: relative;
+      left: 10px;
+      bottom: 2px; }
+  nav.navbar-fixed-side .sidebar-user {
+    height: 99px;
+    line-height: 16px;
+    padding: 15px; }
+    nav.navbar-fixed-side .sidebar-user .user-img {
+      float: left;
+      height: 65px;
+      width: 65px; }
+    nav.navbar-fixed-side .sidebar-user .user-info {
+      color: white;
+      float: left;
+      text-align: left;
+      margin-left: 20px;
+      font-weight: 700; }
+      nav.navbar-fixed-side .sidebar-user .user-info .welcome {
+        font-size: 12px; }
+      nav.navbar-fixed-side .sidebar-user .user-info .user-name {
+        font-size: 17px; }
+      nav.navbar-fixed-side .sidebar-user .user-info .user-state {
+        background-color: #18bc9c;
+        font-size: 12px; }
+  nav.navbar-fixed-side .sidebar-search {
+    padding: 10px 15px;
+    background-color: #262b34; }
+    nav.navbar-fixed-side .sidebar-search input[type="text"] {
+      background: #262b34;
+      border: 1px grey solid;
+      color: white;
+      border-radius: 0;
+      height: 30px; }
+  nav.navbar-fixed-side .active {
+    background-color: #18bc9c; }
+
+.badge {
+  border-radius: 1px;
+  font-weight: 300; }
+
+.badge.badge-notification {
+  position: relative;
+  top: -10px;
+  left: -10px;
+  z-index: 1;
+  padding: 4px 6px;
+  font-size: 10px; }
+
+.badge.badge-warnning {
+  background-color: #f9bf3b; }
+
+.badge.badge-danger {
+  background-color: #f22613; }
+
+.label {
+  border-radius: 2px; }
+
+.no-padding {
+  padding: 0; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  line-height: 30px; }
+
+#wrapper {
+  width: 100%;
+  position: relative; }
+
+.btn.btn-inverse {
+  background-color: #111;
+  border-color: #111;
+  border-radius: 0;
+  height: 30px;
+  font-size: 12px; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 57px;
+  background-color: #303641;
+  right: 0;
+  left: 250px;
+  line-height: 57px;
+  color: white;
+  font-size: 12px;
+  text-align: right; }
+  @media all and (max-width: 768px) {
+    footer {
+      left: 0; } }
+  footer span {
+    white-space: pre; }
+
+#wrapper div.main-content {
+  margin-left: 250px;
+  margin-top: 50px; }

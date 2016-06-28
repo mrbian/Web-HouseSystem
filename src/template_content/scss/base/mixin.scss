@@ -1,0 +1,5 @@
+@mixin setPhone ($a,$b){
+  @media all and (max-width: 768px){
+    #{$a} : $b;
+  }
+}
