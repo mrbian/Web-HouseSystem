@@ -45,6 +45,7 @@
     "datatables": "https://github.com/DataTables/DataTables.git#~1.10.10",
     "skippr": "^1.2.0",
     "jquery.ratemate": "https://github.com/DylanFM/jquery.ratemate.git",
-    "Hook.js": "https://github.com/jordansinger/Hook.js.git"
+    "Hook.js": "https://github.com/jordansinger/Hook.js.git",
+    "toastr": "^2.1.2"
   }
 }

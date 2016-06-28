@@ -20,7 +20,6 @@ var extraEntries = {
 var entry = extend({}, adminEnties);
 // entry = extend(entry, adminEnties);
 
-
 module.exports = {
     entry,
     output: {
@@ -56,3 +55,12 @@ module.exports = {
     //devtool: 'source-map'
     
 };
+
+
+var WebpackDevServer = require("webpack-dev-server");
+var config = require('./webpack.config');
+var compiler = webpack(config);
+var server = new WebpackDevServer(compiler, {
+    stats: { colors: true }
+});
+server.listen(9000);
