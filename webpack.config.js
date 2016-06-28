@@ -9,7 +9,8 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 var adminEnties = {
-    'admin-index': ['./src/js/admin/index.js']
+    'admin-index': ['./src/js/admin/index.js'],
+    'admin-login' : ['./src/js/admin/login.js']
 };
 
 var extraEntries = {
