@@ -1,0 +1,42 @@
+div.container-fluid{
+  div.center{
+    margin: 0 auto;
+  }
+
+  span.grey{
+    color : grey;
+  }
+
+  div.cr {
+    margin : 0 auto;
+    width : 100%;
+    div.header-list{
+      &-panel {
+        width : 100%;
+        padding : 15px 5px;
+        background-color: #fff;
+        line-height: 22px;
+      }
+
+      &-title {
+        font-size : 20px;
+        float: left;
+        text-align: center;
+      }
+
+      &-add{
+        float: right;
+        text-align: center;
+        vertical-align: middle;
+
+        .btn-green {
+          background-color: #18bc9c;
+          width : 50px;
+          color : white;
+        }
+      }
+    }
+  }
+}
+
+

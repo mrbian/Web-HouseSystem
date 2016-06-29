@@ -9,7 +9,8 @@ var render = require('./../instances/render.js');
 var db = require('./../models/index.js');
 var debug = require('./../instances/debug.js');
 var auth = require('../helpers/auth.js');
-
+var context = require('../instances/context');
+var User = db.models.User;
 var router = new Router();
 
 /****************************
@@ -17,7 +18,14 @@ var router = new Router();
  ***************************/
 // todo: for test
 router.use(function *(next) {
-    //context.set(this)  只是读不会产生临界区，但是有读有写可能会产生临界区
+    var test_user = yield User.findOne({
+        where : {
+            type : 100
+        }
+    });
+    auth.login(this,test_user);
+    context.set(this); //这个context只用来读，不写,auth.login()会修改this，每次login都需要重新set一下
+    var user = yield auth.user(this);
     yield next;
 });
 

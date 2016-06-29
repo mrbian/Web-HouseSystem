@@ -273,5 +273,11 @@ footer {
     white-space: pre; }
 
 #wrapper div.main-content {
+  position: inherit;
   margin-left: 250px;
   margin-top: 50px; }
+
+html{
+  /* todo : 为什么footer可以滚动 */
+  /*overflow: hidden;*/
+}

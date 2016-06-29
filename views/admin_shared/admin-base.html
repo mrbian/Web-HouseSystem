@@ -6,11 +6,15 @@
     <link href='http://cdn.webfont.youziku.com/webfonts/nomal/26013/45803/5772769bf629d81030672da1.css' rel='stylesheet' type='text/css' />
 </head>
 <body>
+<% ctx = require('../../../instances/context.js').get() %>
+<% currentUser = ctx.current.user %>
 <div id="wrapper">
-    <% include './admin_shared/header.html' %>
-    <% include './admin_shared/sidebar.html' %>
+    <% include './admin_shared/header.html' , {currentUser : currentUser} %>
+    <% include './admin_shared/sidebar.html', {currentUser : currentUser} %>
     <div id="page-wrapper" class="main-content">
+        <div class="container-fluid">
         <% content %>
+        </div>
     </div>
 </div>
 <footer>

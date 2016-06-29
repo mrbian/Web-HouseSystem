@@ -11,7 +11,8 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 var adminEnties = {
     'admin-index': ['./src/js/admin/index.js'],
     'admin-login' : ['./src/js/admin/login.js'],
-    'admin-first-check' : ['./src/js/admin/first_check.js']
+    'admin-first-check' : ['./src/js/admin/first_check.js'],
+    'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js']
 };
 
 var extraEntries = {
@@ -50,8 +51,8 @@ module.exports = {
         new webpack.ResolverPlugin(
             new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
         ),
+        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties)),
         new ExtractTextPlugin("[name].css"),
-        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties))
     ],
     //devtool: 'source-map'
     
