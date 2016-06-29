@@ -7,6 +7,7 @@ module.exports = (sequelize,DataTypes) => {
     var UserInfo = sequelize.define('UserInfo',{
         person_id : shortDataTypes.String(),
         phone   : shortDataTypes.String(),
+        head_img_url : shortDataTypes.String()
     },{
         timestamps : false,
         associate : function (models) {

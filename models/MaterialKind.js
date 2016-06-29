@@ -13,8 +13,8 @@ module.exports = (sequelize,DataTypes) => {
         associate : function(models) {
             models.MaterialKind.belongsToMany(models.BusinessKind,{
                 through : 'BusinessMaterialKind',
-                foreignKey: 'material_id',
-                otherKey : 'business_id',
+                foreignKey: 'material_kind_id',
+                otherKey : 'business_kind_id',
                 timestamps : false
             });
             models.MaterialKind.hasMany(models.Material,{ foreignKey : 'type_id'});
