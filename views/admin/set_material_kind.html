@@ -2,50 +2,131 @@
 <% block 'head': %>
 <link rel="stylesheet" href="/dist/admin-set-material-kind.css">
 <% end %>
-<div class="cr-all">
-<div class="container-fluid">
-    <div class="row">
+<div class="cr-all" ng-controller="MainCtrl">
+    <div class="container-fluid">
+        <div class="row">
             <div class="cr">
-            <div class="header-list-panel">
-                <div class="header-list-title">
-                    <i class="fa fa-tag"></i>
-                    <span class="grey">登记管理 &nbsp;/&nbsp; </span>
-                    <span class="black">文件种类管理</span>
-                </div>
-                <div class="header-list-add">
-                    <div class="btn btn-green">创建文件</div>
+                <div class="header-list-panel">
+                    <div class="header-list-title">
+                        <i class="fa fa-tag"></i>
+                        <span class="grey">登记管理 &nbsp;/&nbsp; </span>
+                        <span class="black">文件种类管理</span>
+                    </div>
+                    <div class="header-list-add">
+                        <div class="btn btn-green" ng-click="createFile()">创建文件</div>
+                    </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="table-cr">
-            <div class="table-header-panel">
-                <div class="table-header-item">
-                    文件列表
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-cr">
+                <div class="table-header-panel">
+                    <div class="table-header-item">
+                        文件列表
+                    </div>
                 </div>
-            </div>
-            <div class="table-body">
-                <div class="search-panel">
-                    <div class="select">
-                        <select name="search" id="search" class="form-control">
-                            <option value="1">文件编号</option>
-                        </select>
+                <div class="table-body">
+                    <div class="search-panel">
+                        <div class="select">
+                            <select name="search" id="search" class="form-control">
+                                <option value="1">文件编号</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="input-group" placeholder="请输入搜索内容">
+                        </div>
+                        <div class="btn btn-search">
+                            搜索
+                        </div>
                     </div>
-                    <div class="search-group">
-                        <i class="fa fa-search"></i>
-                        <input type="text" class="input-group" placeholder="请输入搜索内容">
-                    </div>
-                    <div class="btn btn-search">
-                        搜索
+                    <div class="loading"></div>
+                    <div class="table">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    文件编号
+                                </th>
+                                <th>
+                                    文件名称
+                                </th>
+                                <th>
+                                    文件下载链接
+                                </th>
+                                <th>
+                                    文件是否必需
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="file-logic-id">
+                                    120405
+                                </td>
+                                <td class="file-title">
+                                    个人身份证明
+                                </td>
+                                <td class="file-href">
+                                    <a href="http://mrbian.com/dist/upload/file-123445.doc">
+                                        http://mrbian.com/dist/upload/file-123445.doc
+                                    </a>
+                                </td>
+                                <td class="file-is-need">
+                                    是
+                                </td>
+                                <td class="file-operator">
+                                    <div class="btn-group">
+                                        <div class="btn btn-green">
+                                            上传
+                                        </div>
+                                        <div class="btn btn-green">
+                                            删除
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="file-logic-id">
+                                    120405
+                                </td>
+                                <td class="file-title">
+                                    个人身份证明
+                                </td>
+                                <td class="file-href">
+                                    <a href="http://mrbian.com/dist/upload/file-123445.doc">
+                                        http://mrbian.com/dist/upload/file-123445.doc
+                                    </a>
+                                </td>
+                                <td class="file-is-need">
+                                    是
+                                </td>
+                                <td class="file-operator">
+                                    <div class="btn-group">
+                                        <div class="btn btn-green">
+                                            上传
+                                        </div>
+                                        <div class="btn btn-green">
+                                            删除
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="modal">
+
 </div>
 
 <% block 'scripts': %>
