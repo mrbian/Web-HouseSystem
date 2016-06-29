@@ -2,7 +2,7 @@
 <% block 'head': %>
 <link rel="stylesheet" href="/dist/admin-set-material-kind.css">
 <% end %>
-
+<div class="cr-all">
 <div class="container-fluid">
     <div class="row">
             <div class="cr">
@@ -18,6 +18,34 @@
             </div>
             </div>
     </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="table-cr">
+            <div class="table-header-panel">
+                <div class="table-header-item">
+                    文件列表
+                </div>
+            </div>
+            <div class="table-body">
+                <div class="search-panel">
+                    <div class="select">
+                        <select name="search" id="search" class="form-control">
+                            <option value="1">文件编号</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <i class="fa fa-search"></i>
+                        <input type="text" class="input-group" placeholder="请输入搜索内容">
+                    </div>
+                    <div class="btn btn-search">
+                        搜索
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <% block 'scripts': %>
