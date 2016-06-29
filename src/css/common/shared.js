@@ -4,3 +4,4 @@
 require('../../bower_components/bootstrap/dist/css/bootstrap.css');
 require('../../bower_components/font-awesome/css/font-awesome.min.css');
 require('../../template_content/dist/css/index.css');
+require('../../bower_components/fex-webuploader/dist/webuploader.css');

@@ -1,0 +1,40 @@
+#container {
+  width: 500px;
+  height: auto;
+  border: dashed 3px #666666;
+  margin: 20px auto;
+}
+
+.picker-button {
+  margin: 50px auto;
+  width: 200px;
+}
+
+#picker {
+  /*width: 100%;*/
+  text-align: center;
+  cursor: pointer;
+}
+
+.webuploader-pick {
+  width: 200px;
+  height: 40px;
+}
+
+.upload-note {
+  width: 495px;
+  height: 100px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 16px;
+  color: #686868;
+}
+
+#add-button {
+  margin: 20px auto;
+}
+
+.admin-margin {
+  width:100%;
+  height: 50px;
+}

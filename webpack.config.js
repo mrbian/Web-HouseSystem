@@ -14,12 +14,14 @@ var adminEnties = {
     'admin-first-check' : ['./src/js/admin/first_check.js']
 };
 
-var extraEntries = {
-
+var userEntries = {
+    'user-form': ['./src/js/user/form.js']
 };
 
 var entry = extend({}, adminEnties);
-// entry = extend(entry, adminEnties);
+    entry = extend(entry, userEntries);
+
+var node_dir = path.join(__dirname, '../node_modules');
 
 module.exports = {
     entry,
@@ -42,8 +44,18 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
             },
-            { test : /\.(ttf|eot|svg|woff(2)?)(\?[a-z=0-9\.]+)?$/, loader : 'url-loader?limit=8192'},
-            { test : /\.(png|gif|svg|jpg)$/, loader : 'url-loader?limit=8192'}
+            {
+                test : /\.(ttf|eot|svg|woff(2)?)(\?[a-z=0-9\.]+)?$/,
+                loader : 'url-loader?limit=8192'
+            },
+            {
+                test : /\.(png|gif|svg|jpg)$/,
+                loader : 'url-loader?limit=8192'
+            },
+            {
+                test: path.resolve(node_dir, 'angular/angular.min.js'),
+                loader: 'expose?angular'
+            }
         ]
     },
     plugins: [
@@ -52,7 +64,7 @@ module.exports = {
         ),
         new ExtractTextPlugin("[name].css"),
         new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties))
-    ],
+    ]
     //devtool: 'source-map'
     
 };

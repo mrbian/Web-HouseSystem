@@ -17,6 +17,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "angular": "^1.5.7",
     "bluebird": "^3.1.1",
     "bunyan": "^1.5.1",
     "busboy": "^0.2.12",
@@ -64,6 +65,8 @@
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "imports-loader": "^0.6.5",
+    "jshint": "^2.9.2",
+    "jshint-loader": "^0.8.3",
     "node-sass": "^3.4.2",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
