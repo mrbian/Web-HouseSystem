@@ -1,3 +1,173 @@
-div.header{
-  height: 60px;
+html , html body {
+  min-width : 1000px;
+  min-height : 100%;
+  height : 100%;
 }
+
+div.cr {
+  margin : 0 auto;
+  width : 100%;
+  height : 100%;
+}
+
+div.header_cr{
+  position: absolute;
+  top : 0;
+  width : 100%;
+  border-top : 4px solid  #44b549;
+  border-bottom: 1px solid #d9dadc;
+  background-color: #fff;
+  div.header{
+    height: 60px;
+    margin : 0 auto;
+    width : 980px;
+    position: relative;
+    text-align: right;
+    display: block;
+    line-height: 60px;
+    .fa-building-o{
+      color : grey;
+    }
+    div.logo {
+      float : left;
+      color : #222;
+      font-weight: 100;
+      font-size : 24px;
+    }
+  }
+  div.info{
+    vertical-align: bottom;
+    font-size : 14px;
+    width : 292px;
+    height : 50px;
+    float : right;
+    padding-top : 10px;
+  }
+}
+
+div.login_cr {
+  width : 100%;
+  height : 100%;
+  padding-top : 60px;
+  background: url('../../img/admin/bg.jpg') no-repeat;
+  background-size : 100% 100%;
+
+  div.login-frame{
+    position: absolute;
+    right : 15%;
+    width : 400px;
+    background-color: #fff;
+    margin-top: 10%;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5) ;
+    padding : 25px 35px 20px;
+
+    div.form-header{
+      font-size : 24px;
+    }
+
+    div.login-input{
+      width : 316px;
+      height : 44px;
+      padding : 6px 0 5px 54px;
+      position: relative;
+      border:1px solid #e7e7e7;
+    }
+
+    i.inline-form{
+      position: absolute;
+      left : 15px;
+      margin-top: -11px;
+      vertical-align: middle;
+      display: inline-block;
+      top: 50%;
+      font-size: 16px;
+      width : 16px;
+      height : 18px;
+    }
+
+    i.icon-user{
+      background: url('../../img/admin/icon.png') 0 0 no-repeat;
+    }
+
+    i.icon-password{
+      background: url('../../img/admin/icon.png') 0 -28px no-repeat;
+    }
+
+    i.icon-checkbox{
+      background: url('../../img/admin/icon.png') 0 -56px no-repeat;
+      width : 16px;
+      height : 16px;
+      display: inline-block;
+      margin-top : 5px;
+      vertical-align: center;
+      margin-right : 3px;
+    }
+
+    div.login-panel{
+      font-size : 16px;
+      height : 30px;
+      line-height : 30px;
+      margin-top : 10px;
+      position: relative;
+      span.rem-check{
+        font-weight:200;
+      }
+    }
+
+    input.form-control{
+      padding:12px 0;
+      vertical-align: middle;
+      width : 100%;
+      border:0;
+      outline:0;
+      height : 14px;
+    }
+
+    div.login-btn{
+      background-color: #44b549;
+      color : #fff;
+      display: inline-block;
+      vertical-align: center;
+      text-align: center;
+      height: 33px;
+      line-height: 33px;
+      width: 120px;
+      padding-left: 0;
+      padding-right: 0;
+      border : 1px solid #44b549;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+      -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    }
+
+    div.login-btn-panel{
+      padding: 10px 0;
+      margin-top : 10px;
+    }
+  }
+
+  div.login-info{
+    &-1 ,&-2{
+      position: absolute;
+      color : white;
+      font-size : 60px;
+      top : 20%;
+      line-height: 70px;
+    }
+    &-1{
+      left : 24%;
+    }
+    &-2{
+      left : 30%;
+    }
+  }
+}
+

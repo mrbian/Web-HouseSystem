@@ -10,7 +10,8 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 var adminEnties = {
     'admin-index': ['./src/js/admin/index.js'],
-    'admin-login' : ['./src/js/admin/login.js']
+    'admin-login' : ['./src/js/admin/login.js'],
+    'admin-first-check' : ['./src/js/admin/first_check.js']
 };
 
 var extraEntries = {

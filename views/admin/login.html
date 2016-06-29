@@ -3,43 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>房产管理首页</title>
+    <link href='http://cdn.webfont.youziku.com/webfonts/nomal/26013/146/57735c77f629d81044ddf1b5.css' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="/dist/admin-login.css">
 </head>
 <body>
-<div class="container">
-    <div class="header">
-    <div class="row">
-        <div class="col-md-8 col-md-push-2">
+<div class="cr">
+    <div class="header_cr">
+        <div class="header">
                 <div class="logo">
-                    <i class="user-logo"></i>
+                    <i class="fa fa-building-o"></i>
+                    <span class="user-logo">房产·管理平台</span>
                 </div>
                 <div class="info">
                     <span>第一次使用房产管理平台？<a href="#">立即注册</a> <span class="grey">|</span>  <a href="#">使用帮助</a> </span>
                 </div>
             </div>
-        </div>
     </div>
-    <div class="row">
-        <div class="cr">
+        <div class="login_cr">
+            <div class="login-info-1 css43fca7c73659d">
+                买<br/>房<br/>办<br/>产<br/>权<br/>
+            </div>
+            <div class="login-info-2 css43fca7c73659d">
+                普<br/>法<br/>天<br/>天<br/>宣<br/>
+            </div>
             <div class="login-frame">
                 <form action="/">
-                    <span class="form-header">登录</span>
-                    <div class="form-control">
-                        <i class=""></i>
-                        <input type="text" class="">
+                    <div class="form-header">登录</div>
+                    <div class="login-input">
+                        <i class="icon-user inline-form"></i>
+                        <input type="text" class="form-control" placeholder="输入账户名">
                     </div>
-                    <div class="form-control">
-                        <i class=""></i>
-                        <input type="text" class="">
+                    <div class="login-input">
+                        <i class="icon-password inline-form"></i>
+                        <input type="text" class="form-control" placeholder="输入密码">
                     </div>
-                    <input type="checkbox"><span>记住账号</span>
-                    <span class="fr">无法登录？</span>
-                    <button classs="btn login-btn">登录</button>
+                    <div class="login-panel">
+                        <i class="icon-checkbox"></i>
+                        <span class="rem-check">记住账号</span>
+                    </div>
+                    <div class="login-btn-panel">
+                        <div class="login-btn">登录</div>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
 </div>
 </body>
 <script src="/dist/admin-login.js"></script>
+<script src="http://192.168.59.116:9000/webpack-dev-server.js"></script>
 </html>

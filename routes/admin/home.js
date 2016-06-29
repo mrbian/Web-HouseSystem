@@ -8,4 +8,9 @@ module.exports = (router) => {
         var ctx = this;
         ctx.body = yield render('admin/index.html');
     });
+
+    router.get('/admin/first_check',function *(){
+       var ctx = this;
+       ctx.body = yield render('admin/first_check.html');
+    })
 };
