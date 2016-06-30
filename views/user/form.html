@@ -2,56 +2,71 @@
 <% block 'head': %>
 <link rel="stylesheet" href="/dist/user-form.css"/>
 <% end %>
-<div ng-controller="formController">
-
+<div ng-controller="formController" id="main">
+    <h3>提交申请书</h3>
+    <form method="POST">
     <!-- 权利类型 -->
-    <div class="dropdown" role="presentation">
-        <button class="btn btn-default" id="power-type" type="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            选择权利类型
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="power-type" ng-repeat="power_item in power_items">
-            <li>{{ power_items }}</li>
-        </ul>
-    </div>
+        <div class="dropdown" role="presentation">
+            <button class="btn btn-default" id="power-type" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!--选择权利类型-->
+                {{power_button}}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="power-type">
+                <li><a href="javascript:;" ng-click="changePowerButton(TYPE.POWER, power_types[$index])"
+                ng-repeat="power_type in power_types">{{ power_type }}</a></li>
+            </ul>
+        </div>
 
-    <!-- 登记大类 -->
-    <div class="dropdown" role="presentation">
-        <button class="btn btn-default" id="register-type-1" type="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            选择登记大类
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="register-type-1" ng-repeat="register_item in register_items1">
-            <li>{{ register_item }}</li>
-        </ul>
-    </div>
+        <!-- 登记大类 -->
+        <div class="dropdown animation-if" role="presentation" ng-if="show.register1">
+            <button class="btn btn-default" id="register-type-1" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{register_button1}}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="register-type-1">
+                <li><a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER1, register_types1[$index])"
+                       ng-repeat="register_type in register_types1">{{ register_type }}</a></li>
+            </ul>
+        </div>
 
     <!-- 登记小类 -->
-    <div class="dropdown" role="presentation">
-        <button class="btn btn-default" id="register-type-2" type="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            选择登记小类
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="register-type-2" ng-repeat="register_item in register_items2">
-            <li>{{ register_item }}</li>
-        </ul>
-    </div>
+        <div class="dropdown animation-if" role="presentation"
+             ng-if="show.register2">
+            <button class="btn btn-default" id="register-type-2" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{register_button2}}
+                <span class="caret"></span>
+            </button>
 
-    <div id="container">
-        <div class="picker-button">
-            <a href="javascript:;">
-                <div id="picker">
-                    <i class="fa fa-plus"></i>
-                    选择文件
-                </div>
-            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="register-type-2">
+                <li><a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER2, register_types2[$index])"
+                       ng-repeat="register_type in register_types2">{{ register_type }}</a></li>
+            </ul>
         </div>
-        <div class="upload-note">
-            <p>直接把文件拖进这个框里也能上传哦</p>
+
+        <div id="container" ng-class="show.uploader ? 'animation-if': 'close'">
+            <div class="picker-button">
+                <a href="javascript:;">
+                    <div id="picker">
+                        <i class="fa fa-plus"></i>
+                        选择文件
+                    </div>
+                </a>
+            </div>
+            <div class="upload-note">
+                <p>直接把文件拖进这个框里也能上传哦</p>
+            </div>
         </div>
+        <button type="submit" class="btn btn-primary btn-lg animation-if"
+                ng-if="show.uploader">上传</button>
+    </form>
+
+    <div class="col-md-12" id="progress">
+
     </div>
 
 </div>

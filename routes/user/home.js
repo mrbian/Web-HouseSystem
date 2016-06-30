@@ -10,5 +10,10 @@ module.exports = (router) => {
     router.get('/user/form', function *() {
         var ctx = this;
         ctx.body = yield render('user/form.html');
-    })
+    });
+
+    router.post('/user/form', function *() {
+        var ctx = this;
+        console.log(ctx.request.body);
+    });
 };
