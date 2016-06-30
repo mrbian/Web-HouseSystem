@@ -98,4 +98,47 @@ ul.dropdown-menu {
   animation: am-fade cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
 }
 
+.title {
+  float: none;
+  overflow: hidden;
+  font-size: 20px;
+}
+.title i,
+.title span {
+  float: left;
+}
 
+.title i {
+  margin-right: 10px;
+}
+
+.li-btn {
+  background: #18BC9C !important;
+  border: 0 !important;
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+.form-span {
+  margin: 0 10px;
+  float: left;
+}
+
+.form-select {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 32px;
+}
+
+.form-button {
+  position: relative;
+  width: 90px;
+  height: 46px;
+  left: 50%;
+  margin:20px -23px 0 0;
+}
+
+.form-table {
+  margin: 20px 10px;
+}

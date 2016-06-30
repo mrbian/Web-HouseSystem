@@ -18,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.5.7",
+    "angular-toastr": "^1.7.0",
     "bluebird": "^3.1.1",
     "bunyan": "^1.5.1",
     "busboy": "^0.2.12",
