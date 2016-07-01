@@ -162,6 +162,7 @@ div.my {
 
     div#picker{
       background-color: #44b549;
+      cursor: pointer;
       color : white;
       text-align: center;
       height : 34px;
@@ -172,10 +173,6 @@ div.my {
       -moz-border-radius:3px;
       display: inline-block;
       border-radius:3px ;
-    }
-
-    div#picker .webuploader-pick{
-      display: block;
     }
 
     div.btn-group-container{
@@ -200,7 +197,7 @@ div.my {
   &-modal-content {
     position : relative;
     width : 500px;
-    margin : 30px auto;
+    margin : 0 auto;
     background-color: #fff;
     -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
     -moz-box-shadow: 0 5px 15px  rgba(0,0,0,.5);
@@ -243,10 +240,39 @@ div.my {
     background-color: #000;
     opacity: 0.5;
   }
-
 }
 
 .webuploader-element-invisible{
   position: absolute;
+  //clip: rect(1px,1px,1px,1px);
   clip: rect(1px,1px,1px,1px);
+}
+
+div.my-modal.on{
+  -webkit-transition: visibility 0s,transform .5s ease-out;
+  -moz-transition: visibility 0s,transform .5s ease-out;
+  -ms-transition: visibility 0s,transform .5s ease-out;
+  -o-transition: visibility 0s,transform .5s ease-out;
+  transition: visibility 0s, transform .5s ease-out;
+  //display: none;
+  visibility: hidden;
+}
+
+div.my-modal-backdrop.on{
+  //display: none;
+  visibility: hidden;
+  -webkit-transition: visibility 0s, opacity .5s linear;
+  -moz-transition: visibility 0s, opacity .5s linear;
+  -ms-transition: visibility 0s, opacity .5s linear;
+  -o-transition: visibility 0s, opacity .5s linear;
+  transition: visibility 0s, opacity .5s linear;
+  opacity: 0;
+}
+
+div.my-modal.in{
+  transform: translate(0,30px);
+}
+
+div.my-modal-backdrop.in{
+  opacity: 0.5;
 }
