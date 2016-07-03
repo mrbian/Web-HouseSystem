@@ -15,12 +15,12 @@ var adminEnties = {
     'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js']
 };
 
-var extraEntries = {
-
+var userEntries = {
+    'user-form': ['./src/js/user/form.js']
 };
 
 var entry = extend({}, adminEnties);
-// entry = extend(entry, adminEnties);
+// entry = extend(entry, userEnties);
 
 module.exports = {
     entry,
