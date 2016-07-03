@@ -35,10 +35,10 @@ module.exports = (router) => {
                     ctx.body = 'false';
                     return;
                 }
-                part.pipe(fs.createWriteStream(path.join(__dirname,'../public/upload/image',filename)));
+                part.pipe(fs.createWriteStream(path.join(__dirname,'../public/upload/file',filename)));
             }
         }
 
-        ctx.body = 'http://localhost:8000/upload/' + filename;
+        ctx.body = 'http://localhost:8000/upload/file/' + filename;
     });
 };
