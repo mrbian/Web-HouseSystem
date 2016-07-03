@@ -4,8 +4,12 @@
 var db = require('../../models/index');
 var util = require('../../lib/utilx');
 var MaterialKind = db.models.MaterialKind;
+var BusinessKind = db.models.BusinessKind;
 
 module.exports = (router) => {
+    /**
+     * 材料种类增删改查
+     */
     router.get('/super/agent/get_all_material_kind',function *(){
         var ctx = this;
         var data = yield MaterialKind.findAll({
@@ -73,5 +77,20 @@ module.exports = (router) => {
             }
         });
         ctx.body = 'ok';
+    });
+
+
+    /**
+     * 登记大类增删改查
+     */
+    router.get('/super/agent/get_all_business_kind',function *(){
+        var ctx = this;
+        var data = yield BusinessKind.findAll({
+            where:{
+                type : 0
+            }
+        });
+        console.log(data);
+        ctx.body = data;
     });
 };

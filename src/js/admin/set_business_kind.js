@@ -39,14 +39,15 @@ $(function () {
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
         scope.init = function(){
             $http
-                .get('/super/agent/get_all_material_kind')
+                .get('/super/agent/get_all_business_kind')
                 .success(function(data){
+                    console.log(data);
                     scope.dataObj = JSON.parse(JSON.stringify(data));
                     scope.dataObjCached = JSON.parse(JSON.stringify(data));
                 });
         };
         scope.init();
-        scope.createFile = function(){
+        scope.create = function(){
             modal_show();
         };
         scope.filter = '1';
@@ -101,14 +102,16 @@ $(function () {
         scope.is_need = 'yes';
         scope.submit = function(){
             // console.log(! uploaded && !!scope.url);
-            if(! scope.url){
-                toastr.warning('文件未上传');
-                return;
-            }
-            if(! scope.title){
-                toastr.warning('文件名未设置');
-                return;
-            }
+            scope.$watch('title',function(newValue,oldValue){
+                if(newValue == oldValue || ! oldValue || ! newValue){
+                    return;
+                }
+                $http
+                    .get('/super/agent/check_business_title',{title : newValue})
+                    .success(function(ret){
+                        console.log(ret);
+                    });
+            });
 
             if(!! scope.is_edit){
                 $http.post('/super/agent/change_material_kind',{

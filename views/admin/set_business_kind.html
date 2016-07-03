@@ -13,7 +13,7 @@
                         <span class="black">登记大类管理</span>
                     </div>
                     <div class="header-list-add">
-                        <div class="btn btn-green" ng-click="createFile()">创建登记种类</div>
+                        <div class="btn btn-green" ng-click="create()">创建登记种类</div>
                     </div>
                 </div>
             </div>
@@ -66,9 +66,6 @@
                                     所有权类型
                                 </th>
                                 <th>
-                                    是否收费
-                                </th>
-                                <th>
                                     操作
                                 </th>
                             </tr>
@@ -79,12 +76,13 @@
                                     {{dataObj[$index].title}}
                                 </td>
                                 <td class="file-href">
-                                    <a ng-href="dataObj.url">
-                                        {{dataObj[$index].url}}
-                                    </a>
-                                </td>
-                                <td class="file-is-need">
-                                    {{ dataObj[$index].is_need ? '是' : '否'}}
+                                    <span style="color:rgb(35,82,124);">
+                                        {{dataObj[$index].right_type == 0 ? '其它登记' :
+                                        dataObj[$index].right_type == 1 ? '所有权登记' :
+                                        dataObj[$index].right_type == 2 ? '抵押权登记' :
+                                        dataObj[$index].right_type == 3 ? '地役权登记' :
+                                        dataObj[$index].right_type == 4 ? '预告登记' : '错误'}}
+                                    </span>
                                 </td>
                                 <td class="file-operator">
                                     <div class="btn-group">
@@ -130,11 +128,11 @@
             </div>
         </div>
     </div>
-    <div ng-controller="ModalCtrl" class="my-modal on ">
+    <div ng-controller="ModalCtrl" class="my-modal on">
         <div class="my-modal-content">
             <div class="my-modal-content-header-panel">
                 <div class="my-modal-content-header-title">
-                    材料上传
+                    创建登记大类
                 </div>
                 <div class="cancel">
                 </div>
@@ -144,46 +142,28 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <label for="name" class="col-md-3 control-label">
-                                材料名称：
+                               登记大类：
                             </label>
                             <div class="col-md-8">
                                 <input type="text" name="name" ng-model="title" ng-pattern="/^.+$/" class="form-control" id="name"
                                        placeholder="请输入材料名称">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-md-3 control-label">
-                                是否必需：
-                            </label>
-                            <div class="col-md-2 padding-top-8">
-                                <div class="col-md-1">
-                                    <label>是&nbsp;</label>
-                                </div>
-                                <input ng-model="is_need" value="yes" type="radio" name="is_need">
-                            </div>
-                            <div class="col-md-3 padding-top-8">
-                                <div class="col-md-1">
-                                    <label>否&nbsp;</label>
-                                </div>
-                                <input ng-model="is_need" value="no" type="radio" name="is_need" >
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="picker" class="col-md-3 control-label">
-                                模板文件上传:
-                            </label>
                             <div class="col-md-3">
-                                <div id="picker">
-                                    选择文件
-                                </div>
+
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="url" class="col-md-3 control-label">
-                                模板文件下载地址
+                            <label for="right_type" class="col-md-3 control-label">
+                                所属权利类型
                             </label>
                             <div class="col-md-8">
-                                <input type="text" ng-model="url" class="form-control" name="url" id="url" disabled>
+                                <select name="right_type" id="right_type" class="form-control">
+                                    <option value="1">所有权登记</option>
+                                    <option value="2">抵押权登记</option>
+                                    <option value="3">地役权登记</option>
+                                    <option value="4">预告登记</option>
+                                    <option value="0">其它登记</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
