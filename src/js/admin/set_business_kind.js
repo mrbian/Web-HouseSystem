@@ -1,10 +1,10 @@
 /**
- * Created by bln on 16-6-29.
+ * Created by bln on 16-7-3.
  */
 require('../common/shared.js');
 
 require('../../bower_components/toastr/toastr.min.css');
-require('../../scss/admin/set_material_kind.scss');
+require('../../scss/admin/set_business_kind.scss');
 
 require('expose?toastr!../../bower_components/toastr/toastr.min.js');
 require('angular');
@@ -38,12 +38,12 @@ $(function () {
 
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
         scope.init = function(){
-           $http
-               .get('/super/agent/get_all_material_kind')
-               .success(function(data){
-                   scope.dataObj = JSON.parse(JSON.stringify(data));
-                   scope.dataObjCached = JSON.parse(JSON.stringify(data));
-               });
+            $http
+                .get('/super/agent/get_all_material_kind')
+                .success(function(data){
+                    scope.dataObj = JSON.parse(JSON.stringify(data));
+                    scope.dataObjCached = JSON.parse(JSON.stringify(data));
+                });
         };
         scope.init();
         scope.createFile = function(){
@@ -209,7 +209,7 @@ $(function () {
             modal_show();
         });
     }]);
-    
+
     app.controller('tableCtrl',['$scope','$http',function(scope,$http){
         scope.search_text = '';
         scope.search = function(){
