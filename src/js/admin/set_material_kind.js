@@ -54,15 +54,15 @@ $(function () {
         scope.dataObj = [];
         scope.dataObjCached = [];
         scope.search_text = '';
-        scope.search = function(){
-
-        };
 
         scope.edit = function($index){
             scope.$broadcast('edit modal',$index);
         };
 
         scope.del = function($index){
+            if(! confirm('您确认要删除吗?')){
+                return;
+            }
             // console.log($index);
             $http.post('/super/agent/del_material_kind',{
                 id : scope.dataObj[$index].id
@@ -94,6 +94,9 @@ $(function () {
         scope.edit_index = -1;
 
         scope.hide = function(){
+            scope.url = '';
+            scope.title = '';
+            scope.is_need = 'yes';
             modal_hide();
         };
         scope.is_need = 'yes';
@@ -209,7 +212,20 @@ $(function () {
     }]);
     
     app.controller('tableCtrl',['$scope','$http',function(scope,$http){
-
+        scope.search_text = '';
+        scope.search = function(){
+            if(! scope.search_text ) {
+                scope.$parent.dataObj = JSON.parse(JSON.stringify(scope.dataObjCached));
+                return;
+            }
+            scope.$parent.dataObj = [];
+            for(var x in scope.dataObjCached){
+                var item = scope.dataObjCached[x];
+                if(item.title.indexOf(scope.search_text) !== -1){
+                    scope.$parent.dataObj.push(item);
+                }
+            }
+        };
     }]);
 
     angular.bootstrap(document.documentElement, ['app']);
