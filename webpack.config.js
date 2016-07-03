@@ -11,17 +11,16 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 var adminEnties = {
     'admin-index': ['./src/js/admin/index.js'],
     'admin-login' : ['./src/js/admin/login.js'],
-    'admin-first-check' : ['./src/js/admin/first_check.js']
+    'admin-first-check' : ['./src/js/admin/first_check.js'],
+    'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js']
 };
 
-var userEntries = {
-    'user-form': ['./src/js/user/form.js']
+var extraEntries = {
+
 };
 
 var entry = extend({}, adminEnties);
-    entry = extend(entry, userEntries);
-
-var node_dir = path.join(__dirname, '../node_modules');
+// entry = extend(entry, adminEnties);
 
 module.exports = {
     entry,
@@ -44,27 +43,17 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
             },
-            {
-                test : /\.(ttf|eot|svg|woff(2)?)(\?[a-z=0-9\.]+)?$/,
-                loader : 'url-loader?limit=8192'
-            },
-            {
-                test : /\.(png|gif|svg|jpg)$/,
-                loader : 'url-loader?limit=8192'
-            },
-            {
-                test: path.resolve(node_dir, 'angular/angular.min.js'),
-                loader: 'expose?angular'
-            }
+            { test : /\.(ttf|eot|svg|woff(2)?)(\?[a-z=0-9\.]+)?$/, loader : 'url-loader?limit=8192'},
+            { test : /\.(png|gif|svg|jpg)$/, loader : 'url-loader?limit=8192'}
         ]
     },
     plugins: [
         new webpack.ResolverPlugin(
             new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
         ),
+        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties)),
         new ExtractTextPlugin("[name].css"),
-        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties))
-    ]
+    ],
     //devtool: 'source-map'
     
 };

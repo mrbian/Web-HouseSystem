@@ -46,7 +46,9 @@
     "skippr": "^1.2.0",
     "jquery.ratemate": "https://github.com/DylanFM/jquery.ratemate.git",
     "Hook.js": "https://github.com/jordansinger/Hook.js.git",
-    "toastr": "^2.1.2",
-    "angular-toastr": "^1.7.0"
+    "toastr": "^2.1.2"
+  },
+  "resolutions": {
+    "angular": "~1.4.8"
   }
 }

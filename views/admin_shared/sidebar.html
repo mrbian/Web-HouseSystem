@@ -7,7 +7,7 @@
                 </div>
                 <div class="user-info">
                     <span class="welcome">&nbsp;你好</span><p></p>
-                    <span class="user-name">卞留念</span><p></p>
+                    <span class="user-name"><%= @currentUser?.account %></span><p></p>
                     <p><span class="user-state label">已认证 <i class="fa fa-check"></i></span></p>
                 </div>
             </li>
@@ -20,33 +20,85 @@
                 </div>
             </li>
             <li class="">
-                <a href="#">
+                <a href="/admin/index">
                     <i class="fa fa-home"></i>
                     <span class="info">首页</span>
                 </a>
             </li>
+            <% if @currentUser.type == 100 : %>
+            <li class="">
+                <a href="/admin/set_business_kind">
+                    <i class="fa fa-folder"></i>
+                    <span class="info">登记类型设置</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="/admin/set_material_kind">
+                    <i class="fa fa-file-word-o"></i>
+                    <span class="info">登记材料种类设置</span>
+                </a>
+            </li>
+            <% end %>
+            <% if @currentUser.type == 0 : %>
             <li>
                 <a href="#">
                     <i class="fa fa-gears"></i>
                     <span class="info">图表控件</span>
                 </a>
             </li>
+            <% end %>
+            <% if @currentUser.type == 1 : %>
             <li>
                 <a href="#">
-                    <i class="fa fa-desktop"></i>
-                    <span class="info">硬件管理</span>
+                    <i class="fa fa-download"></i>
+                    <span class="info">下载</span>
                 </a>
             </li>
+            <% end %>
+            <% if @currentUser.type == 2 : %>
             <li>
                 <a href="#">
                     <i class="fa fa-upload"></i>
                     <span class="info">上传</span>
                 </a>
             </li>
+            <% end %>
+            <% if @currentUser.type == 3 : %>
             <li>
                 <a href="#">
-                    <i class="fa fa-download"></i>
-                    <span class="info">下载</span>
+                    <i class="fa fa-desktop"></i>
+                    <span class="info">硬件管理</span>
+                </a>
+            </li>
+            <% end %>
+            <% if @currentUser.type == 4 : %>
+            <li>
+                <a href="#">
+                    <i class="fa fa-desktop"></i>
+                    <span class="info">硬件管理</span>
+                </a>
+            </li>
+            <% end %>
+            <% if @currentUser.type == 5 : %>
+            <li>
+                <a href="#">
+                    <i class="fa fa-desktop"></i>
+                    <span class="info">硬件管理</span>
+                </a>
+            </li>
+            <% end %>
+            <% if @currentUser.type == 6 : %>
+            <li>
+                <a href="#">
+                    <i class="fa fa-desktop"></i>
+                    <span class="info">硬件管理</span>
+                </a>
+            </li>
+            <% end %>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user"></i>
+                    <span class="info">个人信息设置</span>
                 </a>
             </li>
         </ul>

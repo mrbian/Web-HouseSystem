@@ -7,7 +7,8 @@ module.exports = (sequelize,DataTypes) => {
     var Material = sequelize.define('Material',{
         logic_id : shortDataTypes.String(),
         url : shortDataTypes.String(),
-        info : shortDataTypes.String()
+        info : shortDataTypes.String(),
+        title : shortDataTypes.String()
     },{
         timestamps : false,
         associate : function(models) {

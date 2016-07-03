@@ -12,5 +12,10 @@ module.exports = (router) => {
     router.get('/admin/first_check',function *(){
        var ctx = this;
        ctx.body = yield render('admin/first_check.html');
-    })
+    });
+    
+    router.get('/admin/set_material_kind',function *(){
+        var ctx = this;
+        ctx.body = yield render('admin/set_material_kind.html');
+    });
 };

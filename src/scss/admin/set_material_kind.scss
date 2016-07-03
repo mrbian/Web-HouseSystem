@@ -1,0 +1,308 @@
+div.center {
+  margin: 0 auto;
+}
+
+div.cr-all {
+  padding: 0 20px;
+}
+
+span.grey {
+  color: grey;
+}
+
+div.cr {
+  div.header-list {
+    &-panel {
+      width: 100%;
+      padding: 15px 5px;
+      background-color: #fff;
+      overflow: hidden;
+      zoom: 1;
+      border-bottom: 1px solid #efefef;
+    }
+
+    &-title {
+      font-size: 20px;
+      float: left;
+      text-align: center;
+    }
+
+    &-add {
+      float: right;
+      text-align: center;
+      vertical-align: middle;
+      display: inline-block;
+      .btn-green {
+        background-color: #18bc9c;
+        width: 100px;
+        color: white;
+      }
+    }
+  }
+}
+
+div.table-cr {
+  div.table-header-panel {
+    background-color: #efefef;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    border-left: 28px solid #efefef;
+    margin-left: -10px;
+    margin-right: -20px;
+    div.table-header-item {
+      width: 80px;
+      text-align: center;
+      background-color: #fff;
+    }
+  }
+
+  div.table-body {
+    overflow: hidden;
+    zoom: 1;
+    div.search-panel {
+      overflow: hidden;
+      zoom: 1;
+      padding: 15px 5px;
+      div.select {
+        float: left;
+        padding: 0 3px;
+        width: 120px;
+        font-size: 12px !important;
+      }
+
+      div.search-group {
+        position: relative;
+        float: left;
+        padding: 4px 20px 4px 30px;
+        margin-right: 10px;
+        margin-left: 10px;
+        width: 220px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        i {
+          position: absolute;
+          top: 12px;
+          left: 10px;
+        }
+
+        input.input-group {
+          padding: 12px 0;
+          vertical-align: middle;
+          width: 100%;
+          border: 0;
+          outline: 0;
+          height: 18px;
+        }
+      }
+
+      div.btn-search {
+        background-color: #18bc9c;
+        width: 100px;
+        color: white;
+      }
+    }
+
+
+    div.page{
+      float : right;
+      width : 200px;
+      ul {
+        width : 100px;
+        list-style: none;
+        margin : 0 auto;
+        display: block;
+        li{
+          width : 20px;
+          display: block;
+          float: left;
+          padding : 2px;
+          margin: 1px 2px;
+          background-color: #eeeeee;
+          text-align : center;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          border-radius: 2px;
+        }
+      }
+    }
+  }
+
+  div.table {
+    margin-top: 30px;
+    margin-bottom: 100px;
+  }
+
+  div.btn-green {
+    background-color: #44b549;
+    color: white;
+  }
+
+  .btn-group > .btn-green:first-child {
+    border-right: 1px solid white;
+  }
+
+  .btn-group > .btn-green:last-child {
+    border-left: 1px solid white;
+  }
+
+  div.table-disable > table {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 30px;
+    tbody > tr > td {
+      padding: 8px;
+      line-height: 25px;
+      vertical-align: top;
+      border-top: 1px solid #ddd;
+    }
+
+    thead > tr > th {
+      padding: 8px;
+      line-height: 25px;
+    }
+  }
+}
+
+div.loading {
+  text-align: center;
+  display: none;
+}
+
+div.my {
+  &-modal {
+    position : fixed;
+    top : 0;
+    right : 0;
+    bottom : 0;
+    left : 0;
+    z-index : 2300;
+    opacity: 1;
+
+    div.padding-top-8{
+      padding-top : 8px;
+    }
+
+    div#picker{
+      background-color: #44b549;
+      cursor: pointer;
+      color : white;
+      text-align: center;
+      height : 34px;
+      width : 120px;
+      padding : 8px;
+      vertical-align: middle;
+      -webkit-border-radius:3px;
+      -moz-border-radius:3px;
+      display: inline-block;
+      border-radius:3px ;
+    }
+
+    div.btn-group-container{
+      margin : 0 auto;
+      width : 200px;
+      overflow: hidden;
+      zoom: 1;
+      margin-top : 20px;
+
+      div.btn:first-child{
+        float: left;
+        background-color: #44b549;
+        color : white;
+      }
+
+      div.btn:last-child{
+        float: right;
+      }
+    }
+  }
+
+  &-modal-content {
+    position : relative;
+    width : 500px;
+    margin : 0 auto;
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 5px 15px  rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px  rgba(0,0,0,.5);
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,.2);
+    padding : 5px;
+
+    &-header-panel{
+      height : 50px;
+      background-color: #efefef;
+      border-bottom:4px solid #44b549 ;
+      line-height: 50px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius:3px;
+      border-radius: 3px;
+    }
+
+    &-header-title{
+      position: relative;
+      font-size : 18px;
+      left : 10px;
+    }
+
+    &-body{
+      border: 2px solid #efefef;
+      min-height : 300px;
+    }
+  }
+
+  &-modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    background-color: #000;
+    opacity: 0.5;
+  }
+}
+
+.webuploader-element-invisible{
+  position: absolute;
+  //clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+}
+
+div.my-modal.on{
+  -webkit-transition: visibility 0s,transform .5s ease-out;
+  -moz-transition: visibility 0s,transform .5s ease-out;
+  -ms-transition: visibility 0s,transform .5s ease-out;
+  -o-transition: visibility 0s,transform .5s ease-out;
+  transition: visibility 0s, transform .5s ease-out;
+  //display: none;
+  visibility: hidden;
+}
+
+div.my-modal-backdrop.on{
+  //display: none;
+  visibility: hidden;
+  -webkit-transition: visibility 0s, opacity .5s linear;
+  -moz-transition: visibility 0s, opacity .5s linear;
+  -ms-transition: visibility 0s, opacity .5s linear;
+  -o-transition: visibility 0s, opacity .5s linear;
+  transition: visibility 0s, opacity .5s linear;
+  opacity: 0;
+}
+
+div.my-modal.in{
+  transform: translate(0,30px);
+}
+
+div.my-modal-backdrop.in{
+  opacity: 0.5;
+}
+
+div.fl{
+  float: left;
+}
