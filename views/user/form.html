@@ -19,27 +19,28 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="power-type">
-                    <li><a href="javascript:;" ng-click="changePowerButton(TYPE.POWER, power_types[$index])"
-                    ng-repeat="power_type in power_types">{{ power_type }}</a></li>
+                    <li ng-repeat="power_type in power_types">
+                        <a href="javascript:;" ng-click="changePowerButton(TYPE.POWER, power_types[$index])">{{ power_type }}</a>
+                    </li>
                 </ul>
             </div>
 
             <!-- 登记大类 -->
-            <div class="dropdown animation-if form-span" role="presentation" ng-if="show.register1">
+            <div class="dropdown animation-if form-span" role="presentation"> <!--ng-if="show.register1" -->
                 <button class="btn btn-default li-btn" id="register-type-1" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{register_button1}}
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="register-type-1">
-                    <li><a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER1, register_types1[$index])"
-                           ng-repeat="register_type in register_types1">{{ register_type }}</a></li>
+                    <li ng-repeat="register_type in register_types1"><a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER1, register_types1[$index])"
+                           >{{ register_type }}</a></li>
                 </ul>
             </div>
 
         <!-- 登记小类 -->
-            <div class="dropdown animation-if form-span" role="presentation"
-                 ng-if="show.register2">
+            <div class="dropdown animation-if form-span" role="presentation">
+                 <!--ng-if="show.register2">-->
                 <button class="btn btn-default li-btn" id="register-type-2" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{register_button2}}
@@ -48,13 +49,17 @@
 
 
                 <ul class="dropdown-menu" aria-labelledby="register-type-2">
-                    <li><a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER2, register_types2[$index])"
-                           ng-repeat="register_type in register_types2">{{ register_type }}</a></li>
+                    <li ng-repeat="register_type in register_types2">
+                        <a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER2, register_types2[$index])">
+                            {{ register_type }}
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <table class="table table-bordered animation-if form-table" ng-if="show.uploader">
+        <table class="table table-bordered animation-if form-table" >
+            <!--<ng-if="show.uploader">-->
             <thead>
                 <tr>
                     <td>项目</td>

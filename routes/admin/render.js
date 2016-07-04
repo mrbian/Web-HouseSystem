@@ -18,4 +18,9 @@ module.exports = (router) => {
         var ctx = this;
         ctx.body = yield render('admin/set_material_kind.html');
     });
+    
+    router.get('first_check_data', function *() {
+        var ctx = this;
+        
+    });
 };

@@ -1,0 +1,67 @@
+.title {
+  float: none;
+  overflow: hidden;
+  font-size: 20px;
+  margin: 10px;
+}
+.title i,
+.title span {
+  float: left;
+}
+
+.title i {
+  margin-right: 10px;
+}
+
+.content {
+  margin: 10px;
+}
+
+.content-title {
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  padding: 0 0 0 15px;
+  background: #f9f9f9;
+}
+$greenColor: #18bc9c;
+$greenBackground: $greenColor 0 0 repeat;
+$defaultBorder:0 solid transparent;
+
+.content-title p {
+  display: inline-block;
+  font-weight: 600;
+  margin: 0 !important;
+  padding: 10px 10px;
+  background: #FFFFFF;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.content-search {
+  position: relative;
+  float: right;
+}
+
+.content-search i {
+  position: absolute;
+  top: 9px;
+  left: 12px;
+}
+
+.content-search input {
+  padding-left: 25px;
+  box-sizing: border-box;
+}
+
+.content-search button{
+  box-sizing: border-box;
+  background: $greenBackground;
+  color: #ffffff;
+  padding: 8px 20px;
+  border: $defaultBorder;
+}
+

@@ -20,7 +20,7 @@ var userEntries = {
 };
 
 var entry = extend({}, adminEnties);
-// entry = extend(entry, userEnties);
+    entry = extend(entry, userEntries);
 
 module.exports = {
     entry,

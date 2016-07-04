@@ -2,8 +2,10 @@
  * Created by li-rz on 16-6-29.
  */
 require('../common/shared');
+require('../../scss/share/main.scss');
 require('../../scss/user/form.scss');
 require('expose?Webuploader!../../bower_components/fex-webuploader/dist/webuploader');
+require('angular');
 require('angular-toastr');
 var $ = jQuery;
 
@@ -97,9 +99,7 @@ $(document).ready(function () {
 
 
 
-        scope.power_button = '选择权利类型';
-        scope.register_button1 = '选择权利大类';
-        scope.register_button2 = '选择权利小类';
+
         
         scope.show = {
             power: true,
@@ -132,8 +132,12 @@ $(document).ready(function () {
             name: '日出江花',
             if_need: false
         }];
-        
-        
+
+        scope.power_button = scope.power_types[0];
+        scope.register_button1 = scope.register_types1[0];
+        scope.register_button2 = scope.register_types2[0];
+
+
         scope.changePowerButton = function (type, text) {
 
             switch (type) {

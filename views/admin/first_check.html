@@ -2,11 +2,116 @@
 <% block 'head': %>
 <link rel="stylesheet" href="/dist/admin-first-check.css">
 <% end %>
-<div>
+<div ng-controller="check_controller">
+<div class="title">
     <i class="fa fa-pencil"></i>
     <div>审核页面</div>
 </div>
+    <div class="content">
+        <div class="content-title">
+            <p>审核列表</p>
+        </div>
+        <div>
+            <div class="section">
+                <div class="content-search">
+                    <label>
+                        <input type="text" placeholder="查询" class="form-control"/>
+                        <i class="fa fa-search"></i>
+                    </label>
+                    <button class="btn btn-sm">
+                        搜索
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="loading" ng-if="!loaded">
+                    <p>加载中.......</p>
+                </div>
+                <table class="table table-striped table-bordered" ng-if="loaded">
+                    <thead>
+                        <tr>
+                            <td>项目</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="check_item in check_items">
+                            <td>
+                                {{check_item}}
+                            </td>
+                            <td>
+                                <button class="btn btn-success btn-sm"
+                                        data-target="#pass-item" data-toggle="modal"
+                                        ng-click="checkItem(TYPE.SUCCESS, $index)">
+                                    同意
+                                </button>
+                                <button class="btn btn-danger btn-sm"
+                                        data-target="#delete-item" data-toggle="modal"
+                                        ng-click="checkItem(TYPE.EXCLUSION, $index)">
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+    <!-- 删除 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delete-item">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close"
+                            ng-click="clearPrepare()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p>是否要删除这条</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal" ng-click="clearPrepare()">否</button>
+                    <button type="button" class="btn btn-danger"
+                            ng-click="verifiedItem(TYPE.EXCLUSION)"
+                            data-dismiss="modal">是</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<!-- 通过 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="pass-item">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close"
+                            ng-click="clearPrepare()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p>是否要通过这条</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal" ng-click="clearPrepare()">否</button>
+                    <button type="button" class="btn btn-success"
+                            ng-click="verifiedItem(TYPE.SUCCESS)"
+                            data-dismiss="modal">是</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>
 <% block 'scripts': %>
-<script src="/admin-first-check.js"></script>
+<script src="/dist/admin-commons.js"></script>
+<script src="/dist/admin-first-check.js"></script>
 <% end %>
