@@ -23,4 +23,9 @@ module.exports = (router) => {
         var ctx = this;
         ctx.body = yield render('admin/set_business_kind.html');
     });
+
+    router.get('/admin/set_small_business_kind',function *(){
+        var ctx = this;
+        ctx.body = yield render('admin/set_small_business_kind.html');
+    })
 };

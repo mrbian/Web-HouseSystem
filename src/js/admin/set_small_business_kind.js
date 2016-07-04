@@ -1,10 +1,9 @@
 /**
- * Created by bln on 16-7-3.
+ * Created by bln on 16-7-4.
  */
 require('../common/shared.js');
 require('../../bower_components/toastr/toastr.min.css');
-require('../../scss/admin/set_business_kind.scss');
-
+require('../../scss/admin/set_small_business_kind.scss');
 
 require('expose?toastr!../../bower_components/toastr/toastr.min.js');
 require('angular');
