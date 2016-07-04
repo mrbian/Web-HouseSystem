@@ -26,6 +26,7 @@
 $greenColor: #18bc9c;
 $greenBackground: $greenColor 0 0 repeat;
 $defaultBorder:0 solid transparent;
+$full: 100%;
 
 .content-title p {
   display: inline-block;
@@ -65,3 +66,14 @@ $defaultBorder:0 solid transparent;
   border: $defaultBorder;
 }
 
+.modal-textarea {
+  width: $full;
+}
+
+.textarea-danger {
+  border-color: #d9534f;
+}
+
+.hide {
+  opacity: 0;
+}

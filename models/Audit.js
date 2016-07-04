@@ -3,7 +3,7 @@
  */
 //审计表
 var shortDataTypes = require('../lib/sequelizex').DataTypes;
-module.exports = (sequelize,DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     var Audit = sequelize.define('Audit',{
         /**
          * 1 ： 一审

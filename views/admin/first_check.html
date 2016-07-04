@@ -25,7 +25,7 @@
             </div>
             <div>
                 <div class="loading" ng-if="!loaded">
-                    <p>加载中.......</p>
+                    <p>{{ loading }}</p>
                 </div>
                 <table class="table table-striped table-bordered" ng-if="loaded">
                     <thead>
@@ -68,17 +68,25 @@
                             ng-click="clearPrepare()">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title"></h4>
+                    <h4 class="modal-title">填写不通过理由</h4>
                 </div>
                 <div class="modal-body">
-                    <p>是否要删除这条</p>
+                    <span ng-class="if_reason ? 'text-danger hide' : 'text-danger'">理由不能为空</span>
+                    <form>
+                        <div class="form-group">
+                            <textarea ng-class="if_reason ?
+                            'form-control modal-textarea' :
+                            'form-control modal-textarea textarea-danger' "
+                                      placeholder="理由"
+                                      ng-model="reason"></textarea>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal" ng-click="clearPrepare()">否</button>
                     <button type="button" class="btn btn-danger"
-                            ng-click="verifiedItem(TYPE.EXCLUSION)"
-                            data-dismiss="modal">是</button>
+                            ng-click="verifiedItem(TYPE.EXCLUSION, reason)">是</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
