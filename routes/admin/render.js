@@ -49,15 +49,19 @@ module.exports = (router) => {
 
 
             let success_type = (yield Audit.findOne(where_data))
-                .dataValues.type;
+                .dataValues;
 
-            let update_data = {
-                type: success_type + 1
+            let create_data = {
+                type: success_type.type + 1,
+                state: 0,
+                comment: ' ',
+                business_id: success_type.business_id
             };
             if (success_type > 3) {
-                update_data.state = 1;
+                create_data.state = 1;
             }
-            yield Audit.update(update_data, where_data);
+            console.log(create_data);
+            yield Audit.create(create_data);
 
 
             ctx.body = yield {finish: true}
