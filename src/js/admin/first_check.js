@@ -45,7 +45,7 @@ $(document).ready(function () {
                 };
             });
             scope.check_items = scope.all_items.slice();
-            console.log(scope.check_items);
+            // console.log(scope.check_items);
             scope.loaded = true;
         }, function (res) {
             scope.loading = '加载失败，请刷新';
@@ -94,7 +94,6 @@ $(document).ready(function () {
                     comment: data || ' '
                 };
 
-                console.log(post_data);
                 http.post(
                     'first_check',
                     JSON.stringify(post_data)
@@ -109,10 +108,13 @@ $(document).ready(function () {
 
                             // 清除搜索框
                             scope.check_items = scope.all_items.slice();
+                            // if (type === scope.TYPE.EXCLUSION) {
+                            //     $('#delete-item').modal('hide');
+                            // } else if (type === scope.TYPE.SUCCESS) {
+                            //     $('#pass-item').modal('hide');
+                            // }
+                            scope.clearPrepare();
                         }
-
-                        console.log(scope.all_items);
-                        console.log(scope.check_items);
                     },
                     function (error) {
                         console.error(error);

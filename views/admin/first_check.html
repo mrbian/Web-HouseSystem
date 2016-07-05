@@ -86,7 +86,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal" ng-click="clearPrepare()">否</button>
                     <button type="button" class="btn btn-danger"
-                            ng-click="verifiedItem(TYPE.EXCLUSION, reason)">是</button>
+                            data-dismiss="modal" ng-click="verifiedItem(TYPE.EXCLUSION, reason)">是</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -111,8 +111,7 @@
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal" ng-click="clearPrepare()">否</button>
                     <button type="button" class="btn btn-success"
-                            ng-click="verifiedItem(TYPE.SUCCESS)"
-                            data-dismiss="modal">是</button>
+                            data-dismiss="modal" ng-click="verifiedItem(TYPE.SUCCESS)">是</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
