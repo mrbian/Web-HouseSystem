@@ -5,6 +5,7 @@ require('../common/shared');
 require('../../scss/share/main.scss');
 require('../../scss/admin/first_check.scss');
 require('angular');
+// var JSON = require("querystring");
 var $ = jQuery;
 $(document).ready(function () {
     var app = angular.module('app', []);
@@ -18,7 +19,10 @@ $(document).ready(function () {
             SUCCESS: 1,
             EXCLUSION: 0
         };
-
+        // scope.data  = undefined; // 数据
+        scope.all_items = undefined; // all title
+        scope.check_items = undefined; // show title
+        
         scope.prepare = {
             item: undefined,
             message: undefined
@@ -32,10 +36,16 @@ $(document).ready(function () {
             url: 'first_check_data',
             cache: cache
         }).then(function (res) {
-            scope.all_item = res.data.map(function (value) {
-                return value.title;
+            // scope.data = ;
+            
+            scope.all_items = res.data.map(function (value) {
+                return {
+                    title: value.title,
+                    id: value.id
+                };
             });
-            scope.check_items = scope.all_item.slice();
+            scope.check_items = scope.all_items.slice();
+            console.log(scope.check_items);
             scope.loaded = true;
         }, function (res) {
             scope.loading = '加载失败，请刷新';
@@ -75,18 +85,42 @@ $(document).ready(function () {
              * @param data
              */
             function sendMessage (type, data) {
-                http({
-                    method: 'POST',
-                    url: 'first_check'
-                }).then(
-                    function (res) {},
-                    function (error) {})
+                var post_data = {
+                    type: type,
+                    id: scope.check_items[scope.prepare.item].id,
+                    comment: data || ' '
+                };
+
+                console.log(post_data);
+                http.post(
+                    'first_check',
+                    JSON.stringify(post_data)
+                ).then(
+                    function (res) {
+                        console.log(res);
+                        if (res.data.finish) {
+                            scope.all_items = scope.all_items.filter(function (value) {
+                                console.log(value.id);
+                                return value.id !== scope.check_items[scope.prepare.item].id;
+                            });
+
+                            // 清除搜索框
+                            scope.check_items = scope.all_items.slice();
+                        }
+
+                        console.log(scope.all_items);
+                        console.log(scope.check_items);
+                    },
+                    function (error) {
+                        
+                    })
             }
             
             switch(type) {
                 case scope.TYPE.EXCLUSION:
                     if(!scope.reason) {
                         scope.if_reason = false;
+                        return;
                     }
                     sendMessage(scope.TYPE.EXCLUSION, scope.reason);
                     // 成功关闭
