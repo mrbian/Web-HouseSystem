@@ -10,23 +10,23 @@ var $ = jQuery;
 $(document).ready(function () {
     var app = angular.module('app', []);
     app.controller('check_controller', ['$scope', '$http', '$templateCache', function (scope, http, cache) {
-        scope.loaded = false;
-        scope.loading = '加载中.......';
-        scope.check_items = [];
-        scope.if_reason = true;
-        scope.reason = '';
+        scope.loaded = false; // 判断是否已经成功加载
+        scope.loading = '加载中.......';　// 加载中或者加载失败（加载文字）
+        scope.if_reason = true; // 展示不能为空comment
+        scope.reason = ''; // comment
         scope.TYPE = {
             SUCCESS: 1,
             EXCLUSION: 0
         };
+        scope.search = ''; // 搜索内容
         // scope.data  = undefined; // 数据
-        scope.all_items = undefined; // all title
+        scope.all_items = undefined; // all title => {id, title}
         scope.check_items = undefined; // show title
         
         scope.prepare = {
             item: undefined,
             message: undefined
-        };
+        }; // 准备发送的数据
 
         /**
          * 拖数据
@@ -75,7 +75,10 @@ $(document).ready(function () {
             }
         };
 
-        
+        /**
+         *
+         * @param type
+         */
         scope.verifiedItem = function (type) {
             // 发送数据，准备删除
 
@@ -112,7 +115,7 @@ $(document).ready(function () {
                         console.log(scope.check_items);
                     },
                     function (error) {
-                        
+                        console.error(error);
                     })
             }
             
@@ -151,7 +154,17 @@ $(document).ready(function () {
 
             scope.if_reason = true;
         };
-        
+
+        scope.searchItem = function () {
+            if (scope.search) {
+                scope.check_items = scope.check_items.filter(function (value) {
+                    return value.title.indexOf(scope.search) > -1;
+                });
+                scope.search = '';
+            } else {
+                scope.check_items = scope.all_items.slice();
+            }
+        }
         
     }]);
 

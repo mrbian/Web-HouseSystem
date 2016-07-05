@@ -15,10 +15,10 @@
             <div class="section">
                 <div class="content-search">
                     <label>
-                        <input type="text" placeholder="查询" class="form-control"/>
+                        <input type="text" placeholder="查询" class="form-control" ng-model="search"/>
                         <i class="fa fa-search"></i>
                     </label>
-                    <button class="btn btn-sm">
+                    <button class="btn btn-sm" ng-click="searchItem()">
                         搜索
                     </button>
                 </div>
