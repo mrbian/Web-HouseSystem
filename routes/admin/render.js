@@ -3,10 +3,14 @@
  */
 const render = require('../../instances/render');
 const auth = require('../../helpers/auth');
-const Audit = require('../../models/index').models.Audit;
-const Business = require('../../models/index').models.Business;
-
+const db = require('../../models/index').models;
+const Audit = db.Audit;
+const Business = db.Business;
+const BusinessKind = db.BusinessKind;
+const BusinessMaterialKind = db.BusinessMaterialKind;
+const MaterialKind = db.MaterialKind;
 const FIRST_CHECK = /^http:\/\/(\w+)(:\d+)?\/admin\/first_check$/;
+const FORM_CHECK = /^http:\/\/(\w+)(:\d+)?\/user\/form$/;
 const TYPE = {
     EXCLUSION: 0,
     SUCCESS: 1
@@ -100,5 +104,78 @@ module.exports = (router) => {
             ctx.status = 404;
             // ctx.body = yield {};
         }
+    });
+
+    // right_id => 权力类型
+    // id => 大类
+    router.get('/user/form_data/:right_id/:id', function *() {
+        var ctx = this;
+        let header = ctx.header;
+        console.log(header.referer);
+        if (FORM_CHECK.test(header.referer)) {
+
+            // businesskind寻找大类<null>为大类
+            let params_id = {
+                id: this.params.id,
+                right_id: this.params.right_id
+            };
+            let register_type1 = yield BusinessKind.findAll({
+                where: {
+                    type: 0
+                }
+            }).map(function (value) {
+                return value.dataValues;
+            });
+            // console.log(params_id);
+
+            // businesskind寻找小类(按照大类id)
+            let register_type2 = yield BusinessKind.findAll({
+                where: {
+                    type: parseInt(params_id.id),
+                    right_type: parseInt(params_id.right_id)
+                }
+            }).map(function (value) {
+                return value.dataValues;
+            });
+
+            // 获取小类的id
+
+            // console.log(register_type2);
+            // businessMaterialkind寻找相应的(Materialkind)
+            let material_id = [];
+            if (register_type2.length > 0) {
+                material_id = yield BusinessMaterialKind.findAll({
+                   where: {
+                       business_kind_id: register_type2[0].id
+                   }
+                }).map(function (value) {
+                    return value.dataValues;
+                });
+            }
+
+            // console.log(material_id);
+
+            let material_kind = yield MaterialKind.findAll({
+                where: {
+                    id: material_id.map(function (value) {
+                        return value.material_kind_id;
+                    })
+                }
+            }).map(function (value) {
+                return value.dataValues;
+            });
+
+            ctx.body = yield {
+                register1: register_type1,
+                register2: register_type2,
+                file_items: material_kind
+            };
+            // console.log(material_kind_id);
+            // materialKind寻找相应的material
+
+        } else {
+            ctx.status = 404;
+        }
+
     });
 };

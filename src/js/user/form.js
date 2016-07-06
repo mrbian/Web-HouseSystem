@@ -17,26 +17,20 @@ $(document).ready(function () {
     var progress = $('#progress');
     var temp = '';
     var abort;
-    // var uploader = Webuploader.create({
-    //     // 不压缩image
-    //     resize: false,
-    //     chunked: false,
-    //     fileNumLimit: 1,
-    //     // swf文件路径
-    //     swf: '../bower_components/fex-webuploader/dist/Uploader.swf',
-    //     dnd: '#container',
-    //     // 文件接收服务端。
-    //     server: '/user/form',
-    //     auto: false,
-    //     // 选择文件的按钮。可选。
-    //     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-    //     pick: '#picker'
-    //     // accept: {
-    //     //     title: 'Images',
-    //     //     extensions: 'gif,jpg,jpeg,bmp,png',
-    //     //     mimeTypes: 'image/*'
-    //     // }
-    // });
+    var uploader = Webuploader.create({
+        // 不压缩image
+        resize: false,
+        chunked: false,
+        fileNumLimit: 1,
+        // swf文件路径
+        swf: '../bower_components/fex-webuploader/dist/Uploader.swf',
+        // 文件接收服务端。
+        server: '/user/form',
+        auto: false,
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '.uploader'
+    });
     //
     // // 当有文件添加进来的时候
     // uploader.on('fileQueued', function (file) {
@@ -90,83 +84,99 @@ $(document).ready(function () {
     // });
     
 
-    app.controller('formController', ['$scope', '$http', function (scope, http) {
-        scope.TYPE = {
-            POWER: 0,
-            REGISTER1: 1,
-            REGISTER2: 2
-        };
+    app.controller('formController', ['$scope', '$http', '$templateCache', 
+        function (scope, http, cache) {
+            scope.TYPE = {
+                POWER: 0,
+                REGISTER1: 1,
+                REGISTER2: 2
+            };
+
+            scope.loaded = false;
+            scope.loading = '加载中.......';
+
+            scope.insert_data = {
+                power: [
+                    {title: '所有权登记', right_type: 1},
+                    {title: '抵押权登记', right_type: 2},
+                    {title: '地役权登记', right_type: 3},
+                    {title: '预告登记', right_type: 4},
+                    {title: '其他登记', right_type: 0}
+                ],
+                register1: undefined,
+                register2: undefined,
+                file_items: undefined
+            };
+            scope.button = {
+                power: undefined,
+                register1: undefined,
+                register2: undefined
+            };
+
+
+            scope.show = {
+                power: true,
+                register1: false,
+                register2: false,
+                uploader: false
+            };
+
+
+            http({
+                method: 'GET',
+                url: '/user/form_data/1/1',
+                cache: cache
+            }).then(function (res) {
+                console.log(res);
+                var data = res.data;
+                scope.loaded = true;
+                // scope.register_types1 = data.register_type1;
+                Object.keys(data).forEach(function (value) {
+                    scope.insert_data[value] = data[value];
+                });
+
+                console.log(scope.insert_data);
+                Object.keys(scope.button).forEach(function (value) {
+                    scope.button[value] = scope.insert_data[value][0].title
+                })
+            },
+                function (err) {
+                    scope.loading = '加载失败';
+                });
 
 
 
 
-        
-        scope.show = {
-            power: true,
-            register1: false,
-            register2: false,
-            uploader: false
-        };
-        
-        scope.power_types = [
-            '所有权登记',
-            '抵押权登记',
-            '地役权登记',
-            '预告登记',
-            '其他登记'
-        ];
-        
-        scope.register_types1 = [
-            '初始登记'
-        ];
 
-        scope.register_types2 = [
-            '商品房初始登记',
-            '经济适用房初始登记',
-            '城市房屋新建',
-            '集体入地房屋新建',
-            '集资建房'
-        ];
+            scope.changePowerButton = function (type, text) {
 
-        scope.file_items = [{
-            name: '日出江花',
-            if_need: false
-        }];
+                switch (type) {
+                    case scope.TYPE.POWER:
+                        scope.power_button = text;
 
-        scope.power_button = scope.power_types[0];
-        scope.register_button1 = scope.register_types1[0];
-        scope.register_button2 = scope.register_types2[0];
+                        if (!scope.show.register1) {
+                            scope.show.register1 = true;
+                        }
+                        break;
+                    case scope.TYPE.REGISTER1:
+                        scope.register_button1 = text;
 
+                        if (!scope.show.register2) {
+                            scope.show.register2 = true;
+                        }
+                        break;
+                    case scope.TYPE.REGISTER2:
+                        scope.register_button2 = text;
 
-        scope.changePowerButton = function (type, text) {
-
-            switch (type) {
-                case scope.TYPE.POWER:
-                    scope.power_button = text;
-
-                    if (!scope.show.register1) {
-                        scope.show.register1 = true;
-                    }
-                    break;
-                case scope.TYPE.REGISTER1:
-                    scope.register_button1 = text;
-
-                    if (!scope.show.register2) {
-                        scope.show.register2 = true;
-                    }
-                    break;
-                case scope.TYPE.REGISTER2:
-                    scope.register_button2 = text;
-
-                    if (!scope.show.uploader) {
-                        scope.show.uploader = true;
-                    }
-                    break;
-                default:
-                    throw Error('Fuck You');
-                    break;
-            }
-        };
+                        if (!scope.show.uploader) {
+                            scope.show.uploader = true;
+                        }
+                        break;
+                    default:
+                        throw Error('Fuck You');
+                        break;
+                }
+            };
         
         // http.post()
 

@@ -7,20 +7,35 @@
         <i class="fa fa-pencil"></i>
         <span>提交申请书</span>
     </div>
-    <!--<form method="POST" action="/user/form">-->
-    <!-- 权利类型 -->
     <div id="all">
-        <div class="form-select">
+        <div class="section">
+            <div class="content-search">
+                <label>
+                    <input type="text" placeholder="查询" class="form-control" ng-model="search"/>
+                    <i class="fa fa-search"></i>
+                </label>
+                <button class="btn btn-sm" ng-click="searchItem()">
+                    搜索
+                </button>
+            </div>
+        </div>
+        <div class="loading" ng-if="!loaded">
+            <p>{{ loading }}</p>
+        </div>
+        <div class="form-select" ng-if="loaded">
             <div class="dropdown form-span" role="presentation">
                 <button class="btn btn-default li-btn" id="power-type" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!--选择权利类型-->
-                    {{power_button}}
+                    {{button.power}}
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="power-type">
-                    <li ng-repeat="power_type in power_types">
-                        <a href="javascript:;" ng-click="changePowerButton(TYPE.POWER, power_types[$index])">{{ power_type }}</a>
+                    <li ng-repeat="power_type in insert_data.power">
+                        <a href="javascript:;"
+                           ng-click="changePowerButton(TYPE.POWER, insert_data.power[$index])">
+                            {{ power_type.title }}
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -29,12 +44,16 @@
             <div class="dropdown animation-if form-span" role="presentation"> <!--ng-if="show.register1" -->
                 <button class="btn btn-default li-btn" id="register-type-1" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{register_button1}}
+                    {{button.register1}}
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="register-type-1">
-                    <li ng-repeat="register_type in register_types1"><a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER1, register_types1[$index])"
-                           >{{ register_type }}</a></li>
+                    <li ng-repeat="register_type in insert_data.register1">
+                        <a href="javascript:;"
+                           ng-click="changePowerButton(TYPE.REGISTER1, insert_data.register1[$index])">
+                            {{ register_type.title }}
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -43,65 +62,47 @@
                  <!--ng-if="show.register2">-->
                 <button class="btn btn-default li-btn" id="register-type-2" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{register_button2}}
+                    {{button.register2}}
                     <span class="caret"></span>
                 </button>
-
-
                 <ul class="dropdown-menu" aria-labelledby="register-type-2">
-                    <li ng-repeat="register_type in register_types2">
-                        <a href="javascript:;" ng-click="changePowerButton(TYPE.REGISTER2, register_types2[$index])">
-                            {{ register_type }}
+                    <li ng-repeat="register_type in insert_data.register2">
+                        <a href="javascript:;"
+                           ng-click="changePowerButton(TYPE.REGISTER2, insert_data.register2[$index])">
+                            {{ register_type.title }}
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <table class="table table-bordered animation-if form-table" >
-            <!--<ng-if="show.uploader">-->
-            <thead>
-                <tr>
-                    <td>项目</td>
-                    <td>是/否必须</td>
-                    <td>操作</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="file_item in file_items">
-                    <td>
-                        {{file_item.name}}
-                    </td>
-                    <td>
-                        {{file_item.if_need ? '是': '否'}}
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-sm">上传</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <!--<div id="container" ng-class="show.uploader ? 'animation-if': 'close'">-->
-            <!--<div class="picker-button">-->
-                <!--<a href="javascript:;">-->
-                    <!--<div id="picker">-->
-                        <!--<i class="fa fa-plus"></i>-->
-                        <!--选择文件-->
-                    <!--</div>-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="upload-note">-->
-                <!--<p>直接把文件拖进这个框里也能上传哦</p>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<button type="submit" class="btn btn-primary btn-lg animation-if form-button"-->
-                <!--ng-if="show.uploader">上传</button>-->
-    <!--</form>-->
+
+        <div>
+            <table class="table table-bordered animation-if form-table" ng-if="loaded">
+                <!--<ng-if="show.uploader">-->
+                <thead>
+                    <tr>
+                        <td>项目</td>
+                        <td>是/否必须</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="file_item in insert_data.file_items">
+                        <td>
+                            {{file_item.title}}
+                        </td>
+                        <td>
+                            {{file_item.is_need ? '是': '否'}}
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-sm uploader">上传</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!--<div class="col-md-12" id="progress">-->
-
-    <!--</div>-->
-
 </div>
 <% block 'scripts': %>
 <script src="/dist/user-form.js"></script>

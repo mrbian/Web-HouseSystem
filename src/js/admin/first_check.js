@@ -9,7 +9,8 @@ require('angular');
 var $ = jQuery;
 $(document).ready(function () {
     var app = angular.module('app', []);
-    app.controller('check_controller', ['$scope', '$http', '$templateCache', function (scope, http, cache) {
+    app.controller('check_controller', ['$scope', '$http', '$templateCache',
+        function (scope, http, cache) {
         scope.loaded = false; // 判断是否已经成功加载
         scope.loading = '加载中.......';　// 加载中或者加载失败（加载文字）
         scope.if_reason = true; // 展示不能为空comment
@@ -22,7 +23,7 @@ $(document).ready(function () {
         // scope.data  = undefined; // 数据
         scope.all_items = undefined; // all title => {id, title}
         scope.check_items = undefined; // show title
-        
+
         scope.prepare = {
             item: undefined,
             message: undefined
@@ -37,7 +38,7 @@ $(document).ready(function () {
             cache: cache
         }).then(function (res) {
             // scope.data = ;
-            
+
             scope.all_items = res.data.map(function (value) {
                 return {
                     title: value.title,
@@ -120,7 +121,7 @@ $(document).ready(function () {
                         console.error(error);
                     })
             }
-            
+
             switch(type) {
                 case scope.TYPE.EXCLUSION:
                     if(!scope.reason) {
@@ -144,7 +145,7 @@ $(document).ready(function () {
                     break;
             }
         };
-        
+
         /**
          * 清除准备项目
          */
@@ -167,7 +168,7 @@ $(document).ready(function () {
                 scope.check_items = scope.all_items.slice();
             }
         }
-        
+
     }]);
 
     angular.bootstrap(document, ['app']);
