@@ -17,20 +17,20 @@ $(document).ready(function () {
     var progress = $('#progress');
     var temp = '';
     var abort;
-    var uploader = Webuploader.create({
-        // 不压缩image
-        resize: false,
-        chunked: false,
-        fileNumLimit: 1,
-        // swf文件路径
-        swf: '../bower_components/fex-webuploader/dist/Uploader.swf',
-        // 文件接收服务端。
-        server: '/user/form',
-        auto: false,
-        // 选择文件的按钮。可选。
-        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-        pick: '.uploader'
-    });
+    // var uploader = Webuploader.create({
+    //     // 不压缩image
+    //     resize: false,
+    //     chunked: false,
+    //     fileNumLimit: 1,
+    //     // swf文件路径
+    //     swf: '../bower_components/fex-webuploader/dist/Uploader.swf',
+    //     // 文件接收服务端。
+    //     server: '/user/form',
+    //     auto: false,
+    //     // 选择文件的按钮。可选。
+    //     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+    //     pick: '.uploader'
+    // });
     //
     // // 当有文件添加进来的时候
     // uploader.on('fileQueued', function (file) {
@@ -113,64 +113,77 @@ $(document).ready(function () {
                 register2: undefined
             };
 
-
-            scope.show = {
-                power: true,
-                register1: false,
-                register2: false,
-                uploader: false
+            scope.show_data  = {
+                power: undefined,
+                register1: undefined,
+                register2: undefined
             };
 
+            /**
+             * 权力类型，大类id，小类id
+             * @param right_id
+             * @param id
+             * @param business_id
+             */
+            function getData (right_id, id, business_id) {
+                http({
+                    method: 'GET',
+                    url: '/user/form_data/' +
+                    right_id +
+                    (id ?
+                    '/' + id +
+                    (business_id ? '/' + business_id : '')
+                        : ''),
+                    cache: cache
+                }).then(function (res) {
+                        console.log(res);
+                        var data = res.data;
+                        scope.loaded = true;
+                        // scope.register_types1 = data.register_type1;
+                        Object.keys(data).forEach(function (value) {
+                            scope.insert_data[value] = data[value];
+                        });
 
-            http({
-                method: 'GET',
-                url: '/user/form_data/1/1',
-                cache: cache
-            }).then(function (res) {
-                console.log(res);
-                var data = res.data;
-                scope.loaded = true;
-                // scope.register_types1 = data.register_type1;
-                Object.keys(data).forEach(function (value) {
-                    scope.insert_data[value] = data[value];
-                });
-
-                console.log(scope.insert_data);
-                Object.keys(scope.button).forEach(function (value) {
-                    scope.button[value] = scope.insert_data[value][0].title
-                })
-            },
-                function (err) {
-                    scope.loading = '加载失败';
-                });
+                        // console.log(scope.insert_data);
+                        Object.keys(scope.button).forEach(function (value) {
+                            scope.button[value] = scope.insert_data[value][0].title
+                        });
+                    console.log(scope.insert_data);
+                    console.log(scope.button);
+                },
+                    function (err) {
+                        scope.loading = '加载失败';
+                        console.error(err);
+                    });
+            }
 
 
+            getData(1);
 
 
-
-            scope.changePowerButton = function (type, text) {
-
+            /**
+             * 接收按钮改变事件，并且重新拉取数据
+             * @param type
+             * @param text
+             * @param index
+             */
+            scope.changePowerButton = function (type, text, index) {
+                console.log(index);
                 switch (type) {
                     case scope.TYPE.POWER:
-                        scope.power_button = text;
+                        scope.button.power = text.title;
 
-                        if (!scope.show.register1) {
-                            scope.show.register1 = true;
-                        }
+
                         break;
                     case scope.TYPE.REGISTER1:
-                        scope.register_button1 = text;
+                        scope.button.register1 = text.title;
 
-                        if (!scope.show.register2) {
-                            scope.show.register2 = true;
-                        }
+
                         break;
                     case scope.TYPE.REGISTER2:
-                        scope.register_button2 = text;
+                        scope.button.register2 = text.title;
 
-                        if (!scope.show.uploader) {
-                            scope.show.uploader = true;
-                        }
+
                         break;
                     default:
                         throw Error('Fuck You');

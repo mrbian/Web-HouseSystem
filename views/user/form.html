@@ -33,7 +33,7 @@
                 <ul class="dropdown-menu" aria-labelledby="power-type">
                     <li ng-repeat="power_type in insert_data.power">
                         <a href="javascript:;"
-                           ng-click="changePowerButton(TYPE.POWER, insert_data.power[$index])">
+                           ng-click="changePowerButton(TYPE.POWER, insert_data.power[$index], $index)">
                             {{ power_type.title }}
                         </a>
                     </li>
@@ -50,7 +50,7 @@
                 <ul class="dropdown-menu" aria-labelledby="register-type-1">
                     <li ng-repeat="register_type in insert_data.register1">
                         <a href="javascript:;"
-                           ng-click="changePowerButton(TYPE.REGISTER1, insert_data.register1[$index])">
+                           ng-click="changePowerButton(TYPE.REGISTER1, insert_data.register1[$index], $index)">
                             {{ register_type.title }}
                         </a>
                     </li>
@@ -68,7 +68,7 @@
                 <ul class="dropdown-menu" aria-labelledby="register-type-2">
                     <li ng-repeat="register_type in insert_data.register2">
                         <a href="javascript:;"
-                           ng-click="changePowerButton(TYPE.REGISTER2, insert_data.register2[$index])">
+                           ng-click="changePowerButton(TYPE.REGISTER2, insert_data.register2[$index], $index)">
                             {{ register_type.title }}
                         </a>
                     </li>
