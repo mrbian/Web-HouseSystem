@@ -10,7 +10,7 @@ module.exports = (router) => {
     router.post('/upload',function * (){
         var ctx = this;
         if( !this.request.is('multipart/*')) return yield next;
-        
+
         var parts = parse(this);
         var part,filename = 'test';
         while(part = yield parts){
@@ -19,7 +19,7 @@ module.exports = (router) => {
                     filename = part[1];
                 }
             }else{
-                var prefix = util.getUniqueStr(6) + '#';
+                var prefix = util.getUniqueStr(6) + '_';
                 filename = prefix + filename;
                 var file_directory = path.join(__dirname,'../public/upload/file');
                 var file_path = path.join(file_directory,filename);

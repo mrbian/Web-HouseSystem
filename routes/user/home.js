@@ -88,6 +88,17 @@ module.exports = (router) => {
         console.log(ctx.request.body);
     });
 
+    //  上传接口
+    router.post('/user/upload/', function *() {
+        let ctx = this;
+        console.log(ctx.request.body);
+    });
+
+    // 下载接口
+    router.get('/upload/file/', function *() {
+        let ctx = this;
+    });
+
     router.get('/user/form_data/:right_id', function* () {
         let ctx = this;
         let header = ctx.header;

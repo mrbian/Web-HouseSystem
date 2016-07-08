@@ -18,77 +18,29 @@ var $ = jQuery;
 $(document).ready(function () {
     var app = angular.module('app', ['ngAnimate', 'toastr']);
     var progress = $('#progress');
-    var temp = '';
-    var abort;
-    // var uploader = Webuploader.create({
-    //     // 不压缩image
-    //     resize: false,
-    //     chunked: false,
-    //     fileNumLimit: 1,
-    //     // swf文件路径
-    //     swf: '../bower_components/fex-webuploader/dist/Uploader.swf',
-    //     // 文件接收服务端。
-    //     server: '/user/form',
-    //     auto: false,
-    //     // 选择文件的按钮。可选。
-    //     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-    //     pick: '.uploader'
-    // });
-    //
-    // // 当有文件添加进来的时候
-    // uploader.on('fileQueued', function (file) {
-    //     console.log(file);
-    //     temp = file.id;
-    //     progress.append('<p>文件准备上传</p>' +
-    //         '<button class="btn btn-danger" id="abort">取消</button>');
-    //     $('#container').hide();
-    //     abort = $('#abort');
-    //     abort.on('click', function () {
-    //         uploader.reset();
-    //         $('#container').show();
-    //         progress.empty();
-    //     });
-    // });
-    //
-    // // 文件上传过程中创建进度条实时显示。
-    // uploader.on('uploadProgress', function (file, percentage) {
-    //     // var $li = $('#' + file.id),
-    //     var $percent = progress.find('.progress .progress-bar');
-    //
-    //     // 避免重复创建
-    //     if (!$percent.length) {
-    //         $percent = $('<div class="row"><div class="col-md-1"></div>'
-    //             + '<div class="col-md-9"><div class="progress progress-striped active">'
-    //             + '<div class="progress-bar" role="progressbar" style="width:0;">'
-    //             + '</div>' + '</div></div></div>').appendTo(progress);//.find('.progress-bar');
-    //     }
-    //
-    //     // // $li.find('#' + file.id).text('上传中');
-    //     //
-    //     $percent.css('width', percentage * 100 + '%');
-    // });
-    //
-    // uploader.on('uploadSuccess', function (file) {
-    //     progress.empty();
-    //     progress.append('<p>上传成功</p>')
-    // });
-    //
-    // uploader.on('uploadError', function (file) {
-    //     progress.empty();
-    //     progress.append('<p>上传失败</p>')
-    // });
-    //
-    // uploader.on('uploadComplete', function (file) {
-    //     progress.empty();
-    // });
-    //
-    // uploader.on('uploadAccept', function (object, ret) {
-    //
-    // });
-    
+    // 当有文件添加进来的时候
+    // 文件上传过程中创建进度条实时显示。
+
+    var uploader = Webuploader.create({
+                // 不压缩image
+                resize: false,
+                chunked: false,
+                fileNumLimit: 1,
+                // swf文件路径
+                swf: '../bower_components/fex-webuploader/dist/Uploader.swf',
+                // 文件接收服务端。
+                server: '/upload',
+                auto: true,
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#upload'
+            });
+
 
     app.controller('formController', ['$scope', '$http', '$templateCache', 'toastr',
         function (scope, http, cache, toastr) {
+            var upload = document.querySelector('#upload');
+
             scope.TYPE = {
                 POWER: 0,
                 REGISTER1: 1,
@@ -140,20 +92,20 @@ $(document).ready(function () {
                         : ''),
                     cache: cache
                 }).then(function (res) {
-                    var data = res.data;
-                    scope.loaded = true;
-                    Object.keys(data).forEach(function (value) {
-                        scope.insert_data[value] = data[value];
-                    });
-                    console.log(data);
-                    Object.keys(data).forEach(function (value) {
-                        scope.button[value] = data[value][0].title
-                    });
+                        var data = res.data;
+                        scope.loaded = true;
+                        Object.keys(data).forEach(function (value) {
+                            scope.insert_data[value] = data[value];
+                        });
+                        console.log(data);
+                        Object.keys(data).forEach(function (value) {
+                            scope.button[value] = data[value][0].title
+                        });
 
-                    scope.show_data.power = right_id;
-                    scope.show_data.register1 = id || scope.insert_data.register1[0].id;
-                    scope.show_data.register2 = business_id || scope.insert_data.register2[0].id;
-                },
+                        scope.show_data.power = right_id;
+                        scope.show_data.register1 = id || scope.insert_data.register1[0].id;
+                        scope.show_data.register2 = business_id || scope.insert_data.register2[0].id;
+                    },
                     function (err) {
                         scope.loading = '加载失败';
                         console.error(err);
@@ -211,20 +163,69 @@ $(document).ready(function () {
                         break;
                 }
             };
-        
+            
+            scope.upload_id = undefined;
         // http.post()
-
+            scope.uploadFile = function (index) {
+                var file_input = upload.querySelector('input[type="file"]');
+                console.log(file_input);
+                scope.upload_id = scope.insert_data.file_items[index].id;
+                file_input.click();
+            };
+            
             scope.downloadFile = function (index) {
                 var url = scope.insert_data.file_items[index].url;
                 http({
                     method: 'GET',
                     url: url
-                }).then(function (res) {},
+                }).then(
+                    function (res) {
+                        
+                    },
                     function (err) {
                         console.error(err);
                         toastr.error('下载文件失败', '错误：');
                     });
-            }
+            };
+
+
+
+
+            uploader.on('fileQueued', function (file) {
+
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader.on('uploadProgress', function (file, percentage) {
+
+            });
+
+            uploader.on('uploadSuccess', function (file) {
+                http({
+                    method: "POST",
+                    data: JSON.stringify({id: scope.upload_id}),
+                    url: '/user/form'
+                }).then(
+                    function (res) {
+                        
+                    }, 
+                    function (err) {
+                        console.error(err);
+                    });
+            });
+
+            uploader.on('uploadError', function (file) {
+                scope.upload_id = undefined;
+                toastr.error('上传文件失败', '错误：');
+            });
+
+            uploader.on('uploadComplete', function (file) {
+                
+            });
+
+            uploader.on('uploadAccept', function (object, ret) {
+                
+            });
     }]);
 
     angular.bootstrap(document, ['app']);
