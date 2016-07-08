@@ -4,8 +4,11 @@
 require('../common/shared');
 require('../../scss/share/main.scss');
 require('../../scss/user/form.scss');
+require('../../bower_components/angular-toastr/dist/angular-toastr.min.css');
 require('expose?Webuploader!../../bower_components/fex-webuploader/dist/webuploader');
 require('angular');
+require('angular-animate');
+require('toastr');
 require('angular-toastr');
 var $ = jQuery;
 
@@ -13,7 +16,7 @@ var $ = jQuery;
 // require('angular');
 
 $(document).ready(function () {
-    var app = angular.module('app', []);
+    var app = angular.module('app', ['ngAnimate', 'toastr']);
     var progress = $('#progress');
     var temp = '';
     var abort;
@@ -84,8 +87,8 @@ $(document).ready(function () {
     // });
     
 
-    app.controller('formController', ['$scope', '$http', '$templateCache', 
-        function (scope, http, cache) {
+    app.controller('formController', ['$scope', '$http', '$templateCache', 'toastr',
+        function (scope, http, cache, toastr) {
             scope.TYPE = {
                 POWER: 0,
                 REGISTER1: 1,
@@ -108,7 +111,7 @@ $(document).ready(function () {
                 file_items: undefined
             };
             scope.button = {
-                power: undefined,
+                power: scope.insert_data.power[0].title,
                 register1: undefined,
                 register2: undefined
             };
@@ -126,6 +129,7 @@ $(document).ready(function () {
              * @param business_id
              */
             function getData (right_id, id, business_id) {
+                console.log(arguments);
                 http({
                     method: 'GET',
                     url: '/user/form_data/' +
@@ -136,24 +140,24 @@ $(document).ready(function () {
                         : ''),
                     cache: cache
                 }).then(function (res) {
-                        console.log(res);
-                        var data = res.data;
-                        scope.loaded = true;
-                        // scope.register_types1 = data.register_type1;
-                        Object.keys(data).forEach(function (value) {
-                            scope.insert_data[value] = data[value];
-                        });
+                    var data = res.data;
+                    scope.loaded = true;
+                    Object.keys(data).forEach(function (value) {
+                        scope.insert_data[value] = data[value];
+                    });
+                    console.log(data);
+                    Object.keys(data).forEach(function (value) {
+                        scope.button[value] = data[value][0].title
+                    });
 
-                        // console.log(scope.insert_data);
-                        Object.keys(scope.button).forEach(function (value) {
-                            scope.button[value] = scope.insert_data[value][0].title
-                        });
-                    console.log(scope.insert_data);
-                    console.log(scope.button);
+                    scope.show_data.power = right_id;
+                    scope.show_data.register1 = id || scope.insert_data.register1[0].id;
+                    scope.show_data.register2 = business_id || scope.insert_data.register2[0].id;
                 },
                     function (err) {
                         scope.loading = '加载失败';
                         console.error(err);
+                        toastr.error('加载失败', '错误：');
                     });
             }
 
@@ -171,16 +175,33 @@ $(document).ready(function () {
                 console.log(index);
                 switch (type) {
                     case scope.TYPE.POWER:
+                        if (scope.button.power ===
+                            scope.insert_data.power[index].title) {
+                            return;
+                        }
+                        // console.log('button: ', scope.button);
+                        getData(scope.insert_data.power[index].right_type);
                         scope.button.power = text.title;
-
-
                         break;
                     case scope.TYPE.REGISTER1:
+                        if (scope.button.register1 ===
+                            scope.insert_data.register1[index].title) {
+                            return;
+                        }
+                        getData(scope.show_data.power,
+                            scope.insert_data.register1[index].id);
                         scope.button.register1 = text.title;
-
-
                         break;
+
                     case scope.TYPE.REGISTER2:
+                        if (scope.button.register2 ===
+                            scope.insert_data.register2[index].title) {
+                            return;
+                        }
+                        getData(scope.show_data.power,
+                            scope.show_data.register1,
+                            scope.insert_data.register2[index].id);
+
                         scope.button.register2 = text.title;
 
 
@@ -193,6 +214,17 @@ $(document).ready(function () {
         
         // http.post()
 
+            scope.downloadFile = function (index) {
+                var url = scope.insert_data.file_items[index].url;
+                http({
+                    method: 'GET',
+                    url: url
+                }).then(function (res) {},
+                    function (err) {
+                        console.error(err);
+                        toastr.error('下载文件失败', '错误：');
+                    });
+            }
     }]);
 
     angular.bootstrap(document, ['app']);

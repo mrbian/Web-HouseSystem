@@ -54,6 +54,7 @@
     "redis": "^2.3.0",
     "sequelize": "^3.15.1",
     "superagent": "git+https://github.com/visionmedia/superagent.git",
+    "toastr": "^2.1.2",
     "wechat": "^2.0.3",
     "wechat-oauth": "git+https://github.com/node-webot/wechat-oauth.git",
     "weixin-pay": "^1.1.6",
