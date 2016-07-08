@@ -8,7 +8,7 @@ require('../../bower_components/angular-toastr/dist/angular-toastr.min.css');
 require('expose?Webuploader!../../bower_components/fex-webuploader/dist/webuploader');
 require('angular');
 require('angular-animate');
-require('toastr');
+// require('toastr');
 require('angular-toastr');
 var $ = jQuery;
 
