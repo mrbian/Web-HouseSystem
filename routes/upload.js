@@ -18,7 +18,7 @@ module.exports = (router) => {
                 if(part[0] === 'name'){
                     filename = part[1];
                 }
-            }else{
+            } else {
                 var prefix = util.getUniqueStr(6) + '_';
                 filename = prefix + filename;
                 var file_directory = path.join(__dirname,'../public/upload/file');

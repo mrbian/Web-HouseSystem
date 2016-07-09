@@ -7,6 +7,8 @@ const BusinessKind = db.BusinessKind;
 const BusinessMaterialKind = db.BusinessMaterialKind;
 const MaterialKind = db.MaterialKind;
 const FORM_CHECK = /^http:\/\/(\w+)(:\d+)?\/user\/form$/;
+const fs = require('fs');
+const path = require('path');
 
 const PARAM_NUM = [
     {
@@ -89,14 +91,18 @@ module.exports = (router) => {
     });
 
     //  上传接口
-    router.post('/user/upload/', function *() {
-        let ctx = this;
-        console.log(ctx.request.body);
-    });
+    // router.post('/user/upload/', function *() {
+    //     let ctx = this;
+    //     console.log(ctx.request.body);
+    // });
 
     // 下载接口
     router.get('/upload/file/', function *() {
         let ctx = this;
+        console.log(path.join(__dirname, '../../public/upload/file/887093_4.3demo.cpp'));
+        ctx.type = path.extname(path.join(__dirname, '../../public/upload/file/887093_4.3demo.cpp'));
+        ctx.body =
+            fs.createReadStream(path.join(__dirname, '../../public/upload/file/887093_4.3demo.cpp'));
     });
 
     router.get('/user/form_data/:right_id', function* () {

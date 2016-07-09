@@ -175,17 +175,18 @@ $(document).ready(function () {
             
             scope.downloadFile = function (index) {
                 var url = scope.insert_data.file_items[index].url;
-                http({
-                    method: 'GET',
-                    url: url
-                }).then(
-                    function (res) {
-                        
-                    },
-                    function (err) {
-                        console.error(err);
-                        toastr.error('下载文件失败', '错误：');
-                    });
+                window.open(window.location.host + url);
+                // http({
+                //     method: 'GET',
+                //     url: url
+                // }).then(
+                //     function (res) {
+                //         console.log(res);
+                //     },
+                //     function (err) {
+                //         console.error(err);
+                //         toastr.error('下载文件失败', '错误：');
+                //     });
             };
 
 
