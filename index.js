@@ -27,7 +27,7 @@ app.env = 'development';
 // static file
 app.use(staticServer(path.join( __dirname, 'public')));
 // favicon
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.png'));
 // http parse
 app.use(koaBody());
 // redis session

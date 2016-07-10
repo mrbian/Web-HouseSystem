@@ -6,6 +6,7 @@ require('../../scss/share/main.scss');
 require('../../scss/admin/first_check.scss');
 require('angular');
 // var JSON = require("querystring");
+
 var $ = jQuery;
 $(document).ready(function () {
     var app = angular.module('app', []);

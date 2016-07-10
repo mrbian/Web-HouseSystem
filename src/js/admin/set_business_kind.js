@@ -1,13 +1,14 @@
 /**
- * Created by bln on 16-6-29.
+ * Created by bln on 16-7-3.
  */
 require('../common/shared.js');
-
 require('../../bower_components/toastr/toastr.min.css');
-require('../../scss/admin/set_material_kind.scss');
+require('../../scss/admin/set_business_kind.scss');
+
 
 require('expose?toastr!../../bower_components/toastr/toastr.min.js');
 require('angular');
+require('angular-animate'); //本身不能产生动画，但是可以监听事件
 var WebUploader = require('../../bower_components/fex-webuploader/dist/webuploader.min.js');
 var $ = jQuery;
 
@@ -37,15 +38,16 @@ $(function () {
 
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
         scope.init = function(){
-           $http
-               .get('/super/agent/get_all_material_kind')
-               .success(function(data){
-                   scope.dataObj = JSON.parse(JSON.stringify(data));
-                   scope.dataObjCached = JSON.parse(JSON.stringify(data));
-               });
+            $http
+                .get('/super/agent/get_all_business_kind')
+                .success(function(data){
+                    console.log(data);
+                    scope.dataObj = JSON.parse(JSON.stringify(data));
+                    scope.dataObjCached = JSON.parse(JSON.stringify(data));
+                });
         };
         scope.init();
-        scope.createFile = function(){
+        scope.create = function(){
             modal_show();
         };
         scope.filter = '1';
@@ -62,18 +64,19 @@ $(function () {
                 return;
             }
             // console.log($index);
-            $http.post('/super/agent/del_material_kind',{
+            $http.post('/super/agent/del_business_kind',{
                 id : scope.dataObj[$index].id
             }).success(function(ret){
                 // console.log(ret);
                 if(ret == 'ok'){
                     toastr.info('删除成功');
                 }else{
-                    toastr.warning('删除失败');
+                    toastr.warning('删除失败，请先删除所有引用此登记大类的登记小类别');
+                    return;
                 }
+                scope.dataObj.splice($index,1);
+                scope.dataObjCached.splice($index,1);
             }).error(ajaxError);
-            scope.dataObj.splice($index,1);
-            scope.dataObjCached.splice($index,1);
         };
     }]);
 
@@ -92,80 +95,93 @@ $(function () {
         scope.edit_index = -1;
 
         scope.hide = function(){
-            scope.url = '';
             scope.title = '';
-            scope.is_need = 'yes';
+            scope.right_type = '1';
+            scope.is_edit = false;
+            scope.edit_id = -1;
+            scope.edit_index = -1;
+            scope.is_done = false;
+            scope.is_right = -1;
             modal_hide();
         };
-        scope.is_need = 'yes';
+        scope.is_done = false;
+        scope.is_right = -1;
+
+        scope.$watch('title',function(newValue,oldValue){
+            if(newValue == oldValue || ! newValue){
+                return;
+            }
+            if(scope.is_edit){
+                return;
+            }
+            $http
+                .get('/super/agent/check_business_title',{ params :{title : scope.title}})
+                .success(function(ret){
+                    if(ret == 'ok'){
+                        scope.is_done = true;
+                        scope.is_right = 1;
+                    }else{
+                        scope.is_done = false;
+                        scope.is_right = 0;
+                    }
+                }).error(ajaxError)
+        });
+
+        scope.right_type = '1';
+
         scope.submit = function(){
             // console.log(! uploaded && !!scope.url);
-            if(! scope.url){
-                toastr.warning('文件未上传');
-                return;
-            }
-            if(! scope.title){
-                toastr.warning('文件名未设置');
-                return;
-            }
 
             if(!! scope.is_edit){
-                $http.post('/super/agent/change_material_kind',{
+                $http.post('/super/agent/change_business_kind',{
                     id : scope.edit_id,
                     title : scope.title,
-                    url : scope.url,
-                    is_need : scope.is_need == 'yes'
+                    right_type : scope.right_type
                 }).success(function(ret){
                     if(ret == 'false'){
-                        toastr.error('缺少参数');
+                        toastr.warning('登记大类名不可重复！');
                         return;
                     }
-                    toastr.success('材料修改成功');
+                    toastr.success('登记大类修改成功');
                     scope.dataObj[scope.edit_index] = {
                         id : scope.edit_id ,
                         title : scope.title,
-                        url : scope.url,
-                        is_need : scope.is_need == 'yes'
+                        right_type : scope.right_type
                     };
                     scope.dataObjCached[scope.edit_index] = {
                         id : scope.edit_id ,
                         title : scope.title,
-                        url : scope.url,
-                        is_need : scope.is_need == 'yes'
+                        right_type : scope.right_type
                     };
                     scope.title = '';
-                    scope.url = '';
-                    scope.is_need = 'yes';
+                    scope.right_type = '1';
+                    scope.is_edit = false;
                     modal_hide();
                 }).error(ajaxError);
             }else{
                 $http
-                    .post('/super/agent/add_material_kind',{
+                    .post('/super/agent/add_business_kind',{
                         title : scope.title,
-                        url : scope.url,
-                        is_need : scope.is_need == 'yes'
+                        right_type : scope.right_type
                     }).success(function(ret){
                     if(ret == 'false') {
-                        toastr.error('材料种类添加失败');
+                        toastr.warning('登记种类添加失败，请检查登记大类名称');
                         return;
                     }
-                    toastr.info('材料种类添加成功');
+                    toastr.info('登记种类添加成功');
                     // console.log(scope.$parent.dataObj[0]);
                     scope.$parent.dataObj.push({
                         id : ret,
                         title : scope.title,
-                        url : scope.url,
-                        is_need : scope.is_need
+                        right_type : scope.right_type
                     });
                     scope.$parent.dataObjCached.push({
                         id : ret,
                         title : scope.title,
-                        url : scope.url,
-                        is_need : scope.is_need
+                        right_type : scope.right_type
                     });
                     scope.title = '';
-                    scope.url = '';
-                    scope.is_need = 'yes';
+                    scope.right_type = '1';
                     modal_hide();
                 });
             }
@@ -200,15 +216,15 @@ $(function () {
 
         scope.$on('edit modal',function(event,$index){
             scope.is_edit = true;
-            scope.edit_id = scope.dataObj[$index].id
+            scope.edit_id = scope.dataObj[$index].id;
             scope.edit_index = $index;
-            scope.url = scope.dataObj[$index].url;
             scope.title = scope.dataObj[$index].title;
-            scope.is_need = scope.dataObj[$index].is_need ? 'yes' : 'no';
+            scope.is_right = -1;
+            scope.right_type = scope.dataObj[$index].right_type.toString();
             modal_show();
         });
     }]);
-    
+
     app.controller('tableCtrl',['$scope','$http',function(scope,$http){
         scope.search_text = '';
         scope.search = function(){

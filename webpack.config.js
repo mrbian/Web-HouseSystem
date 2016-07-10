@@ -8,19 +8,22 @@ var extend = require('util')._extend;
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
-var adminEnties = {
+var adminEntries = {
     'admin-index': ['./src/js/admin/index.js'],
     'admin-login' : ['./src/js/admin/login.js'],
     'admin-first-check' : ['./src/js/admin/first_check.js'],
-    'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js']
+    'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js'],
+    'admin-set-business-kind' : ['./src/js/admin/set_business_kind.js'],
+    'admin-set-small-business-kind' : ['./src/js/admin/set_small_business_kind.js']
 };
 
 var userEntries = {
     'user-form': ['./src/js/user/form.js']
 };
 
-var entry = extend({}, adminEnties);
+var entry = extend({}, adminEntries);
     entry = extend(entry, userEntries);
+// entry = extend(entry, adminEntries);
 
 module.exports = {
     entry,
@@ -51,7 +54,7 @@ module.exports = {
         new webpack.ResolverPlugin(
             new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
         ),
-        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEnties)),
+        new CommonsChunkPlugin("admin-commons.js", Object.keys(adminEntries)),
         new ExtractTextPlugin("[name].css"),
     ],
     //devtool: 'source-map'
