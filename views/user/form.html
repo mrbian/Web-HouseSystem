@@ -2,92 +2,210 @@
 <% block 'head': %>
 <link rel="stylesheet" href="/dist/user-form.css"/>
 <% end %>
-<div ng-controller="formController" id="main">
-    <div class="title">
-        <i class="fa fa-pencil"></i>
-        <span>提交申请书</span>
+<div class="container_box" ng-controller="OutCtrl">
+    <div class="processer">
+        <ul>
+            <li>
+                <div class="step_line" ng-class="{'step_line_past' : step > 0}"></div>
+                <div class="step_inner">
+                    <i class="icon_step" ng-class="{'icon_step_current' : step >= 0 }">1</i>
+                    <h4>选择业务类型</h4>
+                </div>
+            </li>
+            <li>
+                <div class="step_line" ng-class="{'step_line_past' : step > 1}"></div>
+                <div class="step_inner">
+                    <i class="icon_step" ng-class="{'icon_step_current' : step >= 1 }">2</i>
+                    <h4>填写业务信息</h4>
+                </div>
+            </li>
+            <li>
+                <div class="step_line"></div>
+                <div class="step_inner">
+                    <i class="icon_step">3</i>
+                    <h4>上传业务所需文件</h4>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div id="all">
-        <div class="section">
-            <div class="content-search">
-                <label>
-                    <input type="text" placeholder="查询" class="form-control" ng-model="search"/>
-                    <i class="fa fa-search"></i>
+    <div class="step_panel">
+        <div ng-view></div>
+        <input type="hidden" ng-model="step">
+        <div class="next_btn" ng-hide="last">
+            <div class="btn btn-lg btn-green" ng-click="next()">
+                下一步
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="upload"></div>
+<% block 'scripts': %>
+<script type="text/ng-template" id="Main.html">
+    <div class="form-select">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="" class="control-label col-sm-3">权利类型选择：</label>
+                <div class="col-sm-6 col-sm-push-2">
+                    <div class="dropdown form-span" role="presentation">
+                        <button class="btn btn-default li-btn" id="power-type" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!--选择权利类型-->
+                            {{button.power}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="power-type">
+                            <li ng-repeat="power_type in insert_data.power">
+                                <a href="javascript:;"
+                                   ng-click="changePowerButton(TYPE.POWER, insert_data.power[$index], $index)">
+                                    {{ power_type.title }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label col-sm-3">登记大类选择：</label>
+                <div class="col-sm-6 col-sm-push-2">
+                    <!-- 登记大类 -->
+                    <div class="dropdown animation-if form-span" role="presentation"> <!--ng-if="show.register1" -->
+                        <button class="btn btn-default li-btn" id="register-type-1" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{button.register1}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="register-type-1">
+                            <li ng-repeat="register_type in insert_data.register1">
+                                <a href="javascript:;"
+                                   ng-click="changePowerButton(TYPE.REGISTER1, insert_data.register1[$index], $index)">
+                                    {{ register_type.title }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label col-sm-3">
+                    登记小类选择：
                 </label>
-                <button class="btn btn-sm" ng-click="searchItem()">
-                    搜索
-                </button>
+                <div class="col-sm-6 col-sm-push-2">
+                    <!-- 登记小类 -->
+                    <div class="dropdown animation-if form-span" role="presentation">
+                        <!--ng-if="show.register2">-->
+                        <button class="btn btn-default li-btn" id="register-type-2" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{button.register2}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="register-type-2">
+                            <li ng-repeat="register_type in insert_data.register2">
+                                <a href="javascript:;"
+                                   ng-click="changePowerButton(TYPE.REGISTER2, insert_data.register2[$index], $index)">
+                                    {{ register_type.title }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="form-info">
+
+    </div>
+</script>
+<script type="text/ng-template" id="info.html">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="" class="control-label col-md-3">
+                业务标题
+            </label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="title">
             </div>
         </div>
-        <div class="loading" ng-if="!loaded">
-            <p>{{ loading }}</p>
-        </div>
-        <div class="form-select" ng-if="loaded">
-            <div class="dropdown form-span" role="presentation">
-                <button class="btn btn-default li-btn" id="power-type" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <!--选择权利类型-->
-                    {{button.power}}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="power-type">
-                    <li ng-repeat="power_type in insert_data.power">
-                        <a href="javascript:;"
-                           ng-click="changePowerButton(TYPE.POWER, insert_data.power[$index], $index)">
-                            {{ power_type.title }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 登记大类 -->
-            <div class="dropdown animation-if form-span" role="presentation"> <!--ng-if="show.register1" -->
-                <button class="btn btn-default li-btn" id="register-type-1" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{button.register1}}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="register-type-1">
-                    <li ng-repeat="register_type in insert_data.register1">
-                        <a href="javascript:;"
-                           ng-click="changePowerButton(TYPE.REGISTER1, insert_data.register1[$index], $index)">
-                            {{ register_type.title }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-        <!-- 登记小类 -->
-            <div class="dropdown animation-if form-span" role="presentation">
-                 <!--ng-if="show.register2">-->
-                <button class="btn btn-default li-btn" id="register-type-2" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{button.register2}}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="register-type-2">
-                    <li ng-repeat="register_type in insert_data.register2">
-                        <a href="javascript:;"
-                           ng-click="changePowerButton(TYPE.REGISTER2, insert_data.register2[$index], $index)">
-                            {{ register_type.title }}
-                        </a>
-                    </li>
-                </ul>
+        <div class="form-group">
+            <label for="" class="control-label col-md-3">
+                业务简介
+            </label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="info">
             </div>
         </div>
-
-
-        <div>
-            <table class="table table-bordered animation-if form-table" ng-if="loaded">
-                <!--<ng-if="show.uploader">-->
-                <thead>
+        <div class="form-group">
+            <label for="" class="control-label col-md-3">
+                申请理由
+            </label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="no">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="control-label col-md-3">
+                国家和城市
+            </label>
+            <div class="col-md-3">
+                <select name="country" class="form-control">
+                    <option value="1">中国</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="city" class="form-control">
+                    <option value="1">大连</option>
+                    <option value="1">北京</option>
+                    <option value="1">上海</option>
+                    <option value="1">广州</option>
+                    <option value="1">深圳</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="control-label col-md-3">
+                地区
+            </label>
+            <div class="col-md-3">
+                <select name="area" id="area" class="form-control">
+                    <option value="2">金州区</option>
+                    <option value="2">开发区</option>
+                </select>
+            </div>
+        </div>
+        <label for="" class="control-label col-md-3">
+            地图
+        </label>
+        <div class="col-md-6">
+            <input type="text" class="form-control" name="pic">
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="form.html">
+    <div id="main">
+        <div id="all">
+            <div class="section">
+                <div class="content-search">
+                    <label>
+                        <input type="text" placeholder="查询" class="form-control" ng-model="search"/>
+                        <i class="fa fa-search"></i>
+                    </label>
+                    <button class="btn btn-sm" ng-click="searchItem()">
+                        搜索
+                    </button>
+                </div>
+            </div>
+            <div>
+                <table class="table table-striped animation-if form-table">
+                    <!--<ng-if="show.uploader">-->
+                    <thead>
                     <tr>
                         <td>项目</td>
                         <td>是/否必须</td>
                         <td>操作</td>
+                        <td>状态</td>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr ng-repeat="file_item in insert_data.file_items">
                         <td>
                             {{file_item.title}}
@@ -96,18 +214,21 @@
                             {{file_item.is_need ? '是': '否'}}
                         </td>
                         <td>
-                            <button class="btn btn-success btn-sm uploader"
-                                    ng-click="uploadFile($index)">上传</button>
                             <button class="btn btn-primary btn-sm"
-                                    ng-click="downloadFile($index)">下载所需文件</button>
+                                    ng-click="downloadFile($index)">下载模板文件</button>
+                            <button class="btn btn-success btn-sm uploader"
+                                    ng-click="uploadFile($index)">{{file_item.isUpload ? '重新上传已填好文件' : '上传已填好文件' }}</button>
+                        </td>
+                        <td>
+                            <span class="file_state label" ng-class="{'yes': file_item.isUpload , 'no' : !file_item.isUpload}">{{file_item.isUpload ?  '已上传' : '未上传' }}</span>
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <div class="btn btn-green btn-lg confirm">提交业务</div>
     </div>
-    <button id="upload"></button>
-</div>
-<% block 'scripts': %>
+</script>
 <script src="/dist/user-form.js"></script>
 <% end %>

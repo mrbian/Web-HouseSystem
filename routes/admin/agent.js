@@ -6,6 +6,24 @@ var util = require('../../lib/utilx');
 var MaterialKind = db.models.MaterialKind;
 var BusinessKind = db.models.BusinessKind;
 var SmallBusinessKind = db.models.BusinessKind;
+const auth = require('../../helpers/auth');
+const co = require('co');
+const Audit = db.models.Audit;
+const Business = db.models.Business;
+const FIRST_CHECK = /^http:\/\/(\w+)(:\d+)?\/admin\/first_check$/;
+
+const TYPE = {
+    EXCLUSION: 0,
+    SUCCESS: 1// console.log(register_type2);
+};
+
+
+
+function testReferrer(regex, referrer) {
+    return regex.test(referrer);
+}
+
+
 
 module.exports = (router) => {
     /**
@@ -215,5 +233,85 @@ module.exports = (router) => {
             }
         });
         ctx.body = data;
+    });
+
+    /**
+     * 审核以及缮证的代码
+     */
+
+    router.get('/admin/first_check_data', function *() {
+        var ctx = this;
+        // 检查cookie和referer// materialKind寻找相应的material
+        let header = ctx.header;
+        // console.log(ctx);
+        if (FIRST_CHECK.test(header.referer)) {
+            let type_num = (yield auth.user(this)).type;
+
+            let business_id = yield Audit.findAll({
+                where: {
+                    type: type_num,
+                    state: 0
+                }
+            }).map(function (value) {
+                return value.dataValues.business_id;
+            });
+
+            ctx.body = yield Business.findAll({
+                where: {
+                    id: business_id
+                }
+            });
+        } else {// console.log(register_type2);
+            ctx.status = 404;
+            // ctx.body = yield {};
+        }
+    });
+
+    // right_id => 权力类型
+    // id => 大类
+
+    router.post('/admin/first_check', function *() {
+        let ctx = this;
+        // body => {type, comment}
+        let body = ctx.request.body;
+        ctx.checkBody('type').notEmpty();
+        ctx.checkBody('comment').notEmpty().toString();
+        ctx.checkBody('id').notEmpty();
+        if (body.type === TYPE.EXCLUSION) {// console.log(register_type2);
+            yield Audit.update({
+                comment: body.comment,
+                state: -1
+            }, {
+                where: {
+                    id: body.id
+                }
+            });
+            ctx.body = yield {finish: true};
+        } else if (body.type === TYPE.SUCCESS) {
+            let where_data = {
+                where: {
+                    id: body.id
+                }
+            };
+
+
+            let success_type = (yield Audit.findOne(where_data))
+                .dataValues;
+
+            let create_data = {
+                type: success_type.type + 1,
+                state: 0,
+                comment: ' ',
+                business_id: success_type.business_id
+            };
+            if (success_type > 3) {
+                create_data.state = 1;
+            }
+            console.log(create_data);
+            yield Audit.create(create_data);
+
+
+            ctx.body = yield {finish: true}
+        }
     });
 };

@@ -90,12 +90,6 @@ module.exports = (router) => {
         console.log(ctx.request.body);
     });
 
-    //  上传接口
-    // router.post('/user/upload/', function *() {
-    //     let ctx = this;
-    //     console.log(ctx.request.body);
-    // });
-
     // 下载接口
     router.get('/upload/file/', function *() {
         let ctx = this;
@@ -109,7 +103,6 @@ module.exports = (router) => {
         let ctx = this;
         let header = ctx.header;
 
-        if (testReferrer(FORM_CHECK, header.referer)) {
             let params_id = {
                 right_id: this.params.right_id || undefined,
                 id: this.params.id || undefined,
@@ -144,17 +137,11 @@ module.exports = (router) => {
                 file_items: material_kind
             };
 
-        } else {
-            ctx.status = 404;
-        }
-
     });
 
     router.get('/user/form_data/:right_id/:id', function *() {
         let ctx = this;
         let header = ctx.header;
-        if (testReferrer(FORM_CHECK, header.referer)) {
-
             // businesskind寻找大类<null>为大类
             let params_id = {
                 right_id: this.params.right_id || undefined,
@@ -188,17 +175,11 @@ module.exports = (router) => {
                 register2: register_type2,
                 file_items: material_kind
             };
-
-        } else {
-            ctx.status = 404;
-        }
     });
 
     router.get('/user/form_data/:right_id/:id/:business_id', function* () {
         let ctx = this;
         let header = ctx.header;
-        if (testReferrer(FORM_CHECK, header.referer)) {
-
             // businesskind寻找大类<null>为大类
             let params_id = {
                 right_id: this.params.right_id || undefined,
@@ -219,50 +200,5 @@ module.exports = (router) => {
             ctx.body = yield {
                 file_items: material_kind
             };
-
-        } else {
-            ctx.status = 404;
-        }
     });
 };
-
-// 等哪天再说吧
-// function* implementFunction(params_id, param_num) {
-//     let material_kind;
-//     let material_id;
-//     let registerFn = getRegisterData(params_id.right_id, params_id.id);
-//
-//     // businesskind寻找小类(按照大类id)
-//     let register_type1 = yield registerFn.next().value;
-//
-//     // 获取小类的id
-//     let register_type2 = yield registerFn.next().value;
-//
-//     // businessMaterialkind寻找相应的(Materialkind)
-//     let materialFn = getMaterialId(register_type2[0].id);
-//     material_id = yield materialFn.next().value;
-//
-//     // materialKind寻找相应的material
-//     let materialDataFn = getMaterialData(
-//         material_id.map((value) => {
-//             return value.material_kind_id;
-//         })
-//     );
-//     material_kind = yield materialDataFn.next().value;
-//     // console.log();
-//     let all_data = {
-//         register1: register_type1,
-//         register2: register_type2,
-//         file_items: material_kind
-//     };
-//
-//     let return_data = {};
-//
-//     Object.keys(param_num).forEach(function (value) {
-//         if (param_num[value]) {
-//             return_data[value] = all_data[value];
-//         }
-//     });
-//
-//     yield return_data;
-// }

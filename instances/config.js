@@ -7,9 +7,9 @@ var fs = require('fs');
 module.exports = {
     db: {
         name: 'mysql',
-        username: 'root',
-        pwd: 'erfvgt',
-        host:'127.0.0.1',
+        username: 'bian',
+        pwd: 'Bln12345',
+        host:'139.129.42.180',
         database: 'house',
         toString() {
             return `${this.name}://${this.username}:${this.pwd}@${this.host}/${this.database}`;

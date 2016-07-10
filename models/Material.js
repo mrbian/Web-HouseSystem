@@ -8,7 +8,12 @@ module.exports = (sequelize,DataTypes) => {
         logic_id : shortDataTypes.String(),
         url : shortDataTypes.String(),
         info : shortDataTypes.String(),
-        title : shortDataTypes.String()
+        title : shortDataTypes.String(),
+        /**
+         * 0 : 未上传
+         * 1 : 已上传
+         */
+        state : shortDataTypes.Int()
     },{
         timestamps : false,
         associate : function(models) {

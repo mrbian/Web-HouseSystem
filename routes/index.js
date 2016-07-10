@@ -20,7 +20,7 @@ var router = new Router();
 router.use(function *(next) {
     var test_user = yield User.findOne({
         where : {
-            type : 3
+            type : 0
         }
     });
     auth.login(this,test_user);
