@@ -1,3 +1,24 @@
+
+html{
+  /* todo : 为什么footer可以滚动 */
+  /*overflow: hidden;*/
+  height:100%;
+}
+
+body{
+  position : relative;
+  min-height : 100%;
+}
+
+html:before,
+html:after ,body:before,html:after{
+  content: " ";
+  display: table;
+}
+html:after,body:after {
+  clear: both;
+}
+
 .badge {
   border-radius: 1px;
   font-weight: 300; }
@@ -256,7 +277,7 @@ ul {
   font-size: 12px; }
 
 footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   height: 57px;
   background-color: #303641;
@@ -272,14 +293,22 @@ footer {
   footer span {
     white-space: pre; }
 
+  footer:before,footer:after{
+    content : '';
+    clear:both;
+    display: table;
+  }
+
+
+
 #wrapper div.main-content {
   position: inherit;
   margin-left: 250px;
-  margin-top: 50px;
-  min-height: 1000px;
+  margin-top : 0 !important;
+  min-height: 0 !important;
 }
-
-html{
-  /* todo : 为什么footer可以滚动 */
-  /*overflow: hidden;*/
+#wrapper:after,#wrapper:before{
+  content : '';
+  clear:both;
+  display: table;
 }
