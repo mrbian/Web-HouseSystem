@@ -207,5 +207,13 @@ module.exports = (router) => {
     /**
      * 登记小类的增删改查
      */
-    
+    router.get('/super/agent/get_all_small_business_kind',function *(){
+        var ctx = this;
+        var data = yield SmallBusinessKind.findAll({
+            where:{
+                type : 1
+            }
+        });
+        ctx.body = data;
+    });
 };

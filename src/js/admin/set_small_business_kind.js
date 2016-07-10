@@ -38,7 +38,7 @@ $(function () {
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
         scope.init = function(){
             $http
-                .get('/super/agent/get_all_business_kind')
+                .get('/super/agent/get_all_small_business_kind')
                 .success(function(data){
                     console.log(data);
                     scope.dataObj = JSON.parse(JSON.stringify(data));
