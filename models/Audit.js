@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
          * 0 : 审核中
          * 1 : 审核通过
          * -1 : 审核未通过
+         * 2 : 审核未进行
          */
         state : shortDataTypes.Int(),
     },{

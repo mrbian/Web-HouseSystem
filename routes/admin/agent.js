@@ -12,10 +12,13 @@ const Audit = db.models.Audit;
 const Business = db.models.Business;
 const User = db.models.User;
 const Material = db.models.Material;
+const AuditAdapter = require('../../adapter/Audit');
 const FIRST_CHECK = /^http:\/\/(\w+)(:\d+)?\/admin\/first_check$/;
+const debug = true;
 
+//棒棒这样定义常量确实不错
 const TYPE = {
-    EXCLUSION: 0,
+    EXCLUSION: -1,
     SUCCESS: 1// console.log(register_type2);
 };
 
@@ -28,6 +31,11 @@ function testReferrer(regex, referrer) {
 
 
 module.exports = (router) => {
+    /**
+     * 这里就体现了js的缺点了，我在addBusiness后面还需要添加一个Audit
+     * 但是如果直接在路由下面写代码非常差劲，所以应该用类的思想加一层adapter
+     * 路由驱动还是事件驱动？加一层adapter来语义化代码不错。
+     */
     router.post('/user/agent/addBusiness',function *(){
         var ctx = this;
         var body = ctx.request.body;
@@ -70,6 +78,7 @@ module.exports = (router) => {
             });
             business.addMaterial(material);
         }
+        yield AuditAdapter.addAudit(business.id);
         ctx.body = 'ok';
     });
 
@@ -288,12 +297,7 @@ module.exports = (router) => {
 
     router.get('/admin/first_check_data', function *() {
         var ctx = this;
-        // 检查cookie和referer// materialKind寻找相应的material
-        let header = ctx.header;
-        // console.log(ctx);
-        if (FIRST_CHECK.test(header.referer)) {
             let type_num = (yield auth.user(this)).type;
-
             let business_id = yield Audit.findAll({
                 where: {
                     type: type_num,
@@ -302,21 +306,22 @@ module.exports = (router) => {
             }).map(function (value) {
                 return value.dataValues.business_id;
             });
-
+        /**
+         * sequelize 本身就对数组支持很好，棒棒可以的
+         */
             ctx.body = yield Business.findAll({
                 where: {
                     id: business_id
                 }
             });
-        } else {// console.log(register_type2);
-            ctx.status = 404;
-            // ctx.body = yield {};
-        }
     });
 
     // right_id => 权力类型
     // id => 大类
 
+    /**
+     * 这样写不对！！根本没有考虑到权限问题 囧
+     */
     router.post('/admin/first_check', function *() {
         let ctx = this;
         // body => {type, comment}
@@ -324,41 +329,24 @@ module.exports = (router) => {
         ctx.checkBody('type').notEmpty();
         ctx.checkBody('comment').notEmpty().toString();
         ctx.checkBody('id').notEmpty();
-        if (body.type === TYPE.EXCLUSION) {// console.log(register_type2);
-            yield Audit.update({
-                comment: body.comment,
-                state: -1
-            }, {
-                where: {
-                    id: body.id
-                }
-            });
-            ctx.body = yield {finish: true};
-        } else if (body.type === TYPE.SUCCESS) {
-            let where_data = {
-                where: {
-                    id: body.id
-                }
-            };
-
-
-            let success_type = (yield Audit.findOne(where_data))
-                .dataValues;
-
-            let create_data = {
-                type: success_type.type + 1,
-                state: 0,
-                comment: ' ',
-                business_id: success_type.business_id
-            };
-            if (success_type > 3) {
-                create_data.state = 1;
+        if(ctx.errors){
+            ctx.body = ctx.errors;
+            return;
+        }
+        try {
+            var audit = yield AuditAdapter.getCheckAuditsByBusinessId(body.id,true);
+            if (body.type == TYPE.EXCLUSION) {// console.log(register_type2);
+                //不通过
+                yield AuditAdapter.notAccept(audit.id,body.comment);
+            } else if (body.type == TYPE.SUCCESS) {
+                //通过
+                // yield AuditAdapter.Accept(audit.id);
             }
-            console.log(create_data);
-            yield Audit.create(create_data);
-
-
-            ctx.body = yield {finish: true}
+            ctx.body = {business_id : body.id};
+        }catch(err){
+            console.error(err.stack);
+            ctx.body = debug ? err : '500';
+            console.log(arguments);
         }
     });
 };

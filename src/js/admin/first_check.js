@@ -4,6 +4,8 @@
 require('../common/shared');
 require('../../scss/share/main.scss');
 require('../../scss/admin/first_check.scss');
+require('../../bower_components/toastr/toastr.css');
+var toastr = require('../../bower_components/toastr/toastr.js');
 require('angular');
 // var JSON = require("querystring");
 
@@ -18,7 +20,7 @@ $(document).ready(function () {
         scope.reason = ''; // comment
         scope.TYPE = {
             SUCCESS: 1,
-            EXCLUSION: 0
+            EXCLUSION: -1
         };
         scope.search = ''; // 搜索内容
         // scope.data  = undefined; // 数据
@@ -39,7 +41,7 @@ $(document).ready(function () {
             cache: cache
         }).then(function (res) {
             // scope.data = ;
-
+            console.log(res);
             scope.all_items = res.data.map(function (value) {
                 return {
                     title: value.title,
@@ -95,14 +97,15 @@ $(document).ready(function () {
                     id: scope.check_items[scope.prepare.item].id,
                     comment: data || ' '
                 };
+                console.log(post_data);
 
                 http.post(
                     'first_check',
                     JSON.stringify(post_data)
                 ).then(
                     function (res) {
+                        toastr.success('操作成功');
                         console.log(res);
-                        if (res.data.finish) {
                             scope.all_items = scope.all_items.filter(function (value) {
                                 console.log(value.id);
                                 return value.id !== scope.check_items[scope.prepare.item].id;
@@ -116,9 +119,9 @@ $(document).ready(function () {
                             //     $('#pass-item').modal('hide');
                             // }
                             scope.clearPrepare();
-                        }
                     },
                     function (error) {
+                        toastr.error('操作失败');
                         console.error(error);
                     })
             }
@@ -157,7 +160,7 @@ $(document).ready(function () {
             });
 
             scope.if_reason = true;
-        };
+        }
 
         scope.searchItem = function () {
             if (scope.search) {

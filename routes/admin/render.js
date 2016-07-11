@@ -4,8 +4,10 @@
 const render = require('../../instances/render');
 const auth = require('../../helpers/auth');
 const co = require('co');
-
-
+/**
+ * 将表示层也分层正是三层五层架构的思想
+ * @param router
+ */
 
 module.exports = (router) => {
     router.get('/admin/index',function *(){

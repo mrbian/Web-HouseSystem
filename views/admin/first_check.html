@@ -27,7 +27,7 @@
                 <div class="loading" ng-if="!loaded">
                     <p>{{ loading }}</p>
                 </div>
-                <table class="table table-striped table-bordered" ng-if="loaded">
+                <table class="table table-striped " ng-if="loaded">
                     <thead>
                         <tr>
                             <td>项目</td>
@@ -48,7 +48,7 @@
                                 <button class="btn btn-danger btn-sm"
                                         data-target="#delete-item" data-toggle="modal"
                                         ng-click="checkItem(TYPE.EXCLUSION, $index)">
-                                    删除
+                                    拒绝
                                 </button>
                             </td>
                         </tr>

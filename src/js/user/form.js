@@ -15,6 +15,7 @@ var $ = jQuery;
 /**
  * todo : scope.upload_index不生效，原因待查
  * todo ： 这个多路由代码写的还是不好，需要学习别人的代码
+ * todo : 路由还会造成浏览器的history back 失效，造成用户体验变差，需要解决
  * @type {number}
  */
 var u_index = -1;
