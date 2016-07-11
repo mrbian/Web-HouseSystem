@@ -47,7 +47,7 @@ $(function () {
         };
         scope.init();
         scope.create = function(){
-            modal_show();
+            location.href = '/admin/small_business_detail';
         };
         scope.filter = '1';
         scope.dataObj = [];

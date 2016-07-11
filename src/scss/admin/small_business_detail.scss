@@ -1,10 +1,12 @@
+//scss的复用不合理
+
 div.center {
   margin: 0 auto;
 }
 
 div.cr-all {
-  padding: 0 20px;
   margin-top: 60px;
+  padding: 0 20px;
 }
 
 span.grey {
@@ -35,7 +37,7 @@ div.cr {
       display: inline-block;
       .btn-green {
         background-color: #18bc9c;
-        width: 100px;
+        width: 130px;
         color: white;
       }
     }
@@ -52,8 +54,14 @@ div.table-cr {
     margin-left: -10px;
     margin-right: -20px;
     div.table-header-item {
-      width: 80px;
+      width: 120px;
       text-align: center;
+      float: left;
+      margin-left : 2px;
+      background-color: inherit;
+      cursor: pointer;
+    }
+    div.table-header-item.cur{
       background-color: #fff;
     }
   }
@@ -68,7 +76,7 @@ div.table-cr {
       div.select {
         float: left;
         padding: 0 3px;
-        width: 120px;
+        width: 140px;
         font-size: 12px !important;
       }
 
@@ -133,7 +141,6 @@ div.table-cr {
   }
 
   div.table {
-    margin-top: 30px;
     margin-bottom: 100px;
   }
 
@@ -306,4 +313,22 @@ div.my-modal-backdrop.in{
 
 div.fl{
   float: left;
+}
+
+span.title-right{
+  color : #44b549;
+}
+
+span.title-false{
+  color : red;
+}
+
+label.control-label-tl{
+  text-align: left;
+  padding-top : 7px;
+  margin-bottom: 0;
+}
+
+div.business_detail{
+  margin-top : 40px;
 }

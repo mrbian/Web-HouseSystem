@@ -14,7 +14,8 @@ var adminEntries = {
     'admin-first-check' : ['./src/js/admin/first_check.js'],
     'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js'],
     'admin-set-business-kind' : ['./src/js/admin/set_business_kind.js'],
-    'admin-set-small-business-kind' : ['./src/js/admin/set_small_business_kind.js']
+    'admin-set-small-business-kind' : ['./src/js/admin/set_small_business_kind.js'],
+    'admin-small-business-detail' : ['./src/js/admin/small_business_detail.js']
 };
 
 var userEntries = {

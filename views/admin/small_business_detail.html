@@ -1,0 +1,194 @@
+<% extend './admin_shared/admin-base' %>
+<% block 'head': %>
+<link rel="stylesheet" href="/dist/admin-small-business-detail.css">
+<% end %>
+<div class="cr-all" ng-controller="MainCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cr">
+                <div class="header-list-panel">
+                    <div class="header-list-title">
+                        <i class="fa fa-tag"></i>
+                        <span class="grey">登记管理 &nbsp;/&nbsp; </span>
+                        <span class="grey">登记小类管理 &nbsp;/&nbsp; </span>
+                        <span class="black">登记小类详情</span>
+                    </div>
+                    <div class="header-list-add">
+                        <div class="btn btn-danger" ng-click="back()"><i class="fa fa-mail-reply"></i>返回</div>
+                        <div class="btn btn-green" ng-show="tab == 2" ng-click="add()">添加文件</div>
+                        <div class="btn btn-primary" ng-click="submit()">提交</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-cr">
+                <div class="table-header-panel">
+                    <div class="table-header-item " ng-class="{ 'cur' : tab == 1 }" ng-click="switchTab(1)">
+                        登记详情
+                    </div>
+                    <div class="table-header-item" ng-class="{ 'cur' : tab == 2 }" ng-click="switchTab(2)">
+                        文件列表
+                    </div>
+                </div>
+                <div class="business_detail" ng-show="tab == 1">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="" class="col-sm-3 control-label">
+                                登记小类名称
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="title" ng-model="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-3 control-label">
+                                是否免费
+                            </label>
+                            <div class="col-sm-2">
+                            <input type="radio" value="1" ng-model="is_free" name="is_free">是
+                            </div>
+                            <div class="col-sm-2">
+                            <input type="radio" value="0" ng-model="is_free" name="is_free">否
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-body" ng-show="tab == 2">
+                    <div class="search-panel" ng-controller="tableCtrl">
+                        <div class="fl">
+                            <div class="select">
+                                <select ng-model="filter" name="search" id="search" class="form-control">
+                                    <option value="1">文件名称</option>
+                                </select>
+                            </div>
+                            <div class="search-group">
+                                <i class="fa fa-search"></i>
+                                <input type="text" ng-model="search_text" class="input-group" placeholder="请输入搜索内容">
+                            </div>
+                            <div class="btn btn-search" ng-click="search()">
+                                搜索
+                            </div>
+                        </div>
+                        <!--<div class="page">-->
+                        <!--<ul>-->
+                        <!--<li>-->
+                        <!--1-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--2-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="table"><table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                材料名称
+                            </th>
+                            <th>
+                                材料模板下载地址
+                            </th>
+                            <th>
+                                是否必须
+                            </th>
+                            <th>
+                                操作
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="(key,value) in dataObj" data-index="{{$index}}">
+                            <td class="file-title">
+                                {{dataObj[$index].title}}
+                            </td>
+                            <td class="file-href">
+                                    <span style="color:rgb(35,82,124);">
+                                        {{dataObj[$index].url }}
+                                    </span>
+                            </td>o
+                            <td>
+                                {{dataObj[$index].is_free ? '是' : '否'}}
+                            </td>
+                            <td class="file-operator">
+                                    <div class="btn btn-danger" ng-click="del($index)">
+                                        删除
+                                    </div>
+                            </td>
+                        </tr>
+                        <!--<tr>-->
+                        <!--<td class="file-logic-id">-->
+                        <!--120405-->
+                        <!--</td>-->
+                        <!--<td class="file-title">-->
+                        <!--个人身份证明-->
+                        <!--</td>-->
+                        <!--<td class="file-href">-->
+                        <!--<a href="http://mrbian.com/dist/upload/file-123445.doc">-->
+                        <!--http://mrbian.com/dist/upload/file-123445.doc-->
+                        <!--</a>-->
+                        <!--</td>-->
+                        <!--<td class="file-is-need">-->
+                        <!--是-->
+                        <!--</td>-->
+                        <!--<td class="file-operator">-->
+                        <!--<div class="btn-group">-->
+                        <!--<div class="btn btn-green">-->
+                        <!--修改-->
+                        <!--</div>-->
+                        <!--<div class="btn btn-danger">-->
+                        <!--删除-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-controller="ModalCtrl" class="my-modal on">
+        <div class="my-modal-content">
+            <div class="my-modal-content-header-panel">
+                <div class="my-modal-content-header-title">
+                    创建登记大类
+                </div>
+                <div class="cancel">
+                </div>
+            </div>
+            <div class="my-modal-content-body padding-top-8">
+                <form action="">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="material" class="col-md-3 control-label">
+                                当前材料种类列表
+                            </label>
+                            <div class="col-md-8">
+                                <select name="material" ng-model="material" id="material"
+                                        ng-options="value.id as value.title for (key, value) in lists" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group-container">
+                                <div class="btn" ng-click="submit()"><i class="fa fa-check"></i>确认</div>
+                                <div class="btn btn-danger" ng-click="hide()"><i class="fa fa-remove"></i>取消</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="my-modal-backdrop on">
+    </div>
+</div>
+<% block 'scripts': %>
+<script type="text/plain" id="data"><%= @data %></script>
+<script src="/dist/admin-small-business-detail.js"></script>
+<% end %>

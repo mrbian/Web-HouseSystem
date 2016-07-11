@@ -291,6 +291,74 @@ module.exports = (router) => {
         ctx.body = data;
     });
 
+    router.get('/super/agent/get_all_small_business_file/:business_id',function *(){
+        var ctx = this;
+        var business_id = ctx.query.business_id;
+        var data = yield Material.findAll({
+            where:{
+                business_id : business_id
+            }
+        });
+        ctx.body = data;
+    });
+
+    router.post('/super/agent/small_business_del_file',function *(){
+        var ctx = this;
+        var body = ctx.request.body;
+        var business_id = body.business_id;
+        var material_id = body.material_id;
+        var small_business = yield Business.findOne({
+            where : {
+                id : business_id
+            }
+        });
+        var material_kind = MaterialKind.findOne({
+            where : {
+                id : material_id
+            }
+        });
+        yield small_business.removeMaterialKind(material_kind);
+        ctx.body = 'ok';
+    });
+    
+    router.post('/super/agent/change_small_business_kind',function *(){
+        var ctx =  this;
+        var body = ctx.request.body;
+        var title = body.title;
+        var is_free = body.is_free;
+        var business_id = body.business_id;
+        yield Business.update({
+            title : title,
+            is_free : !! is_free
+        },{
+            where : {
+                id : business_id
+            }
+        })
+        ctx.body = 'ok';
+    });
+
+    router.post('/super/agent/add_small_business_kind',function *(){
+        var ctx = this;
+        var body = ctx.request.body;
+        var title = body.title;
+        var is_free = body.is_free;
+        var file_list = body.file_list;
+        var business_kind = yield Business.create({
+            title : title,
+            is_free : !! is_free
+        });
+        for(let item of file_list){
+           var material_kind = yield Material.findOne({
+               where:{
+                   id : item.id
+               }
+           });
+           yield business_kind.addMaterialKind(material_kind);
+        }
+        ctx.body = 'ok';
+    });
+
     /**
      * 审核以及缮证的代码
      */
