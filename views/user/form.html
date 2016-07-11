@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+    <div class="btn btn-green btn-lg confirm" ng-show="step == 2" ng-click="submit()">提交业务</div>
 </div>
 
 <div id="upload"></div>
@@ -120,18 +121,18 @@
     <form class="form-horizontal">
         <div class="form-group">
             <label for="" class="control-label col-md-3">
-                业务标题
+                业务标题 (必填)
             </label>
             <div class="col-md-6">
-                <input type="text" class="form-control" name="title">
+                <input type="text" ng-model="title" class="form-control" name="title">
             </div>
         </div>
         <div class="form-group">
             <label for="" class="control-label col-md-3">
-                业务简介
+                业务简介 (必填)
             </label>
             <div class="col-md-6">
-                <input type="text" class="form-control" name="info">
+                <input type="text" ng-model="info" class="form-control" name="info">
             </div>
         </div>
         <div class="form-group">
@@ -227,7 +228,6 @@
                 </table>
             </div>
         </div>
-        <div class="btn btn-green btn-lg confirm">提交业务</div>
     </div>
 </script>
 <script src="/dist/user-form.js"></script>

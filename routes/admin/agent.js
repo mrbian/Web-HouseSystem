@@ -10,6 +10,8 @@ const auth = require('../../helpers/auth');
 const co = require('co');
 const Audit = db.models.Audit;
 const Business = db.models.Business;
+const User = db.models.User;
+const Material = db.models.Material;
 const FIRST_CHECK = /^http:\/\/(\w+)(:\d+)?\/admin\/first_check$/;
 
 const TYPE = {
@@ -26,6 +28,51 @@ function testReferrer(regex, referrer) {
 
 
 module.exports = (router) => {
+    router.post('/user/agent/addBusiness',function *(){
+        var ctx = this;
+        var body = ctx.request.body;
+        ctx.checkBody('title').notEmpty();
+        ctx.checkBody('info').notEmpty();
+        ctx.checkBody('materialItems').notEmpty();
+        ctx.checkBody('type').notEmpty();
+        if(ctx.errors){
+            ctx.body = ctx.errors;
+            return;
+        }
+        var user = yield User.findOne({
+            where:{
+                id : (yield auth.user(ctx)).id
+            }
+        });
+        let materialLists = [];
+        for(let item of body.materialItems){
+            if(item.newUrl){
+                materialLists.push({
+                    id : item.id,
+                    url : item.newUrl,
+                    title : item.title
+                });
+            }
+        }
+        var business = yield Business.create({
+            title : body.title  || '',
+            info : body.info || '',
+            logic_id : util.getUniqueStr()
+        });
+        user.addBusiness(business);
+        for(let item of materialLists){
+            let material = yield Material.create({
+                logic_id : util.getUniqueStr(),
+                url : item.url,
+                info : 'null',
+                title : item.title,
+                state : 0
+            });
+            business.addMaterial(material);
+        }
+        ctx.body = 'ok';
+    });
+
     /**
      * 材料种类增删改查
      */

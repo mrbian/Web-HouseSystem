@@ -14,6 +14,7 @@ require('angular-route');
 var $ = jQuery;
 /**
  * todo : scope.upload_index不生效，原因待查
+ * todo ： 这个多路由代码写的还是不好，需要学习别人的代码
  * @type {number}
  */
 var u_index = -1;
@@ -45,10 +46,53 @@ $(document).ready(function () {
                 pick: '#upload'
             });
 
-    app.controller('OutCtrl',['$scope','$location',function(scope,$location){
-        scope.step = 0;
-        scope.last = false;
-        scope.isRefresh = true;
+    app.controller('OutCtrl',['$scope','$http','$location','toastr',function(scope,$http,$location,toastr){
+        scope.init = scope.refresh = function(){
+            u_index = -1;
+            scope.step = 0;
+            scope.last = false;
+            scope.isRefresh = true;
+
+            scope.title = '测试';
+            scope.info = '演示';
+            /**
+             * 下面的代码是给MainCtrl和formCtrl通信用
+             */
+            scope.TYPE = {
+                POWER: 0,
+                REGISTER1: 1,
+                REGISTER2: 2
+            };
+
+            scope.loaded = false;
+            scope.loading = '加载中.......';
+            scope.upload_index = -1;
+
+            scope.insert_data = {
+                power: [
+                    {title: '所有权登记', right_type: 1},
+                    {title: '抵押权登记', right_type: 2},
+                    {title: '地役权登记', right_type: 3},
+                    {title: '预告登记', right_type: 4},
+                    {title: '其他登记', right_type: 0}
+                ],
+                register1: undefined,
+                register2: undefined,
+                file_items: undefined
+            };
+            scope.button = {
+                power: scope.insert_data.power[0].title,
+                register1: undefined,
+                register2: undefined
+            };
+
+            scope.show_data  = {
+                power: undefined,
+                register1: undefined,
+                register2: undefined
+            };
+        };
+        scope.init();
         scope.next = function(){
             scope.isRefresh = false;
             scope.step = (++ scope.step) % 3;
@@ -59,42 +103,25 @@ $(document).ready(function () {
             $location.path(href);
         };
 
-
-        /**
-         * 下面的代码是给MainCtrl和formCtrl通信用
-         */
-        scope.TYPE = {
-            POWER: 0,
-            REGISTER1: 1,
-            REGISTER2: 2
-        };
-
-        scope.loaded = false;
-        scope.loading = '加载中.......';
-        scope.upload_index = -1;
-
-        scope.insert_data = {
-            power: [
-                {title: '所有权登记', right_type: 1},
-                {title: '抵押权登记', right_type: 2},
-                {title: '地役权登记', right_type: 3},
-                {title: '预告登记', right_type: 4},
-                {title: '其他登记', right_type: 0}
-            ],
-            register1: undefined,
-            register2: undefined,
-            file_items: undefined
-        };
-        scope.button = {
-            power: scope.insert_data.power[0].title,
-            register1: undefined,
-            register2: undefined
-        };
-
-        scope.show_data  = {
-            power: undefined,
-            register1: undefined,
-            register2: undefined
+        scope.submit = function(){
+            //todo : 验证数据是否合法
+            $http.post('/user/agent/addBusiness',{
+                title : scope.title,
+                info : scope.info,
+                materialItems : scope.insert_data.file_items,
+                type : scope.show_data
+            }).success(function(res){
+                if(res !== 'ok'){
+                    toastr.warning('缺少标题或者简介');
+                    return;
+                }
+                toastr.success('添加业务成功');
+                //refresh
+                scope.refresh();
+                $location.path('/');
+            }).error(function(){
+                toastr.error('服务器错误');
+            });
         };
     }]);
 
@@ -189,41 +216,34 @@ $(document).ready(function () {
                 }
             };
 
-            /**
-             * todo : upload 监听就像scoket.on 一样执行几次监听几次，需要写的更安全点
-             */
-            uploader.on('fileQueued', function (file) {
-                toastr.info(file.name + '文件上传中');
-                uploader.upload(file);
-            });
+            if(! uploader.listening){
+                /**
+                 * todo : upload 监听就像scoket.on 一样执行几次监听几次，需要写的更安全点
+                 */
+                uploader.on('fileQueued', function (file) {
+                    toastr.info(file.name + '文件上传中');
+                    uploader.upload(file);
+                });
 
-            uploader.on('uploadSuccess', function (file) {
-                toastr.success(file.name + '上传成功');
-                scope.insert_data.file_items[u_index].isUpload = true;
-                uploader.reset();
-                scope.upload_id = undefined;
-                u_index = -1;
-                scope.upload_index = -1;
-                http({
-                    method: "POST",
-                    data: JSON.stringify({id: scope.upload_id}),
-                    url: '/user/form'
-                }).then(
-                    function (res) {
-                        console.log(res);
-                    },
-                    function (err) {
-                        console.error(err);
-                    });
-            });
+                uploader.on('uploadSuccess', function (file,res) {
+                    toastr.success(file.name + '上传成功');
+                    scope.insert_data.file_items[u_index].isUpload = true;
+                    scope.insert_data.file_items[u_index].newUrl = res._raw;
+                    uploader.reset();
+                    scope.upload_id = undefined;
+                    u_index = -1;
+                    scope.upload_index = -1;
+                });
 
-            uploader.on('uploadError', function (file) {
-                scope.upload_id = undefined;
-                scope.upload_index = -1;
-                u_index = -1;
-                toastr.error('上传文件失败', '错误：');
-                uploader.reset();
-            });
+                uploader.on('uploadError', function (file) {
+                    scope.upload_id = undefined;
+                    scope.upload_index = -1;
+                    u_index = -1;
+                    toastr.error('上传文件失败', '错误：');
+                    uploader.reset();
+                });
+                uploader.listening = true;
+            }
 
             // http.post()
         }

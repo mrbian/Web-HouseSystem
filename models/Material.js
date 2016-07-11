@@ -10,8 +10,8 @@ module.exports = (sequelize,DataTypes) => {
         info : shortDataTypes.String(),
         title : shortDataTypes.String(),
         /**
-         * 0 : 未上传
-         * 1 : 已上传
+         * 0 : 未通过
+         * 1 : 已通过
          */
         state : shortDataTypes.Int()
     },{
