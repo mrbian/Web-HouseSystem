@@ -12,7 +12,7 @@ const Business = require('../models/index').models.Business;
 var AuditAdapter = module.exports = {
     _findById : function *(id){
         if(! id) throw '_findById id is undefined';
-        let audit = yield Audit.findOne({
+        var audit = yield Audit.findOne({
             where:{
                 id : id
             }
@@ -35,7 +35,7 @@ var AuditAdapter = module.exports = {
             }
         });
         var audits = [];
-        for(let i = 0;i < 3;i ++){
+        for(var i = 0;i < 3;i ++){
             audits.push(
                 Audit.create({
                     type : i + 1,
@@ -45,7 +45,7 @@ var AuditAdapter = module.exports = {
             );
         }
         audits = yield Promise.all(audits);
-        for(let audit of audits){
+        for(var audit of audits){
             yield business.addAudit(audit);
         }
         return 1;
@@ -109,7 +109,7 @@ var AuditAdapter = module.exports = {
         if(audits.length !== 3) throw 'audits length != 3';
         if(is_valid){
             var audit = audits[0];
-            for(let item of audits){
+            for(var item of audits){
                 if(item.state == 0 && audit.type < item.type){
                     audit = item;
                 }
