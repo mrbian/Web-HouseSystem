@@ -18,12 +18,12 @@ var router = new Router();
  ***************************/
 // todo: for test
 router.use(function *(next) {
-    var test_user = yield User.findOne({
-        where : {
-            type : 100
-        }
-    });
-    auth.login(this,test_user);
+    // var test_user = yield User.findOne({
+    //     where : {
+    //         type : 100
+    //     }
+    // });
+    // auth.login(this,test_user);
     context.set(this); //这个context只用来读，不写,auth.login()会修改this，每次login都需要重新set一下
     var user = yield auth.user(this);
     yield next;

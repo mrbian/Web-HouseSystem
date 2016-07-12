@@ -5,6 +5,7 @@ const render = require('../../instances/render');
 const auth = require('../../helpers/auth');
 const db = require('../../models/index');
 const Business = db.models.Business;
+const BusinessKind = db.models.BusinessKind;
 const co = require('co');
 /**
  * 将表示层也分层正是三层五层架构的思想
@@ -46,14 +47,15 @@ module.exports = (router) => {
 
     router.get('/admin/small_business_detail/:business_id',function *(){
         var ctx = this;
-        var business_id = ctx.query.business_id;
-        var business = yield Business.findOne({
+        var business_id = ctx.params.business_id;
+        var business_kind = yield BusinessKind.findOne({
             where : {
-                id : business_id
+                id : business_id,
+                type : 1
             }
         });
         ctx.body = yield render('admin/small_business_detail.html',{
-            data : JSON.stringify(business)
+            data : JSON.stringify(business_kind)
         });
     });
 };

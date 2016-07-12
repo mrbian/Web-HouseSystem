@@ -55,7 +55,8 @@ $(function () {
         scope.search_text = '';
 
         scope.edit = function($index){
-            scope.$broadcast('edit modal',$index);
+            var url = '/admin/small_business_detail/' + scope.dataObj[$index].id;
+            location.href = url;
         };
 
         scope.del = function($index){
@@ -211,16 +212,6 @@ $(function () {
 
         uploader.on('uploadComplete',function(file){
             uploader.reset();
-        });
-
-        scope.$on('edit modal',function(event,$index){
-            scope.is_edit = true;
-            scope.edit_id = scope.dataObj[$index].id;
-            scope.edit_index = $index;
-            scope.title = scope.dataObj[$index].title;
-            scope.is_right = -1;
-            scope.right_type = scope.dataObj[$index].right_type.toString();
-            modal_show();
         });
     }]);
 

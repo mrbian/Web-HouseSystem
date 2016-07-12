@@ -41,17 +41,27 @@ $(function () {
 
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
         var init_data = JSON.parse(angular.element('#data').html());
-        var is_edit = ! init_data;
+        var is_edit = !! init_data;
         scope.init = function(){
             if(init_data && init_data.id){
+                scope.title = init_data.title;
+                scope.is_free = init_data.is_free ? '1' : '0';
+                scope.belong_id = init_data.business_kind_id;
                 $http
                     .get('/super/agent/get_all_small_business_file/' + init_data.id)
                     .success(function(data){
-                        console.log(data);
                         scope.dataObj = JSON.parse(JSON.stringify(data));
                         scope.dataObjCached = JSON.parse(JSON.stringify(data));
                     });
             }
+            $http
+                .get('/super/agent/get_all_business_kind')
+                .success(function(ret){
+                    scope.kindObj = ret;
+                    if(! is_edit){
+                        scope.belong_id = scope.kindObj[0].id;
+                    }
+                });
         };
         scope.init();
         scope.add = function(){
@@ -107,16 +117,22 @@ $(function () {
                     business_id : init_data.id,
                     title : scope.title,
                     is_free : scope.is_free,
+                    big_business_id : scope.belong_id,
                 }).success(function(ret){
                     console.log('change ret',ret);
+                    toastr.success('修改成功');
+                    location.href = location.href;
                 });
             }else{
                 $http.post('/super/agent/add_small_business_kind',{
                     title : scope.title,
                     is_free : scope.is_free,
-                    file_list : scope.dataObj
+                    file_list : scope.dataObj,
+                    belong_id : scope.belong_id
                 }).success(function(ret){
-                    console.log('add ret',ret)
+                    console.log('add ret',ret);
+                    toastr.success('添加成功');
+                    location.href = '/admin/set_small_business_kind';
                 });
             }
         };
@@ -132,7 +148,6 @@ $(function () {
         var uploaded = false;
 
         //初始化edit_id 和 is_edit
-        scope.is_edit = false;
         scope.edit_id = -1;
         scope.edit_index = -1;
 
@@ -152,7 +167,6 @@ $(function () {
         scope.hide = function(){
             scope.title = '';
             scope.right_type = '1';
-            scope.is_edit = false;
             scope.edit_id = -1;
             scope.edit_index = -1;
             scope.is_done = false;
@@ -163,19 +177,6 @@ $(function () {
         scope.is_right = -1;
 
         scope.right_type = '1';
-
-        scope.submit = function (){
-            console.log(scope.material);
-            var file;
-            for(var idx in scope.lists){
-                if(scope.lists[idx].id == scope.material){
-                    file = scope.lists[idx];
-                }
-            }
-            scope.dataObj.push(file);
-            scope.dataObjCached.push(file);
-            modal_hide();
-        };
 
         uploader.on('fileQueued',function(file){
             uploader.upload(file);

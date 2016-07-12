@@ -54,6 +54,14 @@
                             <input type="radio" value="0" ng-model="is_free" name="is_free">否
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-3 control-label">所属登记大类</label>
+
+                            <div class="col-sm-6">
+                            <select name="belong_id" id="belong_id" ng-model="belong_id" ng-options="value.id as value.title for (key, value) in kindObj"  class="form-control">
+                            </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="table-body" ng-show="tab == 2">
@@ -189,6 +197,6 @@
     </div>
 </div>
 <% block 'scripts': %>
-<script type="text/plain" id="data"><%= @data %></script>
+<script type="text/plain" id="data"><%- @data %></script>
 <script src="/dist/admin-small-business-detail.js"></script>
 <% end %>

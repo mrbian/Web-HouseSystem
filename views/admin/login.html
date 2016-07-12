@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>房产管理首页</title>
@@ -27,22 +27,22 @@
                 普<br/>法<br/>天<br/>天<br/>宣<br/>
             </div>
             <div class="login-frame">
-                <form action="/">
+                <form action="/login">
                     <div class="form-header">登录</div>
                     <div class="login-input">
                         <i class="icon-user inline-form"></i>
-                        <input type="text" class="form-control" placeholder="输入账户名">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="输入账户名">
                     </div>
                     <div class="login-input">
                         <i class="icon-password inline-form"></i>
-                        <input type="text" class="form-control" placeholder="输入密码">
+                        <input type="text" id="pwd" name="pwd" class="form-control" placeholder="输入密码">
                     </div>
                     <div class="login-panel">
                         <i class="icon-checkbox"></i>
                         <span class="rem-check">记住账号</span>
                     </div>
                     <div class="login-btn-panel">
-                        <div class="login-btn">登录</div>
+                        <div class="login-btn" >登录</div>
                     </div>
                 </form>
             </div>
@@ -50,5 +50,4 @@
 </div>
 </body>
 <script src="/dist/admin-login.js"></script>
-<script src="http://192.168.59.116:9000/webpack-dev-server.js"></script>
 </html>

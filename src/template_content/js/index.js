@@ -12,3 +12,15 @@
 //         }
 //     }
 // }());
+
+(function(){
+    // $('#header-list').hover(function(event){
+    //     $(event.target).dropdown('toggle');
+    // });
+    // $('li.dropdown').hover(function(event){
+    //    $(this).find('.dropdown-toggle').dropdown('toggle');
+    // });
+    $('#quit').click(function(){
+       location.href = '/login';
+    });
+})();

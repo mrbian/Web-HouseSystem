@@ -10,7 +10,6 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 var adminEntries = {
     'admin-index': ['./src/js/admin/index.js'],
-    'admin-login' : ['./src/js/admin/login.js'],
     'admin-first-check' : ['./src/js/admin/first_check.js'],
     'admin-set-material-kind' : ['./src/js/admin/set_material_kind.js'],
     'admin-set-business-kind' : ['./src/js/admin/set_business_kind.js'],
@@ -22,8 +21,13 @@ var userEntries = {
     'user-form': ['./src/js/user/form.js']
 };
 
+var extraEntries = {
+    'admin-login' : ['./src/js/admin/login.js']
+};
+
 var entry = extend({}, adminEntries);
     entry = extend(entry, userEntries);
+    entry = extend(entry,extraEntries);
 // entry = extend(entry, adminEntries);
 
 module.exports = {

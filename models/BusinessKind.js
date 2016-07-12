@@ -27,8 +27,8 @@ module.exports = (sequelize,DataTypes) => {
 
         },
         associate : function(models){
-            models.BusinessKind.hasMany(models.BusinessKind,{ foreignKey : 'business_kind_id'});
-            models.BusinessKind.belongsTo(models.BusinessKind,{ foreignKey : 'business_kind_id'});
+            models.BusinessKind.hasMany(models.BusinessKind,{ as: 'SmallBusinessKind', foreignKey : 'business_kind_id'});
+            models.BusinessKind.belongsTo(models.BusinessKind,{ as : 'BigBusinessKind', foreignKey : 'business_kind_id'});
             models.BusinessKind.belongsToMany(models.MaterialKind,{
                 through : 'BusinessMaterialKind',
                 foreignKey : 'business_kind_id',

@@ -15,6 +15,7 @@ const Material = db.models.Material;
 const AuditAdapter = require('../../adapter/Audit');
 const FIRST_CHECK = /^http:\/\/(\w+)(:\d+)?\/admin\/first_check$/;
 const debug = true;
+var context= require('../../instances/context');
 
 //棒棒这样定义常量确实不错
 const TYPE = {
@@ -32,7 +33,7 @@ function testReferrer(regex, referrer) {
 
 module.exports = (router) => {
     /**
-     * 这里就体现了js的缺点了，我在addBusiness后面还需要添加一个Audit
+     * 这里就体现了js的缺点了，我在addBusiness后面还需要添加一个Audit更改事件
      * 但是如果直接在路由下面写代码非常差劲，所以应该用类的思想加一层adapter
      * 路由驱动还是事件驱动？加一层adapter来语义化代码不错。
      */
@@ -291,33 +292,35 @@ module.exports = (router) => {
         ctx.body = data;
     });
 
-    router.get('/super/agent/get_all_small_business_file/:business_id',function *(){
+    router.get('/super/agent/get_all_small_business_file/:business_kind_id',function *(){
         var ctx = this;
-        var business_id = ctx.query.business_id;
-        var data = yield Material.findAll({
+        var business_kind_id = ctx.params.business_kind_id;
+        var small_business_kind = yield BusinessKind.findOne({
             where:{
-                business_id : business_id
+                id : business_kind_id,
+                type : 1
             }
         });
+        var data = yield small_business_kind.getMaterialKinds();
         ctx.body = data;
     });
 
     router.post('/super/agent/small_business_del_file',function *(){
         var ctx = this;
         var body = ctx.request.body;
-        var business_id = body.business_id;
-        var material_id = body.material_id;
-        var small_business = yield Business.findOne({
+        var business_kind_id = body.business_id;
+        var material_kind_id = body.material_id;
+        var small_business_kind = yield BusinessKind.findOne({
             where : {
-                id : business_id
+                id : business_kind_id
             }
         });
-        var material_kind = MaterialKind.findOne({
+        var material_kind = yield MaterialKind.findOne({
             where : {
-                id : material_id
+                id : material_kind_id
             }
         });
-        yield small_business.removeMaterialKind(material_kind);
+        yield small_business_kind.removeMaterialKind(material_kind);
         ctx.body = 'ok';
     });
     
@@ -326,15 +329,18 @@ module.exports = (router) => {
         var body = ctx.request.body;
         var title = body.title;
         var is_free = body.is_free;
-        var business_id = body.business_id;
-        yield Business.update({
+        var small_business_id = body.business_id;
+        var big_business_id = body.big_business_id;
+        yield BusinessKind.update({
             title : title,
-            is_free : !! is_free
+            is_free : !! is_free,
+            business_kind_id : big_business_id
         },{
             where : {
-                id : business_id
+                id : small_business_id,
+                type : 1
             }
-        })
+        });
         ctx.body = 'ok';
     });
 
@@ -344,17 +350,28 @@ module.exports = (router) => {
         var title = body.title;
         var is_free = body.is_free;
         var file_list = body.file_list;
-        var business_kind = yield Business.create({
+        var belong_id = body.belong_id;
+        var small_business_kind = yield BusinessKind.create({
             title : title,
-            is_free : !! is_free
+            is_free : !! is_free,
+            type : 1
         });
+        var big_business_kind = yield BusinessKind.findOne({
+            where : {
+                id : belong_id,
+                type : 0
+            }
+        });
+        //有意思，主语还必须是级别更大的一个
+        yield big_business_kind.addSmallBusinessKind(small_business_kind);
+        console.log(file_list);
         for(let item of file_list){
-           var material_kind = yield Material.findOne({
+           let material_kind = yield Material.findOne({
                where:{
                    id : item.id
                }
            });
-           yield business_kind.addMaterialKind(material_kind);
+           yield small_business_kind.addMaterialKind(material_kind);
         }
         ctx.body = 'ok';
     });
@@ -416,5 +433,24 @@ module.exports = (router) => {
             ctx.body = debug ? err : '500';
             console.log(arguments);
         }
+    });
+
+    router.post('/login',function *(){
+        var ctx = this;
+        var body = ctx.request.body;
+        var name = body.name.toString('utf8');
+        var pwd = body.pwd.toString('utf8');
+        var user = yield User.findOne({
+            where : {
+                account : name,
+                pwd : pwd
+            }
+        });
+        if(!user) {
+            ctx.body = 'false';
+            return;
+        }
+        auth.login(ctx,user);
+        ctx.body = 'ok';
     });
 };

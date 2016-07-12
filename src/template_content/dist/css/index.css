@@ -312,3 +312,16 @@ footer {
   clear:both;
   display: table;
 }
+
+a.dropdown-toggle{
+  padding-bottom : 0 !important;
+}
+
+ul.dropdown-menu > li{
+  text-align: center;
+  /*width竟然和a是一致的，待查*/
+  width : 140px;
+}
+
+ul.dropdown > li > div {
+}
