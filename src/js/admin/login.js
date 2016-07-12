@@ -5,10 +5,9 @@ require('../../scss/admin/login.scss');
 require('../../bower_components/toastr/toastr.min.css');
 require('../../bower_components/amazeui/dist/css/amazeui.min.css');
 require('../../bower_components/font-awesome/css/font-awesome.css');
-
-require('exports?jQuery!jquery');
+require('../common/shared');
 var $ = jQuery;
-var toastr = require('imports?$=jquery!../../bower_components/toastr/toastr.min.js');
+var toastr = require('../../bower_components/toastr/toastr.min.js');
 
 $('div.login-btn').click(function () {
     //chromebook 的input的value是什么编码= -=  ? 什么鬼
