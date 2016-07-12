@@ -53,8 +53,8 @@ module.exports = (router) => {
                 id : (yield auth.user(ctx)).id
             }
         });
-        let materialLists = [];
-        for(let item of body.materialItems){
+        var  materialLists = [];
+        for(var  item of body.materialItems){
             if(item.newUrl){
                 materialLists.push({
                     id : item.id,
@@ -69,8 +69,8 @@ module.exports = (router) => {
             logic_id : util.getUniqueStr()
         });
         user.addBusiness(business);
-        for(let item of materialLists){
-            let material = yield Material.create({
+        for(var  item of materialLists){
+            var  material = yield Material.create({
                 logic_id : util.getUniqueStr(),
                 url : item.url,
                 info : 'null',
@@ -365,8 +365,8 @@ module.exports = (router) => {
         //有意思，主语还必须是级别更大的一个
         yield big_business_kind.addSmallBusinessKind(small_business_kind);
         console.log(file_list);
-        for(let item of file_list){
-           let material_kind = yield Material.findOne({
+        for(var  item of file_list){
+           var  material_kind = yield Material.findOne({
                where:{
                    id : item.id
                }
@@ -382,8 +382,8 @@ module.exports = (router) => {
 
     router.get('/admin/first_check_data', function *() {
         var ctx = this;
-            let type_num = (yield auth.user(this)).type;
-            let business_id = yield Audit.findAll({
+            var  type_num = (yield auth.user(this)).type;
+            var  business_id = yield Audit.findAll({
                 where: {
                     type: type_num,
                     state: 0
@@ -408,9 +408,9 @@ module.exports = (router) => {
      * 这样写不对！！根本没有考虑到权限问题 囧
      */
     router.post('/admin/first_check', function *() {
-        let ctx = this;
+        var  ctx = this;
         // body => {type, comment}
-        let body = ctx.request.body;
+        var  body = ctx.request.body;
         ctx.checkBody('type').notEmpty();
         ctx.checkBody('comment').notEmpty().toString();
         ctx.checkBody('id').notEmpty();
