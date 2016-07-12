@@ -26,6 +26,11 @@ router.use(function *(next) {
     // auth.login(this,test_user);
     context.set(this); //这个context只用来读，不写,auth.login()会修改this，每次login都需要重新set一下
     var user = yield auth.user(this);
+    if(!user && (/\/admin\/.*/.test(this.request.url) || /\/user\/.*/.test(this.url) )){
+        this.status = 301;
+        this.redirect('/login');
+        return;
+    }
     yield next;
 });
 
