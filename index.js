@@ -21,7 +21,7 @@ var log = require('./instances/log.js');
 
 // ------------------------------------------------
 var app = koa();
-var port = 8000;
+var port = 8080;
 app.env = 'development';
 
 // static file
