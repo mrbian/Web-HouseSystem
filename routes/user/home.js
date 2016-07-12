@@ -92,7 +92,7 @@ module.exports = (router) => {
 
     // 下载接口
     router.get('/upload/file/', function *() {
-        let ctx = this;
+        var ctx = this;
         console.log(path.join(__dirname, '../../public/upload/file/887093_4.3demo.cpp'));
         ctx.type = path.extname(path.join(__dirname, '../../public/upload/file/887093_4.3demo.cpp'));
         ctx.body =
@@ -100,31 +100,31 @@ module.exports = (router) => {
     });
 
     router.get('/user/form_data/:right_id', function* () {
-        let ctx = this;
-        let header = ctx.header;
+        var ctx = this;
+        var header = ctx.header;
 
-            let params_id = {
+            var params_id = {
                 right_id: this.params.right_id || undefined,
                 id: this.params.id || undefined,
                 business_id: this.params.business_id || undefined
             };
 
-            let material_kind;
-            let material_id;
-            let registerFn = getRegisterData(params_id.right_id, params_id.id);
+            var material_kind;
+            var material_id;
+            var registerFn = getRegisterData(params_id.right_id, params_id.id);
 
             // businesskind寻找小类(按照大类id)
-            let register_type1 = yield registerFn.next().value;
+            var register_type1 = yield registerFn.next().value;
 
             // 获取小类的id
-            let register_type2 = yield registerFn.next().value;
+            var register_type2 = yield registerFn.next().value;
 
             // businessMaterialkind寻找相应的(Materialkind)
-            let materialFn = getMaterialId(register_type2[0].id);
+            var materialFn = getMaterialId(register_type2[0].id);
             material_id = yield materialFn.next().value;
 
             // materialKind寻找相应的material
-            let materialDataFn = getMaterialData(
+            var materialDataFn = getMaterialData(
                 material_id.map((value) => {
                     return value.material_kind_id;
                 })
@@ -140,32 +140,32 @@ module.exports = (router) => {
     });
 
     router.get('/user/form_data/:right_id/:id', function *() {
-        let ctx = this;
-        let header = ctx.header;
+        var ctx = this;
+        var header = ctx.header;
             // businesskind寻找大类<null>为大类
-            let params_id = {
+            var params_id = {
                 right_id: this.params.right_id || undefined,
                 id: this.params.id || undefined,
                 business_id: this.params.business_id || undefined
             };
             console.log(params_id);
 
-            let material_kind;
-            let material_id;
-            let registerFn = getRegisterData(params_id.right_id, params_id.id);
+            var material_kind;
+            var material_id;
+            var registerFn = getRegisterData(params_id.right_id, params_id.id);
 
             // businesskind寻找小类(按照大类id)
-            let register_type1 = yield registerFn.next().value;
+            var register_type1 = yield registerFn.next().value;
 
             // 获取小类的id
-            let register_type2 = yield registerFn.next().value;
+            var register_type2 = yield registerFn.next().value;
 
             // businessMaterialkind寻找相应的(Materialkind)
-            let materialFn = getMaterialId(register_type2[0].id);
+            var materialFn = getMaterialId(register_type2[0].id);
             material_id = yield materialFn.next().value;
 
             // materialKind寻找相应的material
-            let materialDataFn = getMaterialData(
+            var materialDataFn = getMaterialData(
                 material_id.map((value) => {
                     return value.material_kind_id;
                 })
@@ -178,20 +178,20 @@ module.exports = (router) => {
     });
 
     router.get('/user/form_data/:right_id/:id/:business_id', function* () {
-        let ctx = this;
-        let header = ctx.header;
+        var ctx = this;
+        var header = ctx.header;
             // businesskind寻找大类<null>为大类
-            let params_id = {
+            var params_id = {
                 right_id: this.params.right_id || undefined,
                 id: this.params.id || undefined,
                 business_id: this.params.business_id || undefined
             };
-            let material_kind;
-            let material_id;
-            let materialFn = getMaterialId(params_id.business_id);
+            var material_kind;
+            var material_id;
+            var materialFn = getMaterialId(params_id.business_id);
             material_id = yield materialFn.next().value;
             // materialKind寻找相应的material
-            let materialDataFn = getMaterialData(
+            var materialDataFn = getMaterialData(
                 material_id.map((value) => {
                     return value.material_kind_id;
                 })
