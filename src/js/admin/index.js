@@ -5,3 +5,4 @@
  * js
  */
 require('../common/shared');
+require('../../scss/admin/index.scss');
