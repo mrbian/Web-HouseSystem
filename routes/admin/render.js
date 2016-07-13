@@ -58,4 +58,5 @@ module.exports = (router) => {
             data : JSON.stringify(business_kind)
         });
     });
+
 };

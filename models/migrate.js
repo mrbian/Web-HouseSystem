@@ -58,7 +58,7 @@ function * BusinessKindInit(){
     var BigBusinessKinds = yield BusinessKind.findAll({});
     for(var j = 0 ;j < BigBusinessKinds.length; j ++){
         var BigBusinessKind = BigBusinessKinds[j];
-        for(var k =0; k < 10;k ++){
+        for(var k =0; k < 5;k ++){
               yield BusinessKind.create({
                   title : '第' + k + '小登记类',
                   right_type: BigBusinessKind.right_type,
@@ -77,11 +77,11 @@ function * MaterialKindInit(){
             type : 1
         }
     });
-    for(var i = 0; i < 20; i ++){
+    for(var i = 0; i < 8; i ++){
         var material = yield MaterialKind.create({
             is_need : i % 2 === 0,
             title : '文件' + i,
-            url : '/upload/file/'
+            url : 'http://localhost:8080/head.jpg'
         });
         for(var idx in SmallBusinessKinds){
             var SmallBusinessKind = SmallBusinessKinds[idx];
@@ -121,8 +121,8 @@ function * init(){
     yield UserInfoInit();
     yield BusinessKindInit();
     yield MaterialKindInit();
-    yield BusinessInit();
-    yield MaterialInit();
+    // yield BusinessInit();
+    // yield MaterialInit();
 }
 
 co(function *(){

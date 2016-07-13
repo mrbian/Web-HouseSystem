@@ -3,6 +3,7 @@
  */
 var render = require('../../instances/render');
 const db = require('../../models/index').models;
+const extend = require('util')._extend;
 const BusinessKind = db.BusinessKind;
 const BusinessMaterialKind = db.BusinessMaterialKind;
 const MaterialKind = db.MaterialKind;
@@ -33,7 +34,7 @@ function testReferrer(regex, referrer) {
 }
 
 
-function* getRegisterData(data, type) {
+function* getRegisterData(data, id) {
     yield BusinessKind.findAll({
         where: {
             right_type: data,
@@ -43,11 +44,17 @@ function* getRegisterData(data, type) {
         return value.dataValues;
     });
 
+    var where  = {
+        type: 1,
+        right_type: data,
+    };
+
+    where = id ? extend(where,{
+        business_kind_id : id
+    }) : where;
+
     yield BusinessKind.findAll({
-        where: {
-            type: type || 1,
-            right_type: data
-        }
+        where
     }).map(function (value) {
         return value.dataValues;
     });
@@ -76,8 +83,9 @@ function* getMaterialData(material_id) {
 }
 
 module.exports = (router) => {
-    router.get('/user/index',function *(){
-
+    router.get('/user/list',function *(){
+        var ctx = this;
+        ctx.body = yield render('user/list.html');
     });
     
     router.get('/user/form', function *() {

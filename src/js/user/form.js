@@ -212,7 +212,7 @@ $(document).ready(function () {
 
                         break;
                     default:
-                        throw Error('Fuck You');
+                        throw Error('Error');
                         break;
                 }
             };

@@ -304,7 +304,7 @@ footer {
 #wrapper div.main-content {
   position: inherit;
   margin-left: 250px;
-  margin-top : 0 !important;
+  margin-top : 50px !important;
   min-height: 0 !important;
 }
 #wrapper:after,#wrapper:before{

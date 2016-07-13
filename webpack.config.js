@@ -18,7 +18,8 @@ var adminEntries = {
 };
 
 var userEntries = {
-    'user-form': ['./src/js/user/form.js']
+    'user-form': ['./src/js/user/form.js'],
+    'user-list' : ['./src/js/user/list.js']
 };
 
 var extraEntries = {

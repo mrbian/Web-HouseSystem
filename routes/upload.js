@@ -39,6 +39,6 @@ module.exports = (router) => {
             }
         }
 
-        ctx.body = 'http://localhost:8000/upload/file/' + filename;
+        ctx.body = 'http://127.0.0.1:8080/upload/file/' + filename;
     });
 };

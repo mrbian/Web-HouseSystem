@@ -4,7 +4,7 @@
 require('../common/shared.js');
 require('../../bower_components/toastr/toastr.min.css');
 require('../../scss/admin/set_small_business_kind.scss');
-
+require('../../scss/user/list.scss');
 require('expose?toastr!../../bower_components/toastr/toastr.min.js');
 require('angular');
 require('angular-animate'); //本身不能产生动画，但是可以监听事件
@@ -36,51 +36,28 @@ $(function () {
     var app = angular.module('app',[]);
 
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
+        scope.STATE = {
+            NOT_PASS : -1,
+            FIRST : 1,
+            SECOND : 2,
+            THIRD : 3,
+            PASS : 4,
+            ERROR : -2
+        };
         scope.init = function(){
             $http
-                .get('/super/agent/get_all_small_business_kind')
+                .get('/user/agent/get_all_business')
                 .success(function(data){
-                    console.log(data);
+                    // console.log(data);
                     scope.dataObj = JSON.parse(JSON.stringify(data));
                     scope.dataObjCached = JSON.parse(JSON.stringify(data));
                 });
         };
         scope.init();
-        scope.create = function(){
-            location.href = '/admin/small_business_detail';
-        };
         scope.filter = '1';
         scope.dataObj = [];
         scope.dataObjCached = [];
         scope.search_text = '';
-
-        scope.edit = function($index){
-            var url = '/admin/small_business_detail/' + scope.dataObj[$index].id;
-            location.href = url;
-        };
-
-        scope.del = function($index){
-            if(! confirm('您确认要删除吗?')){
-                return;
-            }
-            // console.log($index);
-            $http.post('/super/agent/del_small_business_kind',{
-                id : scope.dataObj[$index].id
-            }).success(function(ret){
-                // console.log(ret);
-                if(ret == 'ok'){
-                    toastr.success('删除成功');
-                }else{
-                    toastr.warning('删除失败');
-                    return;
-                }
-                scope.dataObj.splice($index,1);
-                scope.dataObjCached.splice($index,1);
-            }).error(ajaxError);
-        };
-    }]);
-
-    app.controller('ModalCtrl',['$scope','$http',function(scope,$http){
     }]);
 
     app.controller('tableCtrl',['$scope','$http',function(scope,$http){

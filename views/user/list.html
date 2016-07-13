@@ -1,0 +1,104 @@
+<% extend 'admin_shared/admin-base.html' %>
+<% block 'head': %>
+<link rel="stylesheet" href="/dist/user-list.css">
+<% end %>
+<div class="cr-all" ng-controller="MainCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cr">
+                <div class="header-list-panel">
+                    <div class="header-list-title">
+                        <i class="fa fa-tag"></i>
+                        <span class="grey">业务列表 &nbsp;/&nbsp; </span>
+                        <span class="black">业务状态查看</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-cr">
+                <div class="table-header-panel">
+                    <div class="table-header-item">
+                        业务列表
+                    </div>
+                </div>
+                <div class="table-body">
+                    <div class="search-panel" ng-controller="tableCtrl">
+                        <div class="fl">
+                            <div class="select">
+                                <select ng-model="filter" name="search" id="search" class="form-control">
+                                    <option value="1">业务名称</option>
+                                </select>
+                            </div>
+                            <div class="search-group">
+                                <i class="fa fa-search"></i>
+                                <input type="text" ng-model="search_text" class="input-group" placeholder="请输入搜索内容">
+                            </div>
+                            <div class="btn btn-search" ng-click="search()">
+                                搜索
+                            </div>
+                        </div>
+                        <!--<div class="page">-->
+                        <!--<ul>-->
+                        <!--<li>-->
+                        <!--1-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--2-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="loading"></div>
+                    <div class="table">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    业务编号
+                                </th>
+                                <th>
+                                    业务名称
+                                </th>
+                                <th>
+                                    业务状态
+                                </th>
+                                <th>
+                                    评语
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="(key,value) in dataObj" data-index="{{$index}}">
+                                <td class="file-title">
+                                    {{dataObj[$index].logic_id}}
+                                </td>
+                                <td>
+                                    {{dataObj[$index].title}}
+                                </td>
+                                <td>
+                                    <span class="business-state label" ng-class="{'error' : dataObj[$index].state == STATE.NOT_PASS,'success' : dataObj[$index].state == STATE.PASS,'info' : dataObj[$index].state == STATE.FIRST ||dataObj[$index].state  == STATE.SECOND || dataObj[$index].state == STATE.THIRD}">
+                                    {{dataObj[$index].state == STATE.PASS ? '通过' :
+                                        dataObj[$index].state == STATE.NOT_PASS ? '未通过' :
+                                        dataObj[$index].state == STATE.FIRST ? '一审中' :
+                                        dataObj[$index].state == STATE.SECOND ? '二审中' :
+                                        dataObj[$index].state == STATE.THIRD ? '三审中' : '错误'}}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{dataObj[$index].comment}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% block 'scripts': %>
+<script src="/dist/user-list.js"></script>
+<% end %>

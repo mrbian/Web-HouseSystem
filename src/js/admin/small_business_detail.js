@@ -10,7 +10,8 @@ require('angular');
 require('angular-animate'); //本身不能产生动画，但是可以监听事件
 var WebUploader = require('../../bower_components/fex-webuploader/dist/webuploader.min.js');
 var $ = jQuery;
-
+var is_edit ;
+var init_data
 /**
  * 可以给返回与创建页面加一个左右滑动的动画
  */
@@ -40,8 +41,9 @@ $(function () {
     var app = angular.module('app',[]);
 
     app.controller('MainCtrl',['$scope','$http',function(scope,$http){
-        var init_data = JSON.parse(angular.element('#data').html());
-        var is_edit = !! init_data;
+        init_data = JSON.parse(angular.element('#data').html());
+        is_edit = !! init_data.id;
+        console.log('MainCtrl','is_edit',is_edit);
         scope.init = function(){
             if(init_data && init_data.id){
                 scope.title = init_data.title;
@@ -97,7 +99,7 @@ $(function () {
                 }).success(function(ret){
                     // console.log(ret);
                     if(ret == 'ok'){
-                        toastr.info('删除成功');
+                        toastr.success('删除成功');
                     }else{
                         toastr.warning('删除失败');
                         return;
@@ -177,6 +179,48 @@ $(function () {
         scope.is_right = -1;
 
         scope.right_type = '1';
+        
+        scope.confirm = function(){
+            console.log('ModalCtrl','is_edit',is_edit);
+            if(is_edit){
+                $http.post('/super/agent/small_business_kind_add_material',{
+                    material_kind_id : scope.material,
+                    business_kind_id : init_data.id
+                }).success(function(ret){
+                    toastr.success('添加成功');
+                    for(var i = 0;i < scope.lists.length ;i ++){
+                        if(scope.material == scope.lists[i].id){
+                            scope.dataObj.push({
+                                id : scope.lists[i].id,
+                                title : scope.lists[i].title,
+                                url : scope.lists[i].url,
+                                is_need : scope.lists[i].is_need
+                            });
+                            scope.lists.splice(i,1);
+                            scope.material = scope.lists[0].id;
+                            break;
+                        }
+                    }
+                    scope.hide();
+                });
+            }else{
+                for(var i = 0;i < scope.lists.length ;i ++){
+                    if(scope.material == scope.lists[i].id){
+                        scope.dataObj.push({
+                            id : scope.lists[i].id,
+                            title : scope.lists[i].title,
+                            url : scope.lists[i].url,
+                            is_need : scope.lists[i].is_need
+                        });
+                        scope.lists.splice(i,1);
+                        scope.material = scope.lists[0].id;
+                        break;
+                    }
+                }
+                toastr.success('成功');
+                scope.hide();
+            }
+        };
 
         uploader.on('fileQueued',function(file){
             uploader.upload(file);

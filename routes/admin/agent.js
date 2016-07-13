@@ -12,6 +12,7 @@ const Audit = db.models.Audit;
 const Business = db.models.Business;
 const User = db.models.User;
 const Material = db.models.Material;
+const extend = require('util')._extend;
 const AuditAdapter = require('../../adapter/Audit');
 const FIRST_CHECK = /^http:\/\/(\w+)(:\d+)?\/admin\/first_check$/;
 const debug = true;
@@ -282,13 +283,23 @@ module.exports = (router) => {
     /**
      * 登记小类的增删改查
      */
+
     router.get('/super/agent/get_all_small_business_kind',function *(){
         var ctx = this;
         var data = yield SmallBusinessKind.findAll({
             where:{
                 type : 1
+            },
+            include : {
+                model : BusinessKind,
+                as : 'BigBusinessKind'
             }
+        }).map((data) => {
+            return extend(data.get(),{
+                big_title : data.BigBusinessKind.title
+            });
         });
+        console.log(data[0]);
         ctx.body = data;
     });
 
@@ -351,22 +362,23 @@ module.exports = (router) => {
         var is_free = body.is_free;
         var file_list = body.file_list;
         var belong_id = body.belong_id;
-        var small_business_kind = yield BusinessKind.create({
-            title : title,
-            is_free : !! is_free,
-            type : 1
-        });
         var big_business_kind = yield BusinessKind.findOne({
             where : {
                 id : belong_id,
                 type : 0
             }
         });
+        var small_business_kind = yield BusinessKind.create({
+            title : title,
+            is_free : !! is_free,
+            type : 1,
+            right_type : big_business_kind.right_type
+        });
         //有意思，主语还必须是级别更大的一个
         yield big_business_kind.addSmallBusinessKind(small_business_kind);
         console.log(file_list);
         for(var  item of file_list){
-           var  material_kind = yield Material.findOne({
+           var  material_kind = yield MaterialKind.findOne({
                where:{
                    id : item.id
                }
@@ -376,6 +388,39 @@ module.exports = (router) => {
         ctx.body = 'ok';
     });
 
+    
+    router.post('/super/agent/small_business_kind_add_material',function *(){
+        var ctx = this;
+        var body = ctx.request.body;
+        var material_kind_id = body.material_kind_id;
+        var business_kind_id = body.business_kind_id;
+        var small_business_kind = yield SmallBusinessKind.findOne({
+            where :{
+                id : business_kind_id
+            }
+        });
+        var material_kind = yield MaterialKind.findOne({
+            where : {
+                id : material_kind_id
+            }
+        });
+        //不知道是不是不允许多个重复的？
+        yield small_business_kind.addMaterialKind(material_kind);
+        ctx.body = 'ok';
+    });
+
+    //删除肯定没有这么简单的= - =，这个要求必须有数据备份
+    router.post('/super/agent/del_small_business_kind',function *(){
+        var ctx = this;
+        var body = ctx.request.body;
+        var small_business_id = body.id;
+        yield BusinessKind.destroy({
+            where : {
+                id : small_business_id
+            }
+        });
+        ctx.body = 'ok';
+    });
     /**
      * 审核以及缮证的代码
      */
@@ -389,10 +434,10 @@ module.exports = (router) => {
                     state: 0
                 }
             }).map(function (value) {
-                return value.dataValues.business_id;
+                return value.get().business_id;
             });
         /**
-         * sequelize 本身就对数组支持很好，棒棒可以的
+         * 这里利用sequelize对数组支持很好的特性，用一个数组写where很棒
          */
             ctx.body = yield Business.findAll({
                 where: {
@@ -425,7 +470,7 @@ module.exports = (router) => {
                 yield AuditAdapter.notAccept(audit.id,body.comment);
             } else if (body.type == TYPE.SUCCESS) {
                 //通过
-                // yield AuditAdapter.Accept(audit.id);
+                yield AuditAdapter.Accept(audit.id);
             }
             ctx.body = {business_id : body.id};
         }catch(err){
