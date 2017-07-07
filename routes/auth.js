@@ -3,7 +3,7 @@
  */
 var render = require('../instances/render');
 module.exports = (router) => {
-    router.get('/login',function *() {
+    router.get('/',function *() {
         var ctx = this;
         ctx.body = yield render('/admin/login.html');
     })
