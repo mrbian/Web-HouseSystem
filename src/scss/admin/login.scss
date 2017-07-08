@@ -36,12 +36,11 @@ div.header_cr{
     }
   }
   div.info{
-    vertical-align: bottom;
     font-size : 14px;
     width : 292px;
-    height : 50px;
+    height : 63px;
+    line-height : 63px;
     float : right;
-    padding-top : 10px;
   }
 }
 
@@ -73,7 +72,7 @@ div.login_cr {
     div.login-input{
       width : 316px;
       height : 44px;
-      padding : 6px 0 5px 54px;
+      padding : 0 0 0 0;
       position: relative;
       border:1px solid #e7e7e7;
     }
@@ -120,13 +119,17 @@ div.login_cr {
     }
 
     input.form-control{
-      padding:12px 0;
+      padding: 0 0 0 54px;
       vertical-align: middle;
       width : 100%;
       border:0;
-      outline:0;
-      height : 14px;
+      outline:none;
+      height : 42px;
     }
+    input.form-control:focus{
+      outline: none;
+    }
+
 
     div.login-btn{
       background-color: #44b549;
@@ -169,6 +172,37 @@ div.login_cr {
     &-2{
       left : 30%;
     }
+  }
+
+  input[type='checkbox']{
+    visibility: hidden;
+    cursor: pointer;
+    position: absolute;
+    left : 0;
+    top : 0;
+  }
+
+  input[type="checkbox"] + label{
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    margin-right:5px;
+    position: relative;
+    background-color: #fff;
+    border:1px solid #e7e7e7;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+  }
+
+  input[type='checkbox']:checked+label:after{
+    content: "√";
+    font-size: 16px;
+    font-weight:bold;
+    color: #0ab5f1;
+    position : absolute;
+    top:-8px;
   }
 }
 

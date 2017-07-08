@@ -82,3 +82,28 @@ $full: 100%;
   width: 100% !important;
   height: 100% !important;
 }
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{
+  color: white;
+  background-color: #18bc9c;
+}
+
+ul.dropdown-menu{
+  width : 140px;
+  min-width : 140px;
+}
+
+i.fa.fa-angle-down.user {
+  position: absolute;
+  right: 15px;
+  top : 15px;
+}
+
+.dropdown-toggle.user{
+  img{
+    margin-left : 10px;
+  }
+}
+
+div.extend_item{
+}

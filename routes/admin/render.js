@@ -15,7 +15,14 @@ const co = require('co');
 module.exports = (router) => {
     router.get('/admin/index',function *(){
         var ctx = this;
-        ctx.body = yield render('admin/index.html');
+        // ctx.body = yield render('admin/index.html');
+        var user = yield auth.user(this);
+        if(user.type == 100){
+            ctx.redirect('/admin/set_material_kind');
+        }else{
+            ctx.redirect('/admin/first_check');
+        }
+
     });
 
     router.get('/admin/first_check',function *(){

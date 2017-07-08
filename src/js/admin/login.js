@@ -9,7 +9,7 @@ require('../common/shared');
 var $ = jQuery;
 var toastr = require('../../bower_components/toastr/toastr.min.js');
 
-$('div.login-btn').click(function () {
+function loginPost() {
     //chromebook 的input的value是什么编码= -=  ? 什么鬼
     //为什么就跑到error里面去了？ 什么鬼！！！
     var name = document.querySelector('#name').value;
@@ -20,7 +20,7 @@ $('div.login-btn').click(function () {
             url: '/login',
             type: 'POST',
             data: {
-                name: name, 
+                name: name,
                 pwd: pwd
             },
             dataType : 'json',
@@ -41,4 +41,13 @@ $('div.login-btn').click(function () {
     } else {
         toastr.warning('请输入登录名和密码');
     }
+}
+
+$(document).keypress(function(e) {
+    // 回车键事件
+    if(e.which == 13) {
+        loginPost();
+    }
 });
+
+$('div.login-btn').click(loginPost);

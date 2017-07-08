@@ -7,7 +7,7 @@ require('../../scss/user/form.scss');
 require('../../bower_components/angular-toastr/dist/angular-toastr.min.css');
 require('expose?Webuploader!../../bower_components/fex-webuploader/dist/webuploader');
 require('angular');
-require('angular-animate');
+// require('angular-animate');
 // require('toastr');
 require('angular-toastr');
 require('angular-route');
@@ -20,7 +20,7 @@ var $ = jQuery;
  */
 var u_index = -1;
 $(document).ready(function () {
-    var app = angular.module('app', ['ngAnimate', 'toastr','ngRoute']);
+    var app = angular.module('app', [ 'toastr','ngRoute']);
     /**
      * 不同的router使用一个controller，而且两个页面之间最好不要有数据依赖！！！
      */

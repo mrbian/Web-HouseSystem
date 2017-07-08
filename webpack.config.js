@@ -53,7 +53,8 @@ module.exports = {
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
             },
             { test : /\.(ttf|eot|svg|woff(2)?)(\?[a-z=0-9\.]+)?$/, loader : 'url-loader?limit=8192'},
-            { test : /\.(png|gif|svg|jpg)$/, loader : 'url-loader?limit=8192'}
+            { test : /\.(png|gif|svg|jpg)$/, loader : 'url-loader?limit=8192'},
+            { loader: 'exports?window.angular', test: require.resolve('angular') }
         ]
     },
     plugins: [

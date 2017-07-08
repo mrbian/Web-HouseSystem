@@ -7,7 +7,7 @@ require('../../scss/admin/set_small_business_kind.scss');
 require('../../scss/user/list.scss');
 require('expose?toastr!../../bower_components/toastr/toastr.min.js');
 require('angular');
-require('angular-animate'); //本身不能产生动画，但是可以监听事件
+// require('angular-animate'); //本身不能产生动画，但是可以监听事件
 var WebUploader = require('../../bower_components/fex-webuploader/dist/webuploader.min.js');
 var $ = jQuery;
 

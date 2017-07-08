@@ -28,7 +28,7 @@ router.use(function *(next) {
     var user = yield auth.user(this);
     if(!user && (/\/admin\/.*/.test(this.request.url) || /\/user\/.*/.test(this.url) )){
         this.status = 301;
-        this.redirect('/login');
+        this.redirect('/');
         return;
     }
     yield next;

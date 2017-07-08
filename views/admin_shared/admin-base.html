@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <% include './admin_shared/head.html' %>
     <% content 'head' %>
-    <link href='http://cdn.webfont.youziku.com/webfonts/nomal/26013/45803/5772769bf629d81030672da1.css' rel='stylesheet' type='text/css' />
+    <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
 </head>
 <body>
 <% ctx = require('../../../instances/context.js').get() %>
@@ -16,8 +16,12 @@
     </div>
 </div>
 <footer>
-    <span>&copy;&nbsp;2016年7月&nbsp;&nbsp;&nbsp;</span>
+    <span>&copy;&nbsp;2017年7月&nbsp;&nbsp;&nbsp;</span>
 </footer>
+<script type="text/javascript">
+    $youziku.load(".css43c48984e659d", "23454e5ace25417ba7be87260175cf75", "RS_XingKai");
+    $youziku.draw();
+</script>
 </body>
 <script type="text/plain" id="num">3</script>
 <script src="/dist/admin-commons.js"></script>

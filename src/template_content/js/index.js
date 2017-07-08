@@ -21,6 +21,6 @@
     //    $(this).find('.dropdown-toggle').dropdown('toggle');
     // });
     $('#quit').click(function(){
-       location.href = '/login';
+       location.href = '/';
     });
 })();
