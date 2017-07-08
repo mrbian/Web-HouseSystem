@@ -20,7 +20,7 @@ module.exports = (router) => {
         if(user.type == 100){
             ctx.redirect('/admin/set_material_kind');
         }else if(user.type == 0){
-            ctx.redirect('/user/form#/');
+            ctx.redirect('/user/list');
         }else{
             ctx.redirect('/admin/first_check');
         }
