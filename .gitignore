@@ -5,5 +5,4 @@
 node_modules/
 log/
 src/bower_components
-public/dist
 public/upload

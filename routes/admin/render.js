@@ -19,6 +19,8 @@ module.exports = (router) => {
         var user = yield auth.user(this);
         if(user.type == 100){
             ctx.redirect('/admin/set_material_kind');
+        }else if(user.type == 0){
+            ctx.redirect('/user/form#/');
         }else{
             ctx.redirect('/admin/first_check');
         }

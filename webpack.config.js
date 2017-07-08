@@ -69,10 +69,10 @@ module.exports = {
 };
 
 
-var WebpackDevServer = require("webpack-dev-server");
-var config = require('./webpack.config');
-var compiler = webpack(config);
-var server = new WebpackDevServer(compiler, {
-    stats: { colors: true }
-});
-server.listen(9000);
+// var WebpackDevServer = require("webpack-dev-server");
+// var config = require('./webpack.config');
+// var compiler = webpack(config);
+// var server = new WebpackDevServer(compiler, {
+//     stats: { colors: true }
+// });
+// server.listen(9000);
