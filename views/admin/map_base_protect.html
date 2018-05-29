@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Baidu Map </title>
+    <style type="text/css">
+        html{height:100%}
+        body{
+            height:100%;
+            margin:0px;
+            padding:0px
+        }
+        #container{
+            height:100%;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+</body>
+<script  type="text/javascript"  src="http://api.map.baidu.com/api?v=2.0&ak=irtLsdBbffDqWBwwII4fv2jIh1zzsn7R"></script>
+<script>
+    /**
+     * 地图初始化
+     */
+    var map = new BMap.Map("container",{enableMapClick:false});          // 创建地图实例
+    var point = new BMap.Point(114.900, 12.650);  // 创建点坐标
+    map.centerAndZoom(point, 7);                 // 初始化地图，设置中心点坐标和地图级别
+    map.setCurrentCity("三沙");
+    map.disableScrollWheelZoom(true);
+    map.disableDragging(true);
+    map.addEventListener("click", function(e){
+        console.log(e.point.lng,e.point.lat);
+    });
+
+    /**
+     * 总区域初始化
+     */
+    var rStart = new BMap.Point(110.068,17.006);
+    var rEnd = new BMap.Point(119.600509,9.150155);
+    var rectangle = new BMap.Polygon([              // 与margin顺序相似
+        new BMap.Point(rStart.lng,rStart.lat),
+        new BMap.Point(rEnd.lng,rStart.lat),
+        new BMap.Point(rEnd.lng,rEnd.lat),
+        new BMap.Point(rStart.lng,rEnd.lat)
+    ],{strokeColor : "blue",strokeWeight:1,strokeOpacity:0.2});
+
+    /**
+     * 参数配置
+      */
+    // 整个巡逻区域的长宽
+    var length = Math.round(map.getDistance(new BMap.Point(rStart.lng,rStart.lat), new BMap.Point(rEnd.lng,rStart.lat)).toFixed(0) / 1000);
+    var width = Math.round(map.getDistance(new BMap.Point(rStart.lng,rStart.lat), new BMap.Point(rStart.lng,rEnd.lat)).toFixed(0) / 1000);
+
+    // 大致的一个单位的经纬度对应的km长度
+    var per_lng_len = Math.round(map.getDistance(new BMap.Point(rStart.lng,rStart.lat), new BMap.Point(rStart.lng + 1,rStart.lat)) / 1000);
+    var per_lat_len = Math.round(map.getDistance(new BMap.Point(rStart.lng,rStart.lat), new BMap.Point(rStart.lng, rStart.lat + 1)) / 1000);
+
+    // 长度单位都为km，时间单位为h
+    var v_common = 100;       // 一般巡速
+    var t_endurance = 10;    // 续航时间
+    var v_max;          // 最大航速
+    var attack_scope;   // 攻击范围
+    var p_number = 40;       // 巡逻艇数量
+    var p_rallying;     // 巡逻艇聚集点
+    var t_1;            // 报警响应时间
+
+    /**
+     * 参数计算
+     */
+    var area = length * width;      // 总区域的面积
+    var per_scope_len = Math.round(Math.sqrt(area / p_number));   // 每个巡逻区域（正方形）的边长
+    var lng_plus = per_scope_len / per_lng_len;
+    var lat_plus = per_scope_len / per_lat_len;
+    var p_start = rStart;
+    var p_end = new BMap.Point(rStart.lng + lng_plus, rStart.lat - lat_plus);       // 纬度要减
+    var p_rectangle;
+    var scopeArr = [];
+
+    /**
+     * 绘制工作
+     */
+    function add_overlay(){
+        map.addOverlay(rectangle);
+
+        var last_initial_start = p_start;     // 上一行起始正方形的起点
+        var last_initail_end = p_end;       // 上一行起始正方形的终点
+
+        // 从左向右，从上到下
+        for(var i=0;i<p_number;i++){
+            if(p_end.lng > rEnd.lng){       // 换行
+                p_start = new BMap.Point(last_initial_start.lng,last_initial_start.lat - lat_plus);
+                p_end = new BMap.Point(last_initail_end.lng,last_initail_end.lat - lat_plus);
+                last_initial_start = new BMap.Point(last_initial_start.lng,last_initial_start.lat - lat_plus);
+                last_initail_end = new BMap.Point(last_initail_end.lng,last_initail_end.lat - lat_plus);
+                -- i;
+                continue;
+            }
+            if(p_end.lat < rEnd.lat){
+                break;
+            }
+            p_rectangle = new BMap.Polygon([
+                new BMap.Point(p_start.lng,p_start.lat),
+                new BMap.Point(p_end.lng,p_start.lat),
+                new BMap.Point(p_end.lng,p_end.lat),
+                new BMap.Point(p_start.lng,p_end.lat)
+            ],{strokeColor: "red",strokeWeight:1,strokeOpacity:0.5});
+            map.addOverlay(p_rectangle);
+            scopeArr.push({
+                "start": new BMap.Point(p_start.lng,p_start.lat),
+                "end": new BMap.Point(p_end.lng,p_end.lat)
+            });
+
+            p_start = new BMap.Point(p_start.lng + lng_plus, p_start.lat);
+            p_end = new BMap.Point(p_end.lng + lng_plus, p_end.lat);
+        }
+
+    }
+
+    add_overlay();
+
+    // todo : 换成矢量图
+    var pirate = new BMap.Icon("/pirates.png", new BMap.Size(20,20), {    //海盗图片
+        width : 30,
+        offset: new BMap.Size(0, 0),    //相当于CSS精灵
+        imageOffset: new BMap.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
+    });
+    var police = new BMap.Icon("/police.png", new BMap.Size(30, 20), {
+        //offset: new BMap.Size(0, -5),    //相当于CSS精灵
+        imageOffset: new BMap.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
+    });
+
+    // function add_pirate_and_police(){
+    //     var pirate_start = new BMap.Point(113.382223,14.279565);
+    //     var pirateMk = new BMap.Marker(pirate_start,{icon:pirate});
+    //     var police_start = new BMap.Point(113.860553,13.38064);
+    //     var policeMk = new BMap.Marker(police_start,{icon:police});
+    //
+    //     map.addOverlay(pirateMk);
+    //     map.addOverlay(policeMk);
+    // }
+    //
+    // add_pirate_and_police();
+
+    function linear(initPos, targetPos, currentCount, count) {
+        var b = initPos, c = targetPos - initPos, t = currentCount, d = count;
+        return c * t / d + b;
+    }
+    //设置方向
+    function setRotation(curPos, targetPos, marker) {
+        var deg = 0;
+        curPos = map.pointToPixel(curPos);
+        targetPos = map.pointToPixel(targetPos);
+
+
+        if (targetPos.x != curPos.x) {
+            var tan = (targetPos.y - curPos.y) / (targetPos.x - curPos.x), atan = Math
+                .atan(tan);
+            deg = atan * 360 / (2 * Math.PI);
+            if (targetPos.x < curPos.x) {
+                deg = -deg + 90 + 90;
+            } else {
+                deg = -deg;
+            }
+            marker.setRotation(-deg + 180);     // todo : ???
+        } else {
+
+            var disy = targetPos.y - curPos.y;
+            var bias = 0;
+            if (disy > 0){
+                bias = -1;
+            }
+            else{
+                bias = 1;
+            }
+            marker.setRotation(-bias * 90);
+        }
+        return;
+    }
+
+    //移动车辆
+    // count两点间要移动的次数
+    // timer，每次移动的时间，毫秒
+    function moveCar(prvePoint, newPoint, timer,marker,count) {
+        var _prvePoint = new BMap.Pixel(0,0);
+        var _newPoint = new BMap.Pixel(0,0);
+        //当前帧数
+        var currentCount = 0;
+        //初始坐标
+        _prvePoint = map.getMapType().getProjection().lngLatToPoint(prvePoint);
+        //获取结束点的(x,y)坐标
+        _newPoint = map.getMapType().getProjection().lngLatToPoint(newPoint);
+
+        //两点之间匀速移动
+        var intervalFlag = setInterval(function() {
+            //两点之间当前帧数大于总帧数的时候，则说明已经完成移动
+            if (currentCount >= count) {
+                clearInterval(intervalFlag);
+            } else {
+                //动画移动
+                currentCount++;//计数
+                //console.log(currentCount);
+                var x = linear(_prvePoint.x, _newPoint.x, currentCount,
+                    count);
+                var y = linear(_prvePoint.y, _newPoint.y, currentCount,
+                    count);
+                //根据平面坐标转化为球面坐标
+                var pos = map.getMapType().getProjection().pointToLngLat(new BMap.Pixel(x, y));
+                //console.log(pos);
+
+                marker.setPosition(pos);
+                //调整方向
+                setRotation(prvePoint, newPoint, marker);
+            }
+        }, timer);
+
+        return intervalFlag;        // 返回动画问题
+        //marker.removeOverlay(marker);
+    }
+
+
+    var polices = [];
+    function add_polices(){
+        for(var i=0;i<scopeArr.length;i++){
+            var policeMk = new BMap.Marker(scopeArr[i]["end"],{icon:police});
+            polices.push(policeMk);
+            map.addOverlay(policeMk);
+        }
+    }
+    add_polices();
+
+    function patrol(){
+        for(var i=0;i<polices.length;i++){
+            if(i === 24){
+                if(stopping){             // 正在停止，则不再有动画
+                   continue;
+                }
+                intervalFlag1 = moveCar(scopeArr[i]["end"],new BMap.Point(scopeArr[i]["start"].lng,scopeArr[i]["end"].lat), 100, polices[i], 20); // 2s一个边
+            }else{
+                moveCar(scopeArr[i]["end"],new BMap.Point(scopeArr[i]["start"].lng,scopeArr[i]["end"].lat), 100, polices[i], 20); // 2s一个边
+            }
+        }
+        setTimeout(function(){
+            for(var i=0;i<polices.length;i++){
+                if(i === 24){
+                    if(stopping){
+                        continue;
+                    }
+                    intervalFlag2 = moveCar(new BMap.Point(scopeArr[i]["start"].lng,scopeArr[i]["end"].lat), scopeArr[i]["start"], 100, polices[i], 20);
+                }else{
+                    moveCar(new BMap.Point(scopeArr[i]["start"].lng,scopeArr[i]["end"].lat), scopeArr[i]["start"], 100, polices[i], 20);
+                }
+            }
+        },2000);
+        setTimeout(function(){
+            for(var i=0;i<polices.length;i++){
+                if(i === 24){
+                    if(stopping){
+                        continue;
+                    }
+                    intervalFlag3 = moveCar(scopeArr[i]["start"], new BMap.Point(scopeArr[i]["end"].lng,scopeArr[i]["start"].lat), 100, polices[i], 20);
+                }
+                moveCar(scopeArr[i]["start"], new BMap.Point(scopeArr[i]["end"].lng,scopeArr[i]["start"].lat), 100, polices[i], 20);
+            }
+        },4000);
+        setTimeout(function(){
+            for(var i=0;i<polices.length;i++){
+                if(i === 24){
+                    if(stopping){
+                        continue;
+                    }
+                    moveCar(new BMap.Point(scopeArr[i]["end"].lng,scopeArr[i]["start"].lat), scopeArr[i]["end"], 100, polices[i], 20);
+                }
+                moveCar(new BMap.Point(scopeArr[i]["end"].lng,scopeArr[i]["start"].lat), scopeArr[i]["end"], 100, polices[i], 20);
+            }
+        },6000);
+    }
+    patrol();
+
+    var patrol_interval = setInterval(patrol,8000);
+
+    var stopping = false;
+    var intervalFlag1, intervalFlag2, intervalFlag3, intervalFlag4;
+    function attack(){
+        var now_policer = polices[24];          // 选取第25个警察进行反应
+        var now_scope = scopeArr[24];
+        var pirate_start = new BMap.Point(108.994468,9.552165);
+        var pirate_end = new BMap.Point(110.079908,10.300071);
+        var pirateMk = new BMap.Marker(pirate_start,{icon:pirate});
+        map.addOverlay(pirateMk);
+        moveCar(pirate_start,pirate_end,100, pirateMk, 20);         // 2s抵达预警区域
+
+        var vectorWARNING = new BMap.Marker(new BMap.Point(110.760608,10.955294), {
+            // 初始化警告标志的symbol
+            icon: new BMap.Symbol(BMap_Symbol_SHAPE_WARNING, {
+                scale: 1,
+                strokeWeight: 1,
+                fillColor: 'red',
+                fillOpacity: 0.8
+            })
+        });
+        setTimeout(function(){
+            map.addOverlay(vectorWARNING);      // 警告
+            clearInterval(intervalFlag1);
+            clearInterval(intervalFlag2);
+            stopping = true;
+            moveCar(new BMap.Point(pirateMk.point.lng,pirateMk.point.lat), new BMap.Point(110.457053,10.64606),100,pirateMk,10);   // 移动海盗
+            moveCar(new BMap.Point(now_policer.point.lng,now_policer.point.lat), new BMap.Point(110.457053,10.64606),100,now_policer,10);   // 移动海警
+        },2000);
+    }
+
+    var attacked = false;
+    var attack_interval = setInterval(function(){
+        if(window.attackEventFromParent && !attacked){
+            console.log("消息传递成功");
+            attack();
+            attacked = true;
+        }
+    },500);
+
+</script>
+</html>

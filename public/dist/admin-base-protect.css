@@ -2,8 +2,8 @@
   margin: 0 auto; }
 
 div.cr-all {
-  margin-top: 60px;
-  padding: 0 20px; }
+  padding: 0 20px;
+  height: 100%; }
 
 span.grey {
   color: grey; }
@@ -31,104 +31,104 @@ div.cr div.header-list-add {
     width: 130px;
     color: white; }
 
-div.table-cr div.table-header-panel {
-  background-color: #efefef;
-  height: 45px;
-  line-height: 45px;
-  font-size: 14px;
-  border-left: 28px solid #efefef;
-  margin-left: -10px;
-  margin-right: -20px; }
-  div.table-cr div.table-header-panel div.table-header-item {
-    width: 120px;
-    text-align: center;
-    background-color: #fff; }
-
-div.table-cr div.table-body {
-  overflow: hidden;
-  zoom: 1; }
-  div.table-cr div.table-body div.search-panel {
+div.table-cr {
+  height: 100%; }
+  div.table-cr div.table-header-panel {
+    background-color: #efefef;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    border-left: 28px solid #efefef;
+    margin: 0 -20px 10px -10px; }
+    div.table-cr div.table-header-panel div.table-header-item {
+      width: 120px;
+      text-align: center;
+      background-color: #fff; }
+  div.table-cr div.table-body {
     overflow: hidden;
     zoom: 1;
-    padding: 15px 5px; }
-    div.table-cr div.table-body div.search-panel div.select {
-      float: left;
-      padding: 0 3px;
-      width: 140px;
-      font-size: 12px !important; }
-    div.table-cr div.table-body div.search-panel div.search-group {
-      position: relative;
-      float: left;
-      padding: 4px 20px 4px 30px;
-      margin-right: 10px;
-      margin-left: 10px;
-      width: 220px;
-      font-size: 12px;
-      border: 1px solid #ccc;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      border-radius: 2px; }
-      div.table-cr div.table-body div.search-panel div.search-group i {
-        position: absolute;
-        top: 12px;
-        left: 10px; }
-      div.table-cr div.table-body div.search-panel div.search-group input.input-group {
-        padding: 12px 0;
-        vertical-align: middle;
-        width: 100%;
-        border: 0;
-        outline: 0;
-        height: 18px; }
-    div.table-cr div.table-body div.search-panel div.btn-search {
-      background-color: #18bc9c;
-      width: 100px;
-      color: white; }
-  div.table-cr div.table-body div.page {
-    float: right;
-    width: 200px; }
-    div.table-cr div.table-body div.page ul {
-      width: 100px;
-      list-style: none;
-      margin: 0 auto;
-      display: block; }
-      div.table-cr div.table-body div.page ul li {
-        width: 20px;
-        display: block;
+    height: 100%;
+    padding-bottom: 60px; }
+    div.table-cr div.table-body iframe {
+      height: 100%;
+      width: 100%; }
+    div.table-cr div.table-body div.search-panel {
+      overflow: hidden;
+      zoom: 1;
+      padding: 15px 5px; }
+      div.table-cr div.table-body div.search-panel div.select {
         float: left;
-        padding: 2px;
-        margin: 1px 2px;
-        background-color: #eeeeee;
-        text-align: center;
+        padding: 0 3px;
+        width: 140px;
+        font-size: 12px !important; }
+      div.table-cr div.table-body div.search-panel div.search-group {
+        position: relative;
+        float: left;
+        padding: 4px 20px 4px 30px;
+        margin-right: 10px;
+        margin-left: 10px;
+        width: 220px;
+        font-size: 12px;
+        border: 1px solid #ccc;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px; }
-
-div.table-cr div.table {
-  margin-top: 30px;
-  margin-bottom: 100px; }
-
-div.table-cr div.btn-green {
-  background-color: #44b549;
-  color: white; }
-
-div.table-cr .btn-group > .btn-green:first-child {
-  border-right: 1px solid white; }
-
-div.table-cr .btn-group > .btn-green:last-child {
-  border-left: 1px solid white; }
-
-div.table-cr div.table-disable > table {
-  width: 100%;
-  max-width: 100%;
-  margin-top: 30px; }
-  div.table-cr div.table-disable > table tbody > tr > td {
-    padding: 8px;
-    line-height: 25px;
-    vertical-align: top;
-    border-top: 1px solid #ddd; }
-  div.table-cr div.table-disable > table thead > tr > th {
-    padding: 8px;
-    line-height: 25px; }
+        div.table-cr div.table-body div.search-panel div.search-group i {
+          position: absolute;
+          top: 12px;
+          left: 10px; }
+        div.table-cr div.table-body div.search-panel div.search-group input.input-group {
+          padding: 12px 0;
+          vertical-align: middle;
+          width: 100%;
+          border: 0;
+          outline: 0;
+          height: 18px; }
+      div.table-cr div.table-body div.search-panel div.btn-search {
+        background-color: #18bc9c;
+        width: 100px;
+        color: white; }
+    div.table-cr div.table-body div.page {
+      float: right;
+      width: 200px; }
+      div.table-cr div.table-body div.page ul {
+        width: 100px;
+        list-style: none;
+        margin: 0 auto;
+        display: block; }
+        div.table-cr div.table-body div.page ul li {
+          width: 20px;
+          display: block;
+          float: left;
+          padding: 2px;
+          margin: 1px 2px;
+          background-color: #eeeeee;
+          text-align: center;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          border-radius: 2px; }
+  div.table-cr div.table {
+    margin-top: 30px;
+    margin-bottom: 100px; }
+  div.table-cr div.btn-green {
+    background-color: #44b549;
+    color: white; }
+  div.table-cr .btn-group > .btn-green:first-child {
+    border-right: 1px solid white; }
+  div.table-cr .btn-group > .btn-green:last-child {
+    border-left: 1px solid white; }
+  div.table-cr div.table-disable > table {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 30px; }
+    div.table-cr div.table-disable > table tbody > tr > td {
+      padding: 8px;
+      line-height: 25px;
+      vertical-align: top;
+      border-top: 1px solid #ddd; }
+    div.table-cr div.table-disable > table thead > tr > th {
+      padding: 8px;
+      line-height: 25px; }
 
 div.loading {
   text-align: center;
@@ -244,3 +244,9 @@ span.title-right {
 
 span.title-false {
   color: red; }
+
+.map-cr {
+  height: 100%;
+  padding-bottom: 60px; }
+  .map-cr .row {
+    height: 100%; }

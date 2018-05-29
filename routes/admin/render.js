@@ -18,13 +18,24 @@ module.exports = (router) => {
         // ctx.body = yield render('admin/index.html');
         var user = yield auth.user(this);
         if(user.type == 100){
-            ctx.redirect('/admin/set_material_kind');
-        }else if(user.type == 0){
-            ctx.redirect('/user/list');
-        }else{
-            ctx.redirect('/admin/first_check');
+            ctx.redirect('/admin/base_protect');
         }
+        // else if(user.type == 0){
+        //     ctx.redirect('/user/list');
+        // }else{
+        //     ctx.redirect('/admin/first_check');
+        // }
 
+    });
+
+    router.get("/admin/base_protect", function*(){
+        var ctx = this;
+        ctx.body = yield render("admin/base_protect.html");
+    });
+
+    router.get("/map_base_protect", function*(){
+        var ctx = this;
+        ctx.body = yield render("admin/map_base_protect.html");
     });
 
     router.get('/admin/first_check',function *(){

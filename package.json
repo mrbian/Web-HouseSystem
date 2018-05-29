@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "mocha": "DEBUG=koa* mocha",
-    "debugAll": "DEBUG=* supervisor -i src,public,views,webpack.config.js index.js ",
-    "start": " DEBUG=house supervisor -i src,public,views,webpack.config.js index.js ",
+    "debugAll": "DEBUG=* supervisor -i src,public,views,webpack.config.js,node_modules index.js ",
+    "start": " DEBUG=house supervisor -i src,public,views,webpack.config.js,node_modules index.js ",
     "win": " supervisor -i src,public,views,webpack.config.js index.js ",
     "watch": "webpack-dev-server --content-base public/ "
   },

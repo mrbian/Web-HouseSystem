@@ -117,10 +117,10 @@ function * MaterialInit(){
 function * init(){
     yield db.sync({force : true});
     yield superUserInit();
-    yield UserInit();
-    yield UserInfoInit();
-    yield BusinessKindInit();
-    yield MaterialKindInit();
+    // yield UserInit();
+    // yield UserInfoInit();
+    // yield BusinessKindInit();
+    // yield MaterialKindInit();
     // yield BusinessInit();
     // yield MaterialInit();
 }
