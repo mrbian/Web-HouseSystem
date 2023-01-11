@@ -32,7 +32,7 @@
     "co-views": "^2.1.0",
     "co-wechat": "0.0.4",
     "co-wechat-api": "^2.3.0",
-    "debug": "^2.2.0",
+    "debug": "^3.1.0",
     "decimal.js": "^5.0.0",
     "ect": "^0.5.9",
     "koa": "^1.1.1",
